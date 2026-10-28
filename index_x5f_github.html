@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>LUDO SULTAN</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header><h1>♛ LUDO SULTAN</h1><div class="sub">THE ROYAL LUDO ARENA - FINAL</div></header>
+<div class="balance">DEMO COINS<strong id="coins">1,000</strong> <span id="sellUnlockBadge" style="display:none;background:#4ade80;color:#000;padding:2px 8px;border-radius:10px;font-size:10px">SELL UNLOCKED</span></div>
+<main>
+<section id="home" class="screen active">
+<div class="tools">
+<div class="tool"><b>🪙 BUY COINS</b><button onclick="showScreen('buy')">OPEN COIN SHOP</button></div>
+<div class="tool"><b>💱 SELL COINS</b><button onclick="showScreen('sell')">SELL COINS</button></div>
+<div class="tool"><b>🎁 DAILY BONUS</b><button onclick="showScreen('bonus')">OPEN TREASURE</button></div>
+</div>
+<h2>👑 CHOOSE YOUR ARENA</h2>
+<div class="boards-single">
+<div class="board-nav"><button onclick="prevBoard()">◀ PREV</button><span id="boardCounter">1 / 17</span><button onclick="nextBoard()">NEXT ▶</button></div>
+<div class="board-view" id="boards"></div>
+<div class="board-detail-entry" id="boardDetail"></div>
+</div>
+<p class="small">50 Rs = 1000 Coins | 1500 Coins = 50 Rs | Daily 100 | Unique boards</p>
+</section>
+<section id="buy" class="screen"><div class="topbar"><h2>🪙 BUY - 50=1000</h2><button onclick="showScreen('home')">← Back</button></div><div id="buyPackages" class="packages"></div><div id="buyResult" class="panel" hidden></div></section>
+<section id="sell" class="screen"><div class="topbar"><h2>💱 SELL - 1500=50</h2><button onclick="showScreen('home')">← Back</button></div>
+<div class="panel">
+<p>Balance: <b id="sellBalance">1,000</b> <span id="userIdDisplay" style="font-size:10px;color:#aebfb1"></span></p>
+<div id="sellLockMsg" class="note" style="display:none"></div>
+<div id="sellPackages" class="packages" style="margin:10px 0"></div>
+<div id="sellFormArea">
+<label class="field">Coins<input id="sellAmount" type="number" value="1500"></label>
+<label class="field">Method<select id="sellMethod"><option>EasyPaisa</option><option>JazzCash</option></select></label>
+<label class="field">Wallet<input id="sellPhone" placeholder="03XXXXXXXXX"></label>
+<button onclick="submitSell()">SUBMIT</button><div id="sellResult"></div>
+</div>
+</div>
+</section>
+<section id="bonus" class="screen"><div class="topbar"><h2>🎁 DAILY TREASURE</h2><button onclick="showScreen('home')">← Back</button></div><div class="bonusbox"><span class="chest">💎🎁</span><h2>ROYAL BONUS</h2><p>Daily <b>100 coins</b>.</p><button id="claimBonus" onclick="dailyReward()">OPEN +100</button><p id="bonusStatus" class="small"></p></div></section>
+<section id="arena" class="screen">
+<div class="room-topbar"><div style="position:absolute;right:0;top:0"><button class="room-menu-btn" onclick="toggleRoomMenu()">⋮</button><div id="roomMenu" class="room-menu-dropdown"><button onclick="leaveRoom()">🚪 Room Left</button><button onclick="changeBoard()">🎲 Change Board</button><button onclick="quitGame()">❌ Quit Game</button></div></div></div>
+<div id="status">Red player's turn</div>
+<div class="board-wrapper"><div id="loadingOverlay" class="loading-overlay"><div style="text-align:center"><div class="loading-spinner"></div><div style="color:#f4d17b;font-weight:bold">LOADING BOARD...</div><div style="font-size:11px;color:#aebfb1">Room join ho raha hai</div></div></div><div id="board"></div></div>
+<div class="dice-below">
+<div class="dice-pos red" id="diceBox0"><b>🔴 RED - Top Left</b><div class="dice-timer-wrap"><svg><circle class="timer-circle-bg" cx="40" cy="40" r="36"></circle><circle id="timerCircle0" class="timer-circle" cx="40" cy="40" r="36"></circle></svg><div class="die dice-3d" id="die0"><div class="pipface" id="pipface0"></div></div></div><button onclick="rollForPlayer(0)" style="margin-top:6px">ROLL</button></div>
+<div class="dice-pos green" id="diceBox1"><b>🟢 GREEN - Top Right</b><div class="dice-timer-wrap"><svg><circle class="timer-circle-bg" cx="40" cy="40" r="36"></circle><circle id="timerCircle1" class="timer-circle" cx="40" cy="40" r="36"></circle></svg><div class="die dice-3d" id="die1"><div class="pipface" id="pipface1"></div></div></div><button onclick="rollForPlayer(1)" style="margin-top:6px">ROLL</button></div>
+<div class="dice-pos blue" id="diceBox3"><b>🔵 BLUE - Down Left</b><div class="dice-timer-wrap"><svg><circle class="timer-circle-bg" cx="40" cy="40" r="36"></circle><circle id="timerCircle3" class="timer-circle" cx="40" cy="40" r="36"></circle></svg><div class="die dice-3d" id="die3"><div class="pipface" id="pipface3"></div></div></div><button onclick="rollForPlayer(3)" style="margin-top:6px">ROLL</button></div>
+<div class="dice-pos yellow" id="diceBox2"><b>🟡 YELLOW - Down Right</b><div class="dice-timer-wrap"><svg><circle class="timer-circle-bg" cx="40" cy="40" r="36"></circle><circle id="timerCircle2" class="timer-circle" cx="40" cy="40" r="36"></circle></svg><div class="die dice-3d" id="die2"><div class="pipface" id="pipface2"></div></div></div><button onclick="rollForPlayer(2)" style="margin-top:6px">ROLL</button></div>
+</div>
+<div class="board-detail-entry" id="arenaEntryInfo"></div>
+</section>
+<section id="admin" class="screen"><div class="topbar"><h2>🔐 ADMIN</h2><button onclick="showScreen('home')">← Exit</button></div><div class="panel"><label class="field">Password<input id="adminPass" type="password" placeholder="DEMO-ADMIN-CHANGE-ME"></label><button onclick="adminLogin()">UNLOCK</button><div id="adminArea" hidden><div id="adminOrders"></div><div id="adminUnlockInfo" class="panel" style="margin-top:10px"></div></div></div></section>
+</main>
+<script src="script.js"></script>
+</body>
+</html>
