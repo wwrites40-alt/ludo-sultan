@@ -1,0 +1,116 @@
+/* themes.css - FULL BOARD DESIGN - Photo Matching - Not just border */
+/* Har board ka andar ka design alag - track, base, goti, dice */
+
+/* ===== 1. CLASSIC - Wooden ===== */
+.card.style-0{background:linear-gradient(145deg,#5c4033,#3d2a1e);border:2px solid #d2b48c;box-shadow:0 0 15px #8d6e3f66}
+#board.theme-classic{background:#f5e6c8;border-color:#8d6e3f}
+#board.theme-classic .track{background:#fff8e7}
+#board.theme-classic .base.red{background:#d2691e}#board.theme-classic .base.green{background:#8b4513}
+#board.theme-classic .base.yellow{background:#cd853f}#board.theme-classic .base.blue{background:#a0522d}
+
+/* ===== 2. BRONZE - Copper metallic ===== */
+.card.style-1{background:linear-gradient(145deg,#6b3a26,#3d2a1e);border:2px solid #cd7f32;box-shadow:0 0 15px #cd7f3288}
+#board.theme-bronze{background:linear-gradient(145deg,#3d2a1e,#8b5a2b);border-color:#cd7f32;box-shadow:0 0 25px #cd7f3288}
+#board.theme-bronze .track{background:#e8c4a0}
+#board.theme-bronze .base{background:#cd7f32!important;border-color:#8b4513}
+
+/* ===== 3. SILVER - Silver chrome ===== */
+.card.style-2{background:linear-gradient(145deg,#4a4a5a,#2a2a3d);border:2px solid #c0c0c0;box-shadow:0 0 20px #c0c0c0aa}
+#board.theme-silver{background:linear-gradient(145deg,#c0c0c0,#8a8a9a);border-color:#e8e8e8;box-shadow:0 0 30px #c0c0c0cc}
+#board.theme-silver .track{background:#f0f0f5}
+#board.theme-silver .base{background:linear-gradient(145deg,#e8e8e8,#a0a0a0)!important}
+
+/* ===== 4. GOLDEN - Golden glitter shining ===== */
+.card.style-3{background:linear-gradient(145deg,#5a4a1e,#3d3a1e);border:2px solid #ffd700;box-shadow:0 0 25px #ffd70088}
+#board.theme-golden{background:radial-gradient(circle,#fff8dc,#ffd700,#b8860b);border-color:#ffd700;box-shadow:0 0 40px #ffd700aa,0 0 80px #ffd70044}
+#board.theme-golden .track{background:#fffacd;box-shadow:inset 0 0 10px #ffd70088}
+#board.theme-golden .base{border:2px solid gold!important;box-shadow:0 0 10px gold}
+
+/* ===== 5. DIAMOND - Blue crystal diamond ===== */
+.card.style-4{background:linear-gradient(145deg,#1e4a5a,#0f2a3a);border:2px solid #00e5ff;box-shadow:0 0 25px #00e5ffaa}
+#board.theme-diamond{background:linear-gradient(145deg,#e0f7fa,#00e5ff,#0097a7);border-color:#00e5ff;box-shadow:0 0 40px #00e5ffaa,0 0 80px #00e5ff44}
+#board.theme-diamond .track{background:#e0f7fa;border-color:#00e5ff44}
+#board.theme-diamond .base{background:linear-gradient(145deg,#00e5ff,#0097a7)!important;box-shadow:0 0 15px #00e5ff}
+
+/* ===== 6. SPECIAL - Neon colorful RGB ===== */
+.card.style-5{background:linear-gradient(135deg,#4a1e6a,#2a0a4a);border:2px solid #ff00ff;box-shadow:0 0 25px #ff00ff88,0 0 15px #00ffff44}
+#board.theme-special{background:linear-gradient(135deg,#ff00ff,#00ffff,#ffff00,#ff00ff);border:2px solid #ff00ff;box-shadow:0 0 35px #ff00ff88,0 0 20px #00ffff88}
+#board.theme-special .track{background:linear-gradient(135deg,#fff,#ff00ff22)}
+#board.theme-special .base{animation:neonShift 3s infinite}
+
+/* ===== 7. INTERNATIONAL - Globe world blue ===== */
+.card.style-6{background:radial-gradient(circle,#0a3a6a,#051a3a);border:2px solid #1e90ff;box-shadow:0 0 20px #1e90ff88}
+#board.theme-international{background:radial-gradient(circle at center,#1e90ff,#00008b,#001a4a);border-color:#1e90ff;box-shadow:0 0 30px #1e90ff88}
+#board.theme-international .track{background:#e0f0ff}
+#board.theme-international .base{background:radial-gradient(circle,#1e90ff,#00008b)!important}
+
+/* ===== 8. MASTER - Royal crown purple gold ===== */
+.card.style-7{background:linear-gradient(145deg,#3a1e4a,#1e0f2a);border:2px solid #ffd700;box-shadow:0 0 20px #9370db88,0 0 10px gold}
+#board.theme-master{background:linear-gradient(145deg,#4a148c,#ffd700,#4a148c);border-color:gold;box-shadow:0 0 40px #9370db88,0 0 20px gold}
+#board.theme-master .base{border:2px solid gold!important;box-shadow:0 0 12px #9370db}
+
+/* ===== 9. UNDERWORLD - Dark red fire ===== */
+.card.style-8{background:linear-gradient(145deg,#2a0a0a,#1a0000);border:2px solid #8b0000;box-shadow:0 0 25px #ff000088}
+#board.theme-underworld{background:linear-gradient(145deg,#000000,#8b0000,#ff0000);border-color:#8b0000;box-shadow:0 0 50px #ff000088,0 0 100px #8b000044}
+#board.theme-underworld .track{background:#2a0a0a;color:#ff4444}
+#board.theme-underworld .base{background:linear-gradient(145deg,#8b0000,#000)!important;box-shadow:0 0 15px #ff0000}
+
+/* ===== 10. DON - Mafia black ===== */
+.card.style-9{background:linear-gradient(145deg,#1a1a1a,#000);border:2px solid #555;box-shadow:0 0 15px #000}
+#board.theme-don{background:linear-gradient(145deg,#000,#1a1a1a,#333);border-color:#555;box-shadow:0 0 20px #000,0 0 40px #333}
+#board.theme-don .track{background:#1a1a1a;border-color:#333}
+#board.theme-don .base{background:#000!important;border:2px solid #555!important}
+
+/* ===== 11. DON KILLER - Fire orange glowing ===== */
+.card.style-10{background:linear-gradient(145deg,#2a0f0f,#1a0500);border:2px solid #ff4500;box-shadow:0 0 30px #ff4500aa}
+#board.theme-don-killer{background:linear-gradient(145deg,#ff4500,#8b0000,#000);border-color:#ff4500;box-shadow:0 0 50px #ff4500aa,0 0 100px #ff000044;animation:fireGlow 1.2s infinite alternate}
+@keyframes fireGlow{from{box-shadow:0 0 20px #ff4500}to{box-shadow:0 0 50px #ff4500,0 0 100px #ff0000}}
+#board.theme-don-killer .track{background:#ff450022}
+#board.theme-don-killer .base{background:linear-gradient(145deg,#ff4500,#8b0000)!important;animation:fireGlow 1s infinite alternate}
+
+/* ===== 12. DON BOSS - Gold crown skull ===== */
+.card.style-11{background:linear-gradient(145deg,#2a2a0a,#1a1a00);border:2px solid gold;box-shadow:0 0 30px gold}
+#board.theme-don-boss{background:radial-gradient(circle,#ffd700,#8b7500,#000);border-color:gold;box-shadow:0 0 50px gold,0 0 100px #ffd70044}
+#board.theme-don-boss .track{background:#fff8dc}
+#board.theme-don-boss .base{background:linear-gradient(145deg,gold,#8b7500)!important;box-shadow:0 0 20px gold}
+
+/* ===== 13. LEGEND - Dragon green ===== */
+.card.style-12{background:linear-gradient(145deg,#0f2a0f,#0a1a0a);border:2px solid #228b22;box-shadow:0 0 20px #228b2288}
+#board.theme-legend{background:linear-gradient(145deg,#006400,#228b22,#90ee90);border-color:#228b22;box-shadow:0 0 40px #228b2288}
+#board.theme-legend .track{background:#e8f5e9}
+#board.theme-legend .base{background:linear-gradient(145deg,#228b22,#006400)!important}
+
+/* ===== 14. LEGEND MASTER - Crystal blue ===== */
+.card.style-13{background:linear-gradient(145deg,#0f1e3a,#050a1a);border:2px solid #00bfff;box-shadow:0 0 30px #00bfff88}
+#board.theme-legend-master{background:linear-gradient(145deg,#e0f7fa,#00bfff,#006994);border-color:#00bfff;box-shadow:0 0 50px #00bfff88,0 0 100px #00bfff44}
+#board.theme-legend-master .track{background:#e0f7fa}
+#board.theme-legend-master .base{background:linear-gradient(145deg,#00bfff,#006994)!important;box-shadow:0 0 20px #00bfff}
+
+/* ===== 15. LEGEND BOSS - Lion golden ===== */
+.card.style-14{background:linear-gradient(145deg,#2a1e0a,#1a1200);border:2px solid #daa520;box-shadow:0 0 25px #daa52088}
+#board.theme-legend-boss{background:radial-gradient(circle,#ffd700,#daa520,#8b6914);border-color:#daa520;box-shadow:0 0 50px #daa52088}
+#board.theme-legend-boss .track{background:#fff8dc}
+#board.theme-legend-boss .base{background:linear-gradient(145deg,#daa520,#8b6914)!important}
+
+/* ===== 16. LUDO SULTAN - Royal palace gold purple ===== */
+.card.style-15{background:linear-gradient(145deg,#1a0f2a,#0a051a);border:3px solid gold;box-shadow:0 0 40px gold,0 0 80px #ffd70044}
+#board.theme-ludo-sultan{background:radial-gradient(circle at center,#4a148c,#ffd700,#4a148c);border:3px solid gold;box-shadow:0 0 60px gold,0 0 120px #ffd70044,0 0 30px #9370db}
+#board.theme-ludo-sultan .track{background:#fff8dc;box-shadow:inset 0 0 15px #ffd70088}
+#board.theme-ludo-sultan .base{border:3px solid gold!important;box-shadow:0 0 20px gold,0 0 40px #9370db}
+
+/* ===== 17. SULTAN BOSS - Ultimate lion gold ===== */
+.card.style-16{background:linear-gradient(145deg,#000000,#1a1a00);border:3px solid gold;box-shadow:0 0 50px gold,0 0 100px #ffd70066;animation:ultimateGlow 2s infinite alternate}
+@keyframes ultimateGlow{from{box-shadow:0 0 30px gold}to{box-shadow:0 0 80px gold,0 0 150px #ffd700aa}}
+#board.theme-sultan-boss{background:radial-gradient(circle at center,#ffd700,#ff8c00,#8b0000,#000);border:4px solid gold;box-shadow:0 0 80px gold,0 0 150px #ffd70066;animation:ultimateGlow 2s infinite alternate}
+#board.theme-sultan-boss .track{background:#fff8dc;box-shadow:inset 0 0 20px gold}
+#board.theme-sultan-boss .base{background:radial-gradient(circle,gold,#8b6914)!important;border:3px solid gold!important;box-shadow:0 0 30px gold}
+
+/* Common animations */
+@keyframes neonShift{0%{filter:hue-rotate(0deg)}50%{filter:hue-rotate(180deg)}100%{filter:hue-rotate(360deg)}}
+
+/* Dice themes per board - Photo jaisi */
+#board.theme-golden ~ .dice-below .die,#board.theme-don-boss ~ .dice-below .die,#board.theme-ludo-sultan ~ .dice-below .die,#board.theme-sultan-boss ~ .dice-below .die{background:linear-gradient(145deg,#fff8a0,#ffd700)!important;box-shadow:0 0 30px gold!important;border-color:gold!important}
+#board.theme-diamond ~ .dice-below .die,#board.theme-legend-master ~ .dice-below .die{background:linear-gradient(145deg,#e0f7fa,#00e5ff)!important;box-shadow:0 0 30px #00e5ff!important}
+#board.theme-don-killer ~ .dice-below .die{background:linear-gradient(145deg,#ff4500,#8b0000)!important;box-shadow:0 0 25px #ff4500!important;animation:fireGlow 1s infinite alternate}
+#board.theme-underworld ~ .dice-below .die{background:linear-gradient(145deg,#8b0000,#000)!important}
+#board.theme-silver ~ .dice-below .die{background:linear-gradient(145deg,#fff,#c0c0c0)!important;box-shadow:0 0 20px #c0c0c0!important}
