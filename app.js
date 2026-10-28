@@ -1,8 +1,29 @@
-
-/* LUDO SULTAN — App Controller */
+/* LUDO SULTAN — App Controller + SOUNDS */
 "use strict";
 
 (function () {
+  // ===== SOUND SYSTEM - 8 MP3 - ONLY ADDITION =====
+  const sounds = {
+    bg: new Audio('background-music.mp3'),
+    click: new Audio('button-click.mp3'),
+    dice: new Audio('dice-roll.mp3'),
+    start: new Audio('game-start.mp3'),
+    win: new Audio('game-win.mp3'),
+    capture: new Audio('token-capture.mp3'),
+    move: new Audio('token-move.mp3'),
+    turn: new Audio('turn-change.mp3')
+  };
+  sounds.bg.loop = true;
+  sounds.bg.volume = 0.3;
+  function playSound(name){
+    const s = sounds[name];
+    if(!s) return;
+    s.currentTime = 0;
+    s.play().catch(()=>{});
+  }
+  document.addEventListener('click',()=>{sounds.bg.play().catch(()=>{});},{once:true});
+  // ===== END SOUND SYSTEM =====
+
   function startApp() {
     if (!window.LudoGame) {
       console.error("LudoGame not found. Load game.js first.");
@@ -27,6 +48,8 @@
 
     // Connect the existing Roll Dice button.
     window.rollDice = function () {
+      playSound('click');
+      playSound('dice');
       const result = window.LudoGame.rollDice();
 
       if (result.error) {
@@ -48,6 +71,7 @@
       if (result.mustPass) {
         alert("No legal move. Your turn will pass.");
         const passed = window.LudoGame.passTurn();
+        playSound('turn');
 
         if (passed.error) {
           alert(passed.error);
@@ -92,11 +116,15 @@
       lastRoll = null;
 
       if (move.captured && move.captured.length) {
+        playSound('capture');
         alert("Captured " + move.captured.length +
           " opposing token(s)!");
+      } else {
+        playSound('move');
       }
 
       if (move.gameOver) {
+        playSound('win');
         alert("🏆 " + move.winner + " wins!");
       }
 
@@ -105,6 +133,8 @@
 
     // Connect the existing New Game button.
     window.newGame = function () {
+      playSound('click');
+      playSound('start');
       window.LudoGame.newGame();
       lastRoll = null;
 
@@ -125,3 +155,10 @@
     startApp();
   }
 })();
+
+
+
+
+
+
+
