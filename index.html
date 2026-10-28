@@ -223,5 +223,7 @@ function newGame(){turnIndex=0;document.getElementById("die").textContent="⚄";
 function resetDemo(){if(!confirm("Reset all local demo data?"))return;localStorage.removeItem(KEY);load();render();closePanels()}
 load();render();
 </script>
+  <script src="game.js"></script>
+<script src="app.js"></script>
 </body>
 </html>
