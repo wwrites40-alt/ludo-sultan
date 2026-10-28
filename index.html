@@ -1,0 +1,156 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>LUDO SULTAN</title>
+<style>
+:root{--gold:#f6cb68;--dark:#071b16;--panel:#102e24}
+*{box-sizing:border-box}
+body{margin:0;background:radial-gradient(circle at top,#1b5139,#06120f 70%);color:#fff;font-family:Arial,sans-serif;padding:14px}
+header{text-align:center;padding:12px 0}
+h1{margin:0;color:var(--gold);font-size:clamp(27px,7vw,42px);letter-spacing:3px;text-shadow:0 0 18px #c58c31}
+.sub{color:#c9d9ce;margin-top:7px;font-size:12px;letter-spacing:2px}
+.balance{margin:12px auto;background:#153b2c;border:1px solid #b98b3d;border-radius:14px;padding:12px;text-align:center;max-width:420px}
+.balance strong{display:block;color:var(--gold);font-size:23px;margin-top:5px}
+h2{font-size:17px;color:var(--gold);margin:20px 0 12px}
+.boards{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px}
+.board{min-width:0;position:relative;border:1px solid #967239;border-radius:12px;background:linear-gradient(145deg,#1c4634,#0c241b);padding:10px 3px;text-align:center;box-shadow:0 5px 12px #0005}
+.board .symbol{font-size:25px;margin-bottom:5px}
+.board h3{font-size:clamp(10px,2.8vw,14px);margin:4px 0;color:#ffe4a0}
+.board p{font-size:10px;color:#c7d7cc;margin:5px 0}
+.board button{width:94%;font-size:10px;padding:8px 2px}
+button{border:0;border-radius:8px;background:linear-gradient(#ffdf8a,#c58b2c);color:#241704;font-weight:bold;cursor:pointer}
+button:disabled{background:#536159;color:#c2ccc4}
+.lock{font-size:10px;color:#f6d58b}
+.game{display:none;margin-top:20px;background:#0d261d;border:1px solid #9f7b3b;border-radius:15px;padding:12px}
+.game.active{display:block}
+.gamehead{display:flex;align-items:center;justify-content:space-between;gap:8px}
+#board{width:min(100%,380px);aspect-ratio:1;margin:14px auto;display:grid;grid-template-columns:repeat(15,1fr);grid-template-rows:repeat(15,1fr);border:3px solid var(--gold);background:#eee7ce;border-radius:5px;overflow:hidden}
+.cell{border:1px solid #b9b29c;display:flex;align-items:center;justify-content:center;font-size:clamp(7px,2vw,13px);color:#111;position:relative}
+.red{background:#e95151}.green{background:#42b97b}.yellow{background:#f5cf45}.blue{background:#55a5f4}
+.home{border:2px solid #fff8}
+.center{background:conic-gradient(#e95151 0 25%,#42b97b 0 50%,#f5cf45 0 75%,#55a5f4 0);color:white;font-weight:bold;text-shadow:1px 1px #000}
+.pawn{font-size:clamp(9px,3vw,17px);filter:drop-shadow(0 1px 1px #333)}
+.controls{display:flex;justify-content:center;gap:10px;flex-wrap:wrap}
+.controls button{padding:12px}
+#status{text-align:center;color:#ffe5a3;min-height:35px;line-height:1.5}
+.note{font-size:11px;color:#b8c9bf;text-align:center;line-height:1.6;margin:18px 0}
+@media(min-width:600px){body{max-width:800px;margin:auto}.boards{grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}.board{padding:14px 6px}.board .symbol{font-size:30px}.board h3{font-size:14px}.board p{font-size:12px}.board button{font-size:12px}}
+</style>
+</head>
+<body>
+<header>
+<h1>♛ LUDO SULTAN</h1>
+<div class="sub">THE ROYAL LUDO ARENA</div>
+</header>
+
+<div class="balance">YOUR DEMO COINS<strong id="coins">1,000</strong></div>
+
+<h2>👑 SELECT YOUR ROYAL BOARD</h2>
+<div class="boards" id="boards"></div>
+
+<section class="game" id="game">
+<div class="gamehead">
+<strong id="gameTitle">Classic Arena</strong>
+<button onclick="closeGame()">← All Boards</button>
+</div>
+<div id="status">Select a die roll to begin.</div>
+<div id="board"></div>
+<div class="controls">
+<button onclick="roll()">🎲 ROLL DICE</button>
+<button onclick="resetGame()">↻ NEW GAME</button>
+</div>
+<p class="note">LOCAL DEMO ONLY · No real coins or online multiplayer.</p>
+</section>
+
+<p class="note">LUDO SULTAN · ROYAL EDITION<br>Coins and entry fees in this prototype are simulated.</p>
+
+<script>
+const levels=[
+["Classic",300,"🎲"],["Bronze",500,"🥉"],["Silver",700,"🥈"],
+["Golden",1000,"🥇"],["Diamond",2000,"💎"],["Special",5000,"⭐"],
+["International",10000,"🌐"],["Master",20000,"👑"],["Underworld",25000,"🌑"],
+["Don",30000,"⚔️"],["Don Killer",50000,"🔥"],["Don Boss",100000,"🏆"],
+["Legend",150000,"🐉"],["Legend Master",200000,"💠"],
+["Legend Boss",250000,"🦁"],["Ludo Sultan",500000,"♛"],
+["Sultan Boss",1000000,"👑"]
+];
+let coins=1000,current=null,die=0,turn=0,tokens=[],finished=false;
+const colors=["red","green","yellow","blue"];
+const starts=[0,13,26,39];
+const pawns=["🔴","🟢","🟡","🔵"];
+const boardEl=document.getElementById("board");
+function money(n){return n.toLocaleString("en-US")}
+function renderBoards(){
+ document.getElementById("boards").innerHTML=levels.map((l,i)=>{
+ let locked=coins<l[1];
+ return `<div class="board"><div class="symbol">${l[2]}</div>
+ <h3>${l[0]}</h3><p>Entry: ${money(l[1])} coins</p>
+ ${locked?`<div class="lock">🔒 Need ${money(l[1])}</div>`:
+ `<button onclick="openGame(${i})">PLAY</button>`}</div>`;
+ }).join("");
+ document.getElementById("coins").textContent=money(coins);
+}
+function openGame(i){
+ if(coins<levels[i][1])return;
+ current=i;
+ document.getElementById("gameTitle").textContent=levels[i][0]+" Arena";
+ document.getElementById("game").classList.add("active");
+ document.getElementById("game").scrollIntoView({behavior:"smooth",block:"start"});
+ resetGame();
+}
+function closeGame(){document.getElementById("game").classList.remove("active");current=null}
+function resetGame(){
+ die=0;turn=0;finished=false;
+ tokens=colors.map(()=>[-1,-1,-1,-1]);
+ drawBoard();
+ say("Red player's turn. Roll the dice.");
+}
+function drawBoard(){
+ boardEl.innerHTML="";
+ for(let r=0;r<15;r++)for(let c=0;c<15;c++){
+  let cell=document.createElement("div");cell.className="cell";
+  let color=null;
+  if(r<6&&c<6)color="red";
+  if(r<6&&c>8)color="green";
+  if(r>8&&c<6)color="blue";
+  if(r>8&&c>8)color="yellow";
+  if(color){cell.classList.add(color,"home");}
+  else if(r===7&&c===7){cell.classList.add("center");cell.textContent="♛";}
+  else if((r===6||r===8)&&(c>=1&&c<=6))cell.classList.add("red");
+  else if((c===6||c===8)&&(r>=1&&r<=6))cell.classList.add("green");
+  else if((r===6||r===8)&&(c>=8&&c<=13))cell.classList.add("yellow");
+  else if((c===6||c===8)&&(r>=8&&r<=13))cell.classList.add("blue");
+  if(color){
+   let p=colors.indexOf(color);
+   let slot=(r%4)*4+(c%4);
+   if(slot<4&&tokens[p][slot]===-1)cell.innerHTML=`<span class="pawn">${pawns[p]}</span>`;
+  }
+  boardEl.appendChild(cell);
+ }
+}
+function say(s){document.getElementById("status").textContent=s}
+function roll(){
+ if(finished||current===null)return;
+ if(die!==0){say("Choose a token first.");return}
+ die=Math.floor(Math.random()*6)+1;
+ let legal=[];
+ tokens[turn].forEach((p,i)=>{if(p===-1?die===6:p+die<=57)legal.push(i)});
+ if(!legal.length){
+  say(`${colors[turn]} rolled ${die}. No legal move — turn passes.`);
+  die=0;turn=(turn+1)%4;return;
+ }
+ let token=legal[0];
+ tokens[turn][token]=tokens[turn][token]===-1?0:tokens[turn][token]+die;
+ say(`${colors[turn]} rolled ${die}; token ${token+1} moved. Next: ${colors[turn]}.`);
+ if(tokens[turn].every(p=>p===57)){finished=true;say(`${colors[turn]} wins!`);return}
+ if(die!==6)turn=(turn+1)%4;
+ die=0;drawBoard();
+ say(`${colors[turn]} player's turn. Last roll: ${document.getElementById("status").textContent}`);
+}
+renderBoards();
+</script>
+</body>
+</html>
