@@ -15,16 +15,18 @@ const LudoGame = (() => {
       start: START[i],
       tokens: [-1, -1, -1, -1]
     }));
+
     turn = 0;
     dice = 0;
     over = false;
     winner = null;
+
     return getState();
   }
 
-  function square(player, progress) {
+  function square(playerIndex, progress) {
     if (progress < 0 || progress >= 52) return null;
-    return (START[player] + progress) % 52;
+    return (START[playerIndex] + progress) % 52;
   }
 
   function legalMoves() {
@@ -40,8 +42,13 @@ const LudoGame = (() => {
   }
 
   function rollDice() {
-    if (over) return { error: "Game over. Start a new game." };
-    if (dice !== 0) return { error: "Move a token first." };
+    if (over) {
+      return { error: "Game over. Start a new game." };
+    }
+
+    if (dice !== 0) {
+      return { error: "Complete the current move first." };
+    }
 
     dice = Math.floor(Math.random() * 6) + 1;
     const moves = legalMoves();
@@ -56,29 +63,43 @@ const LudoGame = (() => {
 
   function passTurn() {
     if (!dice || legalMoves().length > 0) {
-      return { error: "A legal move is available, or dice was not rolled." };
+      return {
+        error: "A legal move is available, or dice was not rolled."
+      };
     }
 
     dice = 0;
     turn = (turn + 1) % 4;
+
     return getState();
   }
 
   function moveToken(tokenIndex) {
     if (over) return { error: "Game over." };
     if (!dice) return { error: "Roll the dice first." };
-    if (!legalMoves().includes(tokenIndex)) {
+
+    if (
+      !Number.isInteger(tokenIndex) ||
+      !legalMoves().includes(tokenIndex)
+    ) {
       return { error: "Invalid token move." };
     }
 
     const playerIndex = turn;
     const player = players[playerIndex];
     const oldPosition = player.tokens[tokenIndex];
-    const nextPosition = oldPosition === -1 ? 0 : oldPosition + dice;
+
+    // Save the dice result before resetting it.
+    const rolledSix = dice === 6;
+
+    const nextPosition =
+      oldPosition === -1 ? 0 : oldPosition + dice;
 
     player.tokens[tokenIndex] = nextPosition;
+
     const captured = [];
 
+    // Capture opponents on the shared track.
     if (nextPosition < 52) {
       const landed = square(playerIndex, nextPosition);
 
@@ -87,16 +108,25 @@ const LudoGame = (() => {
           if (otherIndex === playerIndex) return;
 
           other.tokens.forEach((position, token) => {
-            if (position >= 0 && position < 52 &&
-                square(otherIndex, position) === landed) {
-              captured.push({ player: other.color, token });
+            if (
+              position >= 0 &&
+              position < 52 &&
+              square(otherIndex, position) === landed
+            ) {
+              captured.push({
+                player: other.color,
+                token
+              });
             }
           });
         });
 
+        // Capture one opposing token.
         if (captured.length === 1) {
           const enemy = captured[0];
-          players[COLORS.indexOf(enemy.player)].tokens[enemy.token] = -1;
+
+          players[COLORS.indexOf(enemy.player)]
+            .tokens[enemy.token] = -1;
         } else {
           captured.length = 0;
         }
@@ -108,10 +138,12 @@ const LudoGame = (() => {
       winner = player.color;
     }
 
-    const rolledSix = dice === 6;
     const reachedFinish = nextPosition === FINISH;
+
+    // Reset dice after the move.
     dice = 0;
 
+    // Extra turn for rolling six or reaching finish.
     if (!over && !rolledSix && !reachedFinish) {
       turn = (turn + 1) % 4;
     }
@@ -142,7 +174,14 @@ const LudoGame = (() => {
 
   newGame();
 
-  return { newGame, rollDice, moveToken, passTurn, getState, legalMoves };
+  return {
+    newGame,
+    rollDice,
+    moveToken,
+    passTurn,
+    getState,
+    legalMoves
+  };
 })();
 
 if (typeof window !== "undefined") {
