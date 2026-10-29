@@ -286,3 +286,8 @@ section#arena:has(#board.theme-sultan-skull) {
   color: #ef4444 !important;
   box-shadow: 0 6px 0 #000000, 0 0 28px rgba(239, 68, 68, 0.8) !important;
 }
+/* Make Grid Cells Transparent for Image Boards */
+#board .cell {
+  background: transparent !important;
+  border: none !important;
+}
