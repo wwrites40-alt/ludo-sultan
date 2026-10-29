@@ -16,9 +16,14 @@ section#arena:has(#board.theme-forest-arena) {
 }
 /* Board Design */
 #board.theme-forest-arena {
-  background: radial-gradient(circle, #d8f3dc, #2e7d32, #12351b);
+  background-image: url('board-1.png');
+  background-size: 100% 100%;
+  background-position: center;
+  background-repeat: no-repeat;
   border: 4px solid #72d572;
   box-shadow: 0 0 30px rgba(54, 178, 74, 0.5);
+}
+
 }
 #board.theme-forest-arena .track { background: #effbea; }
 #board.theme-forest-arena .base { border: 2px solid #72d572 !important; box-shadow: inset 0 0 8px #1b5e20; }
