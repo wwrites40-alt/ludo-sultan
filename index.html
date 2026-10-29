@@ -2,313 +2,81 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>LUDO SULTAN FINAL - Sounds + Themes</title>
+<title>LUDO SULTAN</title>
 <style>
 :root{--gold:#f4d17b;--dark:#071810;--panel:#123323;--line:#bd9548}
-*{box-sizing:border-box}body{margin:0;background:radial-gradient(circle at top,#163b29,#06120c 65%);color:#fff;font-family:Arial,sans-serif;min-height:100vh}
-header{text-align:center;padding:15px;background:linear-gradient(120deg,#173d2a,#06120c);border-bottom:2px solid #d7ae53}
-h1{margin:0;color:var(--gold);letter-spacing:3px;font-size:clamp(26px,7vw,40px)}.sub{font-size:11px;letter-spacing:3px;margin-top:5px;color:#d9c18a}
-.balance{text-align:center;padding:10px;color:#ffe3a0}.balance strong{display:block;font-size:22px;margin-top:3px}
-main{max-width:900px;margin:auto;padding:10px}h2{color:var(--gold);font-size:17px}.screen{display:none}.screen.active{display:block}
-.tools{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:8px 0 14px}.tool,.panel{background:linear-gradient(145deg,#204a32,#10291d);border:1px solid var(--line);border-radius:12px;padding:10px;text-align:center}
-.tool b{display:block;font-size:11px;margin-bottom:6px;color:#ffe5a1}
-button{border:0;border-radius:8px;background:linear-gradient(#ffe7a1,#c99535);color:#201606;font-weight:bold;padding:9px;cursor:pointer}
-button:disabled{background:#49594e;color:#bbb}.tool button{width:100%;font-size:11px}
-.boards-single{display:flex;flex-direction:column;align-items:center;gap:10px}
-.board-nav{display:flex;gap:10px;align-items:center;justify-content:center;margin:8px 0}
-.board-view{width:100%;max-width:320px;margin:auto}
-.card{border-radius:12px;text-align:center;padding:16px 6px}
-.card .icon{font-size:34px}.card h3{font-size:15px;color:#ffe5a1;margin:8px 0 4px}.card p{font-size:12px;color:#d2e0d5}
-.card button{width:94%;font-size:12px;margin-top:8px;padding:10px}
-
-/* ===== 17 THEMES - PHOTO MATCHING - FULL BOARD DESIGN - NOT JUST BORDER ===== */
-.card.style-0{background:linear-gradient(145deg,#5c4033,#3d2a1e);border:2px solid #d2b48c;box-shadow:0 0 15px #8d6e3f66} /* Classic Wooden */
-.card.style-1{background:linear-gradient(145deg,#6b3a26,#3d2a1e);border:2px solid #cd7f32;box-shadow:0 0 15px #cd7f3288} /* Bronze */
-.card.style-2{background:linear-gradient(145deg,#4a4a5a,#2a2a3d);border:2px solid #c0c0c0;box-shadow:0 0 20px #c0c0c0aa} /* Silver */
-.card.style-3{background:linear-gradient(145deg,#5a4a1e,#3d3a1e);border:2px solid #ffd700;box-shadow:0 0 25px #ffd70088} /* Golden glitter */
-.card.style-4{background:linear-gradient(145deg,#1e4a5a,#0f2a3a);border:2px solid #00e5ff;box-shadow:0 0 25px #00e5ffaa} /* Diamond crystal */
-.card.style-5{background:linear-gradient(135deg,#4a1e6a,#2a0a4a);border:2px solid #ff00ff;box-shadow:0 0 25px #ff00ff88,0 0 15px #00ffff44} /* Special neon */
-.card.style-6{background:radial-gradient(circle,#0a3a6a,#051a3a);border:2px solid #1e90ff;box-shadow:0 0 20px #1e90ff88} /* International globe */
-.card.style-7{background:linear-gradient(145deg,#3a1e4a,#1e0f2a);border:2px solid #ffd700;box-shadow:0 0 20px #9370db88,0 0 10px gold} /* Master crown */
-.card.style-8{background:linear-gradient(145deg,#2a0a0a,#1a0000);border:2px solid #8b0000;box-shadow:0 0 25px #ff000088} /* Underworld */
-.card.style-9{background:linear-gradient(145deg,#1a1a1a,#000);border:2px solid #555;box-shadow:0 0 15px #000} /* Don mafia */
-.card.style-10{background:linear-gradient(145deg,#2a0f0f,#1a0500);border:2px solid #ff4500;box-shadow:0 0 30px #ff4500aa} /* Don Killer fire */
-.card.style-11{background:linear-gradient(145deg,#2a2a0a,#1a1a00);border:2px solid gold;box-shadow:0 0 30px gold} /* Don Boss gold */
-.card.style-12{background:linear-gradient(145deg,#0f2a0f,#0a1a0a);border:2px solid #228b22;box-shadow:0 0 20px #228b2288} /* Legend dragon */
-.card.style-13{background:linear-gradient(145deg,#0f1e3a,#050a1a);border:2px solid #00bfff;box-shadow:0 0 30px #00bfff88} /* Legend Master crystal */
-.card.style-14{background:linear-gradient(145deg,#2a1e0a,#1a1200);border:2px solid #daa520;box-shadow:0 0 25px #daa52088} /* Legend Boss lion */
-.card.style-15{background:linear-gradient(145deg,#1a0f2a,#0a051a);border:3px solid gold;box-shadow:0 0 40px gold,0 0 80px #ffd70044} /* Ludo Sultan palace */
-.card.style-16{background:linear-gradient(145deg,#000000,#1a1a00);border:3px solid gold;box-shadow:0 0 50px gold,0 0 100px #ffd70066;animation:ultimateGlow 2s infinite alternate} /* Sultan Boss ultimate */
-@keyframes ultimateGlow{from{box-shadow:0 0 30px gold}to{box-shadow:0 0 60px gold,0 0 100px #ffd700aa}}
-
-.packages{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
-.package-card{background:linear-gradient(145deg,#204a32,#10291d);border-radius:12px;text-align:center;padding:12px 5px}
-.package-card.buy{border:2px solid #4ade80}.package-card.sell{border:2px solid #facc15}
-.package-price{font-size:18px;color:#ffe5a1;font-weight:bold}.package-rate{font-size:10px;color:#aebfb1}
-.topbar{display:flex;align-items:center;justify-content:space-between;gap:8px;margin:8px 0}.small{text-align:center;font-size:10px;color:#aebfb1;line-height:1.5}
-.field{display:block;text-align:left;margin:10px 0;color:#ffe5a1;font-size:12px}
-.field input,.field select{display:block;width:100%;margin-top:5px;padding:10px;border:1px solid #bd9548;border-radius:8px;background:#071810;color:#fff;font-size:14px}
-.note{padding:8px;border-radius:8px;background:#3b2d12;color:#ffe5a1;font-size:11px;line-height:1.4;margin:8px 0}
-.bonusbox{text-align:center;padding:20px;border:1px solid #d7ae53;border-radius:16px;background:radial-gradient(circle,#315f38,#102319 70%)}
-.chest{font-size:70px;display:block}
-.board-wrapper{position:relative;width:min(94vw,440px);margin:0 auto}
-#board{width:100%;aspect-ratio:1;display:grid;grid-template-columns:repeat(15,1fr);grid-template-rows:repeat(15,1fr);background:#f6f0d9;border:4px solid #e4bc5e;box-shadow:0 0 22px #d4a83c55}
-.cell{border:1px solid #c8c1a9;display:flex;align-items:center;justify-content:center;position:relative;font-size:clamp(6px,2vw,12px);overflow:hidden}
-.red{background:#e95a58}.green{background:#49b87c}.yellow{background:#f4d14b}.blue{background:#55a4ee}
-.base{border:1px solid #fff}.track{background:#fffdf3}.safe:before{content:"★";color:#a18a53}
-.homeinner{width:85%;height:85%;background:#fff;border-radius:12%;display:grid;grid-template-columns:1fr 1fr;place-items:center;gap:2px;padding:3px}
-.pawn{width:78%;height:78%;border-radius:50%;border:2px solid #fff;box-shadow:inset -2px -3px 0 #0004,0 2px 3px #3338;cursor:pointer}
-.pawn.red{background:radial-gradient(circle at 30% 25%,#ffb4b4,#e51e28 55%,#850d17)}.pawn.green{background:radial-gradient(circle at 30% 25%,#b7ffd1,#148447 55%,#064b27)}
-.pawn.yellow{background:radial-gradient(circle at 30% 25%,#fff6b0,#f2c51b 55%,#997000)}.pawn.blue{background:radial-gradient(circle at 30% 25%,#b8e4ff,#1674d2 55%,#063d83)}
-.pawn.selectable{outline:3px solid #fff;box-shadow:0 0 0 4px #e6b63e,0 0 10px #000}
-.center{background:conic-gradient(#e95a58 0 25%,#49b87c 0 50%,#f4d14b 0 75%,#55a4ee 0);color:#fff;font-weight:bold}
-.dice-below{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:12px;width:min(94vw,440px);margin-left:auto;margin-right:auto}
-.dice-pos{padding:10px;border-radius:14px;text-align:center;border:2px solid;transition:all .3s;opacity:.45;background:rgba(0,0,0,.4)}
-.dice-pos.active{opacity:1;transform:scale(1.06);box-shadow:0 0 18px currentColor}
-.dice-pos.red{color:#e95a58;border-color:#e95a58}.dice-pos.green{color:#49b87c;border-color:#49b87c}
-.dice-pos.yellow{color:#f4d14b;border-color:#f4d14b}.dice-pos.blue{color:#55a4ee;border-color:#55a4ee}
-.dice-pos b{font-size:10px;display:block;margin-bottom:5px}
-.dice-timer-wrap{position:relative;width:70px;height:70px;margin:5px auto}
-.dice-timer-wrap svg{position:absolute;top:-4px;left:-4px;width:78px;height:78px;transform:rotate(-90deg)}
-.timer-circle-bg{fill:none;stroke:rgba(255,255,255,.18);stroke-width:4}
-.timer-circle{fill:none;stroke:currentColor;stroke-width:5;stroke-linecap:round;stroke-dasharray:226;stroke-dashoffset:0;transition:stroke-dashoffset 1s linear}
-.die{width:70px;height:70px;display:grid;place-items:center;background:linear-gradient(145deg,#fffef6,#f3e5b5);border-radius:14px;border:3px solid currentColor;box-shadow:0 6px 0 #0008,0 0 12px currentColor;position:absolute;top:0;left:0;transform-style:preserve-3d}
-.die.dice-3d{background:linear-gradient(145deg,#fff,#f3e5b5 30%,#d7c9a2 70%,#a89060);transform:perspective(300px) rotateX(15deg) rotateY(-15deg)}
-.die.rolling{animation:roll3dFancy 1s cubic-bezier(.2,.7,.3,1)}
-.die .pipface{width:100%;height:100%;display:grid;grid-template:repeat(3,1fr)/repeat(3,1fr);padding:11px;gap:3px}
-.die .pip{border-radius:50%;background:radial-gradient(circle at 30% 30%,#444,#000);visibility:hidden;width:11px;height:11px;margin:auto}
-.die .pip.on{visibility:visible}
-@keyframes roll3dFancy{0%{transform:perspective(300px) rotateX(15deg) rotateY(-15deg)}50%{transform:perspective(300px) rotateX(320deg) rotateY(380deg) scale(1.15)}100%{transform:perspective(300px) rotateX(720deg) rotateY(720deg)}}
-.room-topbar{position:relative;height:40px;display:flex;justify-content:flex-end;align-items:center;margin-bottom:6px}
-.room-menu-btn{width:38px;height:38px;border-radius:50%;background:#ffffff14;border:1px solid #f4d17b;display:grid;place-items:center;font-size:22px;color:#f4d17b;cursor:pointer}
-.room-menu-dropdown{position:absolute;top:42px;right:0;background:linear-gradient(145deg,#204a32,#10291d);border:1px solid #f4d17b;border-radius:12px;padding:6px;min-width:190px;z-index:100;display:none;box-shadow:0 10px 30px #000a}
-.room-menu-dropdown.show{display:block}
-.room-menu-dropdown button{width:100%;text-align:left;padding:11px;background:transparent;border:0;border-bottom:1px solid #ffffff11;color:#ffe5a1;font-size:13px}
-.loading-overlay{position:absolute;inset:0;background:radial-gradient(circle,#163b29,#06120c 85%);z-index:50;display:grid;place-items:center;transition:opacity .5s}
-.loading-overlay.hide{opacity:0;pointer-events:none}
-.loading-spinner{width:56px;height:56px;border:4px solid #ffffff22;border-top-color:#f4d17b;border-radius:50%;animation:spin 1s linear infinite;margin:0 auto 10px}
-@keyframes spin{to{transform:rotate(360deg)}}
-#status{text-align:center;min-height:30px;color:#ffe4a0;margin:6px 0;font-size:14px}
-.board-detail-entry{margin-top:8px;text-align:center;background:linear-gradient(145deg,#204a32,#10291d);border:1px solid #f4d17b;border-radius:10px;padding:8px;font-size:11px}
-
-/* ===== BOARD THEMES INSIDE GAME - PHOTO MATCHING + SHINING ===== */
-#board.theme-classic{background:#f5e6c8;border-color:#8d6e3f;box-shadow:0 0 20px #8d6e3f88}
-#board.theme-bronze{background:linear-gradient(145deg,#3d2a1e,#24180f);border-color:#cd7f32;box-shadow:0 0 25px #cd7f3288}
-#board.theme-silver{background:linear-gradient(145deg,#2a2a3d,#18182a);border-color:#c0c0c0;box-shadow:0 0 30px #c0c0c0aa}
-#board.theme-golden{background:linear-gradient(145deg,#4a3d1e,#2a2410);border-color:#ffd700;box-shadow:0 0 35px #ffd700aa,0 0 60px #ffd70044}
-#board.theme-diamond{background:linear-gradient(145deg,#1e3a4a,#0f1e2a);border-color:#00e5ff;box-shadow:0 0 35px #00e5ffaa,0 0 60px #00e5ff44}
-#board.theme-special{background:linear-gradient(135deg,#4a1e6a,#0a3a6a);border-color:#ff00ff;box-shadow:0 0 35px #ff00ff88}
-#board.theme-international{background:linear-gradient(145deg,#0a2a4a,#051a2a);border-color:#1e90ff;box-shadow:0 0 30px #1e90ff88}
-#board.theme-master{background:linear-gradient(145deg,#2e1a4a,#1a0f2a);border-color:gold;box-shadow:0 0 35px #9370db88}
-#board.theme-underworld{background:linear-gradient(145deg,#1a0a0a,#000);border-color:#8b0000;box-shadow:0 0 40px #ff000088}
-#board.theme-don{background:linear-gradient(145deg,#1a1a1a,#000);border-color:#333;box-shadow:0 0 30px #000}
-#board.theme-don-killer{background:linear-gradient(145deg,#2a0f0f,#1a0500);border-color:#ff4500;box-shadow:0 0 40px #ff450088;animation:fireGlow 1.2s infinite alternate}
-@keyframes fireGlow{from{box-shadow:0 0 20px #ff4500}to{box-shadow:0 0 40px #ff4500,0 0 80px #ff0000}}
-#board.theme-don-boss{background:linear-gradient(145deg,#2a2a0a,#1a1a00);border-color:gold;box-shadow:0 0 40px gold}
-#board.theme-legend{background:linear-gradient(145deg,#0f1a0f,#000a00);border-color:#228b22;box-shadow:0 0 35px #228b2288}
-#board.theme-legend-master{background:linear-gradient(145deg,#0f1e2a,#050a1a);border-color:#00bfff;box-shadow:0 0 40px #00bfff88}
-#board.theme-legend-boss{background:linear-gradient(145deg,#2a1e0a,#1a1000);border-color:#daa520;box-shadow:0 0 40px #daa52088}
-#board.theme-ludo-sultan{background:linear-gradient(145deg,#1a0f2a,#0a051a);border:3px solid gold;box-shadow:0 0 50px gold,0 0 100px #ffd70044}
-#board.theme-sultan-boss{background:linear-gradient(145deg,#000,#1a1a00);border:4px solid gold;box-shadow:0 0 60px gold,0 0 120px #ffd70066;animation:ultimateGlow 2s infinite alternate}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(circle at top,#163b29,#06120c 65%);color:#fff;font-family:Arial,sans-serif;min-height:100vh}header{text-align:center;padding:17px;background:linear-gradient(120deg,#173d2a,#06120c);border-bottom:2px solid #d7ae53}h1{margin:0;color:var(--gold);letter-spacing:3px;font-size:clamp(27px,7vw,42px)}.sub{font-size:11px;letter-spacing:3px;margin-top:7px;color:#d9c18a}.balance{text-align:center;padding:12px;color:#ffe3a0}.balance strong{display:block;font-size:23px;margin-top:4px}main{max-width:900px;margin:auto;padding:12px}h2{color:var(--gold);font-size:18px}.screen{display:none}.screen.active{display:block}.tools{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:8px 0 18px}.tool,.panel{background:linear-gradient(145deg,#204a32,#10291d);border:1px solid var(--line);border-radius:12px;padding:12px;text-align:center}.tool b{display:block;font-size:12px;margin-bottom:7px;color:#ffe5a1}button,.button{border:0;border-radius:8px;background:linear-gradient(#ffe7a1,#c99535);color:#201606;font-weight:bold;padding:10px;cursor:pointer;text-decoration:none;display:inline-block}button:disabled{background:#49594e;color:#bbb}.tool button{width:100%;font-size:11px}.boards,.packages{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px}.card{background:linear-gradient(145deg,#204a32,#10291d);border:1px solid var(--line);border-radius:12px;text-align:center;padding:12px 3px}.icon{font-size:26px}.card h3{font-size:12px;color:#ffe5a1;margin:7px 0}.card p{font-size:11px;color:#d2e0d5}.card button{width:94%;font-size:11px}.topbar{display:flex;align-items:center;justify-content:space-between;gap:8px;margin:10px 0}.small{text-align:center;font-size:11px;color:#aebfb1;line-height:1.6}.field{display:block;text-align:left;margin:12px 0;color:#ffe5a1;font-size:13px}.field input,.field select,.field textarea{display:block;width:100%;margin-top:6px;padding:11px;border:1px solid #bd9548;border-radius:8px;background:#071810;color:#fff;font-size:15px}.row{display:flex;gap:8px;flex-wrap:wrap;align-items:center;justify-content:center}.row>*{flex:1}.note{padding:10px;border-radius:8px;background:#3b2d12;color:#ffe5a1;font-size:12px;line-height:1.5;margin:10px 0}.package-price{font-size:20px;color:#ffe5a1;font-weight:bold}.chest{font-size:88px;display:block;filter:drop-shadow(0 0 12px #f4d17b);animation:glow 1.8s infinite alternate}.bonusbox{text-align:center;padding:22px;border:1px solid #d7ae53;border-radius:18px;background:radial-gradient(circle,#315f38,#102319 70%);box-shadow:0 0 22px #d4a83c35}.bonusbox button{font-size:16px;padding:14px 24px}@keyframes glow{from{transform:scale(1);filter:drop-shadow(0 0 6px #f4d17b)}to{transform:scale(1.06);filter:drop-shadow(0 0 20px #ffe9a3)}}#board{width:min(94vw,430px);aspect-ratio:1;margin:14px auto;display:grid;grid-template-columns:repeat(15,1fr);grid-template-rows:repeat(15,1fr);background:#f6f0d9;border:4px solid #e4bc5e;box-shadow:0 0 22px #d4a83c55}.cell{border:1px solid #c8c1a9;display:flex;align-items:center;justify-content:center;min-width:0;min-height:0;position:relative;font-size:clamp(7px,2vw,13px);overflow:hidden}.red{background:#e95a58}.green{background:#49b87c}.yellow{background:#f4d14b}.blue{background:#55a4ee}.base{border:1px solid #fff}.track{background:#fffdf3}.safe:before{content:"★";color:#a18a53;font-size:clamp(7px,2vw,12px)}.homeinner{width:85%;height:85%;background:#fff;border-radius:12%;display:grid;grid-template-columns:1fr 1fr;place-items:center;gap:3px;padding:4px}.pawn{width:75%;height:75%;padding:0;border-radius:50%;border:2px solid #fff;box-shadow:inset -2px -3px 0 #0004,0 2px 3px #3338;cursor:pointer;min-width:3px;min-height:3px;position:relative;flex:none}.pawn:after{content:"";position:absolute;inset:20%;border-radius:50%;background:#ffffff80;border:1px solid #ffffffb0}.pawn.red{background:radial-gradient(circle at 30% 25%,#ffb4b4,#e51e28 55%,#850d17)}.pawn.green{background:radial-gradient(circle at 30% 25%,#b7ffd1,#148447 55%,#064b27)}.pawn.yellow{background:radial-gradient(circle at 30% 25%,#fff6b0,#f2c51b 55%,#997000)}.pawn.blue{background:radial-gradient(circle at 30% 25%,#b8e4ff,#1674d2 55%,#063d83)}.pawn.selectable{outline:3px solid #fff;box-shadow:0 0 0 4px #e6b63e,0 0 10px #000}.center{background:conic-gradient(#e95a58 0 25%,#49b87c 0 50%,#f4d14b 0 75%,#55a4ee 0);color:#fff;font-size:clamp(8px,2vw,15px);font-weight:bold}.controls{display:flex;justify-content:center;align-items:center;gap:12px;flex-wrap:wrap;margin:12px}.dice-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;width:min(94vw,430px);margin:12px auto}.dice-player{min-width:0;padding:8px 4px;border-radius:13px;text-align:center;border:2px solid #ffffff22;background:#081b12;opacity:.48;transition:opacity .2s,box-shadow .2s}.dice-player.active{opacity:1;box-shadow:0 0 14px currentColor;border-color:currentColor}.dice-player.red{color:#ff5b61}.dice-player.green{color:#51d88b}.dice-player.yellow{color:#ffd84b}.dice-player.blue{color:#61b8ff}.dice-player b{font-size:11px;letter-spacing:.5px}.dice-timer-wrap{position:relative;width:76px;height:76px;margin:8px auto 5px;color:inherit}.timer-ring{position:absolute;inset:-4px;width:84px;height:84px;transform:rotate(-90deg);overflow:visible}.timer-bg{fill:none;stroke:#ffffff22;stroke-width:4}.timer-circle{fill:none;stroke:#4ade80;stroke-width:4;stroke-linecap:round;stroke-dasharray:226.2;stroke-dashoffset:0;transition:stroke-dashoffset 1s linear}.die{width:68px;height:68px;display:grid;place-items:center;background:linear-gradient(145deg,#fffef6,#d7c9a2);color:#162519;border-radius:14px;border:3px solid #d6ae4f;box-shadow:0 5px 0 #8d6425,0 8px 12px #0008;transform-style:preserve-3d;position:relative;margin:auto}.pipface{width:100%;height:100%;display:grid;grid-template:repeat(3,1fr)/repeat(3,1fr);padding:11px;gap:3px}.pip{border-radius:50%;background:#162519;box-shadow:inset 1px 1px 1px #0008;visibility:hidden}.pip.on{visibility:visible}.die.rolling{animation:roll3d .8s cubic-bezier(.2,.7,.3,1)}.dice-player button{font-size:10px;padding:7px 9px;width:90%}@keyframes roll3d{0%{transform:rotateX(0) rotateY(0) rotateZ(0) scale(1)}20%{transform:rotateX(150deg) rotateY(180deg) rotateZ(80deg) scale(.8)}45%{transform:rotateX(310deg) rotateY(370deg) rotateZ(180deg) scale(1.12)}70%{transform:rotateX(500deg) rotateY(540deg) rotateZ(270deg) scale(.95)}100%{transform:rotateX(720deg) rotateY(720deg) rotateZ(360deg) scale(1)}}#status{text-align:center;min-height:35px;color:#ffe4a0;line-height:1.5}.theme-bronze{filter:sepia(.12)}.theme-silver{filter:saturate(.75)}.theme-golden{filter:sepia(.2) saturate(1.2)}.theme-diamond{filter:hue-rotate(15deg) saturate(1.15)}.theme-special{filter:contrast(1.08)}.theme-international{filter:hue-rotate(8deg)}.theme-master{filter:saturate(1.2)}.theme-underworld{filter:hue-rotate(35deg) brightness(.85)}.theme-don{filter:sepia(.25)}.theme-don-killer{filter:hue-rotate(-12deg) contrast(1.12)}.theme-don-boss{filter:sepia(.35) saturate(1.4)}.theme-legend{filter:hue-rotate(20deg) saturate(1.25)}.theme-legend-master{filter:hue-rotate(50deg)}.theme-legend-boss{filter:contrast(1.15) saturate(1.3)}.theme-ludo-sultan{filter:sepia(.3) saturate(1.5)}.theme-sultan-boss{filter:contrast(1.2) hue-rotate(12deg)}@media(min-width:600px){.boards,.packages{grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}.card{padding:15px 5px}.card h3{font-size:14px}.card p{font-size:12px}}
 </style></head><body>
-<header><h1>♛ LUDO SULTAN</h1><div class="sub">THE ROYAL LUDO ARENA - FINAL</div></header>
-<div class="balance">DEMO COINS<strong id="coins">1,000</strong> <span id="sellUnlockBadge" style="display:none;background:#4ade80;color:#000;padding:2px 8px;border-radius:10px;font-size:10px">SELL UNLOCKED</span></div>
-<main>
+<header><h1>♛ LUDO SULTAN</h1><div class="sub">THE ROYAL LUDO ARENA</div></header>
+<div class="balance">DEMO COINS<strong id="coins">1,000</strong></div><main>
 <section id="home" class="screen active">
 <div class="tools">
 <div class="tool"><b>🪙 BUY COINS</b><button onclick="showScreen('buy')">OPEN COIN SHOP</button></div>
 <div class="tool"><b>💱 SELL COINS</b><button onclick="showScreen('sell')">SELL COINS</button></div>
 <div class="tool"><b>🎁 DAILY BONUS</b><button onclick="showScreen('bonus')">OPEN TREASURE</button></div>
-</div>
-<h2>👑 CHOOSE YOUR ARENA</h2>
-<div class="boards-single">
-<div class="board-nav"><button onclick="prevBoard()">◀ PREV</button><span id="boardCounter">1 / 17</span><button onclick="nextBoard()">NEXT ▶</button></div>
-<div class="board-view" id="boards"></div>
-<div class="board-detail-entry" id="boardDetail"></div>
-</div>
-<p class="small">50 Rs = 1000 Coins | 1500 Coins = 50 Rs | Daily 100 | Unique boards</p>
+</div><h2>👑 CHOOSE YOUR ARENA</h2><div class="boards" id="boards"></div>
+<p class="small">Local prototype. Coins and orders are demo-only; no real payments or online multiplayer.</p>
 </section>
-<section id="buy" class="screen"><div class="topbar"><h2>🪙 BUY - 50=1000</h2><button onclick="showScreen('home')">← Back</button></div><div id="buyPackages" class="packages"></div><div id="buyResult" class="panel" hidden></div></section>
-<section id="sell" class="screen"><div class="topbar"><h2>💱 SELL - 1500=50</h2><button onclick="showScreen('home')">← Back</button></div>
-<div class="panel">
-<p>Balance: <b id="sellBalance">1,000</b> <span id="userIdDisplay" style="font-size:10px;color:#aebfb1"></span></p>
-<div id="sellLockMsg" class="note" style="display:none"></div>
-<div id="sellPackages" class="packages" style="margin:10px 0"></div>
-<div id="sellFormArea">
-<label class="field">Coins<input id="sellAmount" type="number" value="1500"></label>
-<label class="field">Method<select id="sellMethod"><option>EasyPaisa</option><option>JazzCash</option></select></label>
-<label class="field">Wallet<input id="sellPhone" placeholder="03XXXXXXXXX"></label>
-<button onclick="submitSell()">SUBMIT</button><div id="sellResult"></div>
-</div>
-</div>
-</section>
-<section id="bonus" class="screen"><div class="topbar"><h2>🎁 DAILY TREASURE</h2><button onclick="showScreen('home')">← Back</button></div><div class="bonusbox"><span class="chest">💎🎁</span><h2>ROYAL BONUS</h2><p>Daily <b>100 coins</b>.</p><button id="claimBonus" onclick="dailyReward()">OPEN +100</button><p id="bonusStatus" class="small"></p></div></section>
-<section id="arena" class="screen">
-<div class="room-topbar"><div style="position:absolute;right:0;top:0"><button class="room-menu-btn" onclick="toggleRoomMenu()">⋮</button><div id="roomMenu" class="room-menu-dropdown"><button onclick="leaveRoom()">🚪 Room Left</button><button onclick="changeBoard()">🎲 Change Board</button><button onclick="quitGame()">❌ Quit Game</button></div></div></div>
-<div id="status">Red player's turn</div>
-<div class="board-wrapper"><div id="loadingOverlay" class="loading-overlay"><div style="text-align:center"><div class="loading-spinner"></div><div style="color:#f4d17b;font-weight:bold">LOADING BOARD...</div><div style="font-size:11px;color:#aebfb1">Room join ho raha hai</div></div></div><div id="board"></div></div>
-<div class="dice-below">
-<div class="dice-pos red" id="diceBox0"><b>🔴 RED - Top Left</b><div class="dice-timer-wrap"><svg><circle class="timer-circle-bg" cx="40" cy="40" r="36"></circle><circle id="timerCircle0" class="timer-circle" cx="40" cy="40" r="36"></circle></svg><div class="die dice-3d" id="die0"><div class="pipface" id="pipface0"></div></div></div><button onclick="rollForPlayer(0)" style="margin-top:6px">ROLL</button></div>
-<div class="dice-pos green" id="diceBox1"><b>🟢 GREEN - Top Right</b><div class="dice-timer-wrap"><svg><circle class="timer-circle-bg" cx="40" cy="40" r="36"></circle><circle id="timerCircle1" class="timer-circle" cx="40" cy="40" r="36"></circle></svg><div class="die dice-3d" id="die1"><div class="pipface" id="pipface1"></div></div></div><button onclick="rollForPlayer(1)" style="margin-top:6px">ROLL</button></div>
-<div class="dice-pos blue" id="diceBox3"><b>🔵 BLUE - Down Left</b><div class="dice-timer-wrap"><svg><circle class="timer-circle-bg" cx="40" cy="40" r="36"></circle><circle id="timerCircle3" class="timer-circle" cx="40" cy="40" r="36"></circle></svg><div class="die dice-3d" id="die3"><div class="pipface" id="pipface3"></div></div></div><button onclick="rollForPlayer(3)" style="margin-top:6px">ROLL</button></div>
-<div class="dice-pos yellow" id="diceBox2"><b>🟡 YELLOW - Down Right</b><div class="dice-timer-wrap"><svg><circle class="timer-circle-bg" cx="40" cy="40" r="36"></circle><circle id="timerCircle2" class="timer-circle" cx="40" cy="40" r="36"></circle></svg><div class="die dice-3d" id="die2"><div class="pipface" id="pipface2"></div></div></div><button onclick="rollForPlayer(2)" style="margin-top:6px">ROLL</button></div>
-</div>
-<div class="board-detail-entry" id="arenaEntryInfo"></div>
-</section>
-<section id="admin" class="screen"><div class="topbar"><h2>🔐 ADMIN</h2><button onclick="showScreen('home')">← Exit</button></div><div class="panel"><label class="field">Password<input id="adminPass" type="password" placeholder="DEMO-ADMIN-CHANGE-ME"></label><button onclick="adminLogin()">UNLOCK</button><div id="adminArea" hidden><div id="adminOrders"></div><div id="adminUnlockInfo" class="panel" style="margin-top:10px"></div></div></div></section>
+<section id="buy" class="screen"><div class="topbar"><h2>🪙 BUY COINS</h2><button onclick="showScreen('home')">← Back</button></div><p class="small">Choose a package. Prices are example prices in Pakistani rupees, not connected to a payment provider.</p><div id="buyPackages" class="packages"></div><div id="buyResult" class="panel" hidden></div></section>
+<section id="sell" class="screen"><div class="topbar"><h2>💱 SELL COINS</h2><button onclick="showScreen('home')">← Back</button></div><div class="panel"><p>Available demo balance: <b id="sellBalance">1,000</b> coins</p><label class="field">Coins to sell<input id="sellAmount" type="number" min="100" step="100" value="100"></label><p>Example rate: 1,000 coins = PKR 100 (illustrative only).</p><label class="field">Payment method<select id="sellMethod"><option>EasyPaisa</option><option>JazzCash</option></select></label><label class="field">Your wallet/mobile number<input id="sellPhone" inputmode="numeric" placeholder="03XXXXXXXXX"></label><button onclick="submitSell()">SUBMIT DEMO SELL REQUEST</button><p class="small">This only records a local demo request. It does not transfer money.</p><div id="sellResult"></div></div></section>
+<section id="bonus" class="screen"><div class="topbar"><h2>🎁 DAILY TREASURE</h2><button onclick="showScreen('home')">← Back</button></div><div class="bonusbox"><span class="chest">💎🎁</span><h2>ROYAL DAILY BONUS</h2><p>Claim your daily reward of <b>200 demo coins</b>.</p><button id="claimBonus" onclick="dailyReward()">OPEN TREASURE · +200</button><p id="bonusStatus" class="small">One reward per calendar day on this browser.</p></div></section>
+<section id="arena" class="screen"><div class="topbar"><strong id="arenaTitle">Classic Arena</strong><button onclick="showScreen('home')">← All Boards</button></div><div id="status">Red player's turn. Roll the dice.</div><div class="dice-grid" aria-label="Player dice above the board">
+<div class="dice-player red" id="diceBox0"><b>🔴 RED</b><div class="dice-timer-wrap"><svg class="timer-ring" viewBox="0 0 84 84"><circle class="timer-bg" cx="42" cy="42" r="36"></circle><circle class="timer-circle" id="timerCircle0" cx="42" cy="42" r="36"></circle></svg><div class="die" id="die0" aria-label="Red dice"><div class="pipface" id="pipface0"></div></div></div><button onclick="rollForPlayer(0)">ROLL</button></div>
+<div class="dice-player green" id="diceBox1"><b>🟢 GREEN</b><div class="dice-timer-wrap"><svg class="timer-ring" viewBox="0 0 84 84"><circle class="timer-bg" cx="42" cy="42" r="36"></circle><circle class="timer-circle" id="timerCircle1" cx="42" cy="42" r="36"></circle></svg><div class="die" id="die1" aria-label="Green dice"><div class="pipface" id="pipface1"></div></div></div><button onclick="rollForPlayer(1)">ROLL</button></div>
+</div><div id="board"></div>
+<div class="dice-grid" aria-label="Player dice below the board">
+<div class="dice-player blue" id="diceBox3"><b>🔵 BLUE</b><div class="dice-timer-wrap"><svg class="timer-ring" viewBox="0 0 84 84"><circle class="timer-bg" cx="42" cy="42" r="36"></circle><circle class="timer-circle" id="timerCircle3" cx="42" cy="42" r="36"></circle></svg><div class="die" id="die3" aria-label="Blue dice"><div class="pipface" id="pipface3"></div></div></div><button onclick="rollForPlayer(3)">ROLL</button></div>
+<div class="dice-player yellow" id="diceBox2"><b>🟡 YELLOW</b><div class="dice-timer-wrap"><svg class="timer-ring" viewBox="0 0 84 84"><circle class="timer-bg" cx="42" cy="42" r="36"></circle><circle class="timer-circle" id="timerCircle2" cx="42" cy="42" r="36"></circle></svg><div class="die" id="die2" aria-label="Yellow dice"><div class="pipface" id="pipface2"></div></div><button onclick="rollForPlayer(2)">ROLL</button></div>
+</div><div class="controls"><button onclick="resetGame()">↻ NEW GAME</button></div><p class="small">Local prototype · Four players · Four tokens each. No online play or cash prizes.</p></section>
+<section id="admin" class="screen"><div class="topbar"><h2>🔐 ADMIN CONTROL</h2><button onclick="showScreen('home')">← Exit</button></div><div class="panel"><p class="note">DEMO ADMIN ONLY. This page and password are inside public front-end code and are NOT secure. Do not enter real wallet credentials. A protected server is needed before real use.</p><label class="field">Demo admin password<input id="adminPass" type="password" placeholder="Demo password"></label><button onclick="adminLogin()">UNLOCK DEMO ADMIN</button><div id="adminArea" hidden><h3>Payment display settings (demo only)</h3><label class="field">EasyPaisa display number<input id="epNumber" placeholder="Demo number"></label><label class="field">EasyPaisa account name<input id="epName" placeholder="Account holder"></label><label class="field">JazzCash display number<input id="jcNumber" placeholder="Demo number"></label><label class="field">JazzCash account name<input id="jcName" placeholder="Account holder"></label><button onclick="saveAdminSettings()">SAVE DEMO SETTINGS</button><div id="adminMessage"></div><h3>Local demo requests</h3><div id="adminOrders"></div></div></div></section>
 </main>
 <script>
-// ===== SOUND SYSTEM - 8 MP3 - ADDED ONLY =====
-const sounds = {
-  bg: new Audio('background-music.mp3'),
-  click: new Audio('button-click.mp3'),
-  dice: new Audio('dice-roll.mp3'),
-  start: new Audio('game-start.mp3'),
-  win: new Audio('game-win.mp3'),
-  capture: new Audio('token-capture.mp3'),
-  move: new Audio('token-move.mp3'),
-  turn: new Audio('turn-change.mp3')
-};
-sounds.bg.loop = true;
-sounds.bg.volume = 0.35;
-function playSound(name){
-  const s = sounds[name];
-  if(!s) return;
-  s.currentTime = 0;
-  s.play().catch(()=>{});
-}
-document.addEventListener('click',()=>{sounds.bg.play().catch(()=>{});},{once:true});
-// ===== END SOUND SYSTEM =====
-
 const levels=[["Classic",300,"🎲"],["Bronze",500,"🥉"],["Silver",700,"🥈"],["Golden",1000,"🥇"],["Diamond",2000,"💎"],["Special",5000,"⭐"],["International",10000,"🌐"],["Master",20000,"👑"],["Underworld",25000,"🌑"],["Don",30000,"⚔️"],["Don Killer",50000,"🔥"],["Don Boss",100000,"🏆"],["Legend",150000,"🐉"],["Legend Master",200000,"💠"],["Legend Boss",250000,"🦁"],["Ludo Sultan",500000,"♛"],["Sultan Boss",1000000,"👑"]];
 const names=["Red","Green","Yellow","Blue"],colors=["red","green","yellow","blue"],starts=[0,13,26,39];
 const path=[[6,1],[6,2],[6,3],[6,4],[6,5],[5,6],[4,6],[3,6],[2,6],[1,6],[0,6],[0,7],[0,8],[1,8],[2,8],[3,8],[4,8],[5,8],[6,9],[6,10],[6,11],[6,12],[6,13],[6,14],[7,14],[8,14],[8,13],[8,12],[8,11],[8,10],[8,9],[9,8],[10,8],[11,8],[12,8],[13,8],[14,8],[14,7],[14,6],[13,6],[12,6],[11,6],[10,6],[9,6],[8,5],[8,4],[8,3],[8,2],[8,1],[8,0],[7,0],[6,0]];
 const safe=new Set([0,8,13,21,26,34,39,47]);
-let coins=Number(localStorage.getItem("ludoSultanCoins")||1000),entry=0,turn=0,dice=0,players=[],gameOver=false,rolledPending=false,currentBoardIndex=0;
+let coins=Number(localStorage.getItem("ludoSultanCoins")||1000),entry=0,turn=0,dice=0,players=[],gameOver=false,rolledPending=false;
 let rewardClaimed=localStorage.getItem("ludoSultanRewardDate")===(new Date()).toDateString();
 let orders=JSON.parse(localStorage.getItem("ludoSultanDemoOrders")||"[]");
-let userId=localStorage.getItem("ludoSultanUserId");
-if(!userId){userId="USER-"+Math.random().toString(36).substr(2,6).toUpperCase();localStorage.setItem("ludoSultanUserId",userId)}
-let sellUnlockedUsers=JSON.parse(localStorage.getItem("ludoSultanSellUnlockedUsers")||"{}");
-function isSellUnlocked(){return !!sellUnlockedUsers[userId]}
-let timerInterval=null,timerRemaining=20;
-function fmt(n){return Number(n).toLocaleString("en-US")}
-function persistCoins(){localStorage.setItem("ludoSultanCoins",String(coins))}
-function showCoins(){document.getElementById("coins").textContent=fmt(coins);persistCoins();makeLobby();const sb=document.getElementById("sellBalance");if(sb)sb.textContent=fmt(coins);const uid=document.getElementById("userIdDisplay");if(uid)uid.textContent="ID: "+userId;const badge=document.getElementById("sellUnlockBadge");if(badge)badge.style.display=isSellUnlocked()?"inline-block":"none";}
-function showScreen(id){playSound('click');document.querySelectorAll(".screen").forEach(s=>s.classList.remove("active"));document.getElementById(id).classList.add("active");if(id==="buy")makePackages();if(id==="sell"){makeSellPackages()}if(id==="bonus")updateBonus();if(id!=="arena")stopTimer();}
-function makeLobby(){const container=document.getElementById("boards");const detail=document.getElementById("boardDetail");if(!container)return;const l=levels[currentBoardIndex];const locked=coins<l[1];container.innerHTML=`<div class="card style-${currentBoardIndex}"><div class="icon">${l[2]}</div><h3>${l[0]} BOARD</h3><p>Entry ${fmt(l[1])} Coins - ${l[0]} Style Photo Matching</p><button ${locked?"disabled":""} onclick="openArena(${currentBoardIndex})">${locked?"🔒 LOCKED":"▶ PLAY"}</button></div>`;detail.innerHTML=`<div>🏟️ <b style="color:#f4d17b">${l[0]} Arena</b> - ${l[0]} Theme</div><div style="margin-top:4px">Entry Fee: <b style="color:#4ade80">${fmt(l[1])} Coins</b> - Photo matching shining</div>`;document.getElementById("boardCounter").textContent=(currentBoardIndex+1)+" / "+levels.length;}
-function prevBoard(){playSound('click');currentBoardIndex=(currentBoardIndex-1+levels.length)%levels.length;makeLobby()}
-function nextBoard(){playSound('click');currentBoardIndex=(currentBoardIndex+1)%levels.length;makeLobby()}
-function makePackages(){const packages=[[1000,50],[2000,100],[4000,200],[5000,250],[10000,500],[25000,1250],[50000,2500],[100000,5000]];document.getElementById("buyPackages").innerHTML=packages.map(([n,price])=>`<div class="package-card buy"><div class="icon">🪙</div><h3>${fmt(n)} COINS</h3><div class="package-price">PKR ${fmt(price)}</div><p class="package-rate">50 Rs = 1000 Coins</p><button onclick="requestBuy(${n},${price})">BUY NOW</button></div>`).join("");}
-function makeSellPackages(){const unlocked=isSellUnlocked();const el=document.getElementById("sellPackages");const lockMsg=document.getElementById("sellLockMsg");const form=document.getElementById("sellFormArea");if(!unlocked){if(el)el.innerHTML=`<div class="panel" style="grid-column:1/-1;border:2px solid #f87171"><h3 style="color:#f87171">🔒 SELL LOCKED</h3><p>5000 Coins buy karke Admin se confirm karwayein. ID: ${userId}</p><button onclick="showScreen('buy')">BUY 5000</button></div>`;if(lockMsg){lockMsg.style.display="block";lockMsg.textContent="Sell locked - 5000 buy + admin confirm required";}if(form){form.style.opacity="0.3";form.style.pointerEvents="none"}return;}if(lockMsg)lockMsg.style.display="none";if(form){form.style.opacity="1";form.style.pointerEvents="auto"}const sellPackages=[[1500,50],[3000,100],[6000,200],[15000,500],[30000,1000],[75000,2500]];if(el)el.innerHTML=sellPackages.map(([n,price])=>`<div class="package-card sell"><div class="icon">💱</div><h3>${fmt(n)} COINS</h3><div class="package-price">PKR ${fmt(price)}</div><p class="package-rate">1500 = 50 Rs</p><button onclick="selectSellPackage(${n})">SELECT</button></div>`).join("");}
-function selectSellPackage(n){playSound('click');document.getElementById("sellAmount").value=n}
-function requestBuy(n,price){playSound('click');orders.push({id:Date.now()+Math.random(),userId:userId,type:"BUY",coins:n,amount:price,status:"PENDING",date:new Date().toLocaleString()});saveOrders();const out=document.getElementById("buyResult");out.hidden=false;out.innerHTML=`<h3>⏳ Pending Admin</h3><p>${fmt(n)} coins · PKR ${fmt(price)} - ${userId}</p><p class="small">Admin confirm karega to coins add honge, 5000+ par sell unlock sirf aapka</p>`;}
-function confirmBuy(orderId){const o=orders.find(x=>String(x.id)===String(orderId));if(!o||o.status==="CONFIRMED")return;o.status="CONFIRMED";if(o.type==="BUY"){if(o.userId===userId){coins+=o.coins;showCoins();playSound('move');}let userTotals=JSON.parse(localStorage.getItem("ludoSultanUserTotals")||"{}");userTotals[o.userId]=(userTotals[o.userId]||0)+o.coins;localStorage.setItem("ludoSultanUserTotals",JSON.stringify(userTotals));if(userTotals[o.userId]>=5000||o.coins>=5000){let unlocks=JSON.parse(localStorage.getItem("ludoSultanSellUnlockedUsers")||"{}");unlocks[o.userId]=true;localStorage.setItem("ludoSultanSellUnlockedUsers",JSON.stringify(unlocks));sellUnlockedUsers=unlocks;}}saveOrders();renderOrders();showCoins();alert("Confirmed "+o.coins+" for "+o.userId);}
+function fmt(n){return Number(n).toLocaleString("en-US")}function persistCoins(){localStorage.setItem("ludoSultanCoins",String(coins))}
+function showCoins(){document.getElementById("coins").textContent=fmt(coins);persistCoins();makeLobby();document.getElementById("sellBalance").textContent=fmt(coins)}
+function showScreen(id){if(id!=="arena")stopTimer();document.querySelectorAll(".screen").forEach(s=>s.classList.remove("active"));document.getElementById(id).classList.add("active");if(id==="buy")makePackages();if(id==="sell")document.getElementById("sellBalance").textContent=fmt(coins);if(id==="bonus")updateBonus();if(id==="admin")history.replaceState(null,"",location.pathname+"#admin")}
+function makeLobby(){document.getElementById("boards").innerHTML=levels.map((l,i)=>`<div class="card"><div class="icon">${l[2]}</div><h3>${l[0]}</h3><p>Entry ${fmt(l[1])} coins</p><button ${coins<l[1]?"disabled":""} onclick="openArena(${i})">${coins<l[1]?"🔒 LOCKED":"PLAY"}</button></div>`).join("")}
+function makePackages(){const packages=[[500,50],[1000,90],[2500,200],[5000,350],[10000,650],[25000,1500]];document.getElementById("buyPackages").innerHTML=packages.map(([n,price])=>`<div class="card"><div class="icon">🪙</div><h3>${fmt(n)} COINS</h3><div class="package-price">PKR ${fmt(price)}</div><p>Example package</p><button onclick="requestBuy(${n},${price})">SELECT PACKAGE</button></div>`).join("")}
+function requestBuy(n,price){orders.push({type:"BUY",coins:n,amount:price,method:"Not paid",date:new Date().toLocaleString()});saveOrders();const out=document.getElementById("buyResult");out.hidden=false;out.innerHTML=`<h3>Demo request created</h3><p>${fmt(n)} coins · PKR ${fmt(price)}</p><p class="small">No payment has been made. Payment confirmation is not connected.</p>`}
+function submitSell(){const n=Number(document.getElementById("sellAmount").value),phone=document.getElementById("sellPhone").value.trim(),method=document.getElementById("sellMethod").value;if(!Number.isInteger(n)||n<100||n>coins){document.getElementById("sellResult").textContent="Enter a valid amount within your demo balance.";return}if(!phone){document.getElementById("sellResult").textContent="Enter a demo wallet/mobile number.";return}coins-=n;showCoins();orders.push({type:"SELL",coins:n,amount:Math.floor(n/10),method,phone,date:new Date().toLocaleString()});saveOrders();document.getElementById("sellResult").textContent="Demo sell request recorded. No money will be sent.";document.getElementById("sellAmount").value="100"}
 function saveOrders(){localStorage.setItem("ludoSultanDemoOrders",JSON.stringify(orders))}
-function submitSell(){if(!isSellUnlocked()){document.getElementById("sellResult").textContent="Sell locked";return}const n=Number(document.getElementById("sellAmount").value),phone=document.getElementById("sellPhone").value.trim();if(!Number.isInteger(n)||n<100||n>coins){document.getElementById("sellResult").textContent="Valid amount";return}if(!phone){document.getElementById("sellResult").textContent="Wallet enter";return}coins-=n;showCoins();playSound('move');const amount=Math.floor((n/1500)*50);orders.push({id:Date.now(),userId:userId,type:"SELL",coins:n,amount:amount,method:document.getElementById("sellMethod").value,phone,status:"PENDING",date:new Date().toLocaleString()});saveOrders();document.getElementById("sellResult").textContent="Sell request recorded";}
-function updateBonus(){const btn=document.getElementById("claimBonus");if(btn){btn.disabled=rewardClaimed;btn.textContent=rewardClaimed?"CLAIMED TODAY":"OPEN +100";}const st=document.getElementById("bonusStatus");if(st)st.textContent=rewardClaimed?"Already claimed":"Ready 100 coins"}
-function dailyReward(){if(rewardClaimed){updateBonus();return}coins+=100;rewardClaimed=true;playSound('move');localStorage.setItem("ludoSultanRewardDate",(new Date()).toDateString());showCoins();updateBonus();alert("100 coins added");}
-function openArena(i){
-  if(coins<levels[i][1])return;
-  entry=i;
-  const info=document.getElementById("arenaEntryInfo");
-  if(info)info.innerHTML=`Entry Fee: <b style="color:#4ade80">${fmt(levels[i][1])} Coins</b> - ${levels[i][0]} Theme`;
-  showScreen("arena");
-  // Apply board theme - PHOTO MATCHING
-  const board=document.getElementById("board");
-  if(board){
-    board.className="";
-    board.id="board";
-    const themeName=levels[i][0].toLowerCase().replaceAll(" ","-");
-    board.classList.add("theme-"+themeName);
-  }
-  resetGame();
-  showLoadingBoard();
-  playSound('start');
-  sounds.bg.play().catch(()=>{});
-}
-function toggleRoomMenu(){playSound('click');document.getElementById("roomMenu").classList.toggle("show")}
-function closeRoomMenu(){document.getElementById("roomMenu")?.classList.remove("show")}
-function leaveRoom(){closeRoomMenu();if(confirm("Room leave?")){playSound('click');stopTimer();showScreen('home')}}
-function changeBoard(){closeRoomMenu();if(confirm("Change board?")){playSound('click');stopTimer();showScreen('home')}}
-function quitGame(){closeRoomMenu();if(confirm("Quit game?")){playSound('click');stopTimer();showScreen('home')}}
-document.addEventListener('click',function(e){const m=document.getElementById("roomMenu");const b=document.querySelector(".room-menu-btn");if(m&&b&&!m.contains(e.target)&&!b.contains(e.target))m.classList.remove("show")});
-function showLoadingBoard(){const o=document.getElementById("loadingOverlay");if(!o)return;o.classList.remove("hide");o.style.display="grid";setTimeout(()=>{o.classList.add("hide");setTimeout(()=>o.style.display="none",500);},1800)}
-function startTimer(){stopTimer();timerRemaining=20;updateTimerUI();timerInterval=setInterval(()=>{timerRemaining--;updateTimerUI();if(timerRemaining<=0){if(!gameOver){setStatus("⏰ Time up! "+names[turn]);if(rolledPending){dice=0;rolledPending=false;}turn=(turn+1)%4;drawBoard();highlightActiveDice();resetTimerForNewTurn();playSound('turn');}}},1000)}
-function resetTimerForNewTurn(){timerRemaining=20;updateTimerUI()}
-function resetTimerOnSix(){timerRemaining=20;updateTimerUI()}
+function updateBonus(){document.getElementById("claimBonus").disabled=rewardClaimed;document.getElementById("claimBonus").textContent=rewardClaimed?"CLAIMED TODAY":"OPEN TREASURE · +200";document.getElementById("bonusStatus").textContent=rewardClaimed?"Today's reward has already been claimed on this browser.":"Your treasure is ready!"}
+function dailyReward(){if(rewardClaimed){updateBonus();return}coins+=200;rewardClaimed=true;localStorage.setItem("ludoSultanRewardDate",(new Date()).toDateString());showCoins();updateBonus();alert("200 demo coins added!")}
+function openArena(i){if(coins<levels[i][1])return;entry=i;document.getElementById("arenaTitle").textContent=levels[i][0]+" Arena · Entry "+fmt(levels[i][1]);document.getElementById("board").className="theme-"+levels[i][0].toLowerCase().replaceAll(" ","-");showScreen("arena");resetGame()}
+let timerInterval=null,timerRemaining=20;
 function stopTimer(){if(timerInterval){clearInterval(timerInterval);timerInterval=null}}
-function updateTimerUI(){for(let i=0;i<4;i++){const c=document.getElementById("timerCircle"+i);if(!c)continue;const circ=2*Math.PI*36;if(i===turn){const off=circ-(timerRemaining/20)*circ;c.style.strokeDashoffset=off;c.style.opacity="1";if(timerRemaining<=5)c.style.stroke="#ef4444";else if(timerRemaining<=10)c.style.stroke="#facc15";else c.style.stroke="#4ade80";}else{c.style.strokeDashoffset=circ;c.style.opacity="0.15"}}}
-function resetGame(){turn=0;dice=0;gameOver=false;rolledPending=false;players=names.map(()=>[-1,-1,-1,-1]);drawBoard();for(let i=0;i<4;i++)renderDieFor(i,1);highlightActiveDice();setStatus("Red player's turn. Loading...");setTimeout(()=>{setStatus("Red player's turn. Roll - 20s");startTimer();},1900)}
-function setStatus(s){const el=document.getElementById("status");if(el)el.textContent=s}
-function renderDieFor(idx,n){const face=document.getElementById("pipface"+idx);if(!face)return;face.innerHTML="";const patterns={1:[4],2:[0,8],3:[0,4,8],4:[0,2,6,8],5:[0,2,4,6,8],6:[0,2,3,5,6,8]};for(let i=0;i<9;i++){const pip=document.createElement("span");pip.className="pip"+(patterns[n].includes(i)?" on":"");face.appendChild(pip)}}
-function highlightActiveDice(){for(let i=0;i<4;i++){const box=document.getElementById("diceBox"+i);if(box)box.classList.toggle("active",i===turn)}}
-function canMove(p,t){const pos=players[p][t];if(pos===-1)return dice===6;return pos+dice<=57}
-function legalMoves(){return players[turn].map((_,i)=>i).filter(i=>canMove(turn,i))}
-function rollForPlayer(p){if(p!==turn){setStatus("Not your turn! It's "+names[turn]+"'s");return}roll()}
-function roll(){
-  if(gameOver)return;
-  if(rolledPending){setStatus("Select token for "+names[turn]);return}
-  const die=document.getElementById("die"+turn);
-  die.classList.remove("rolling");void die.offsetWidth;die.classList.add("rolling");
-  setStatus(names[turn]+" rolling...");
-  playSound('dice');
-  setTimeout(()=>{
-    dice=1+Math.floor(Math.random()*6);
-    renderDieFor(turn,dice);
-    die.classList.remove("rolling");
-    const moves=legalMoves();
-    if(!moves.length){
-      const who=names[turn],v=dice;dice=0;
-      if(v!==6){turn=(turn+1)%4;resetTimerForNewTurn();playSound('turn');}else{resetTimerOnSix()}
-      drawBoard();highlightActiveDice();setStatus(who+" rolled "+v+". No move.");
-      return
-    }
-    rolledPending=true;drawBoard();
-    if(dice===6)resetTimerOnSix();else{timerRemaining=20;updateTimerUI()}
-    setStatus(names[turn]+" rolled "+dice+" - "+timerRemaining+"s to move");
-  },800)
-}
-function selectToken(p,t){
-  if(gameOver||!rolledPending||p!==turn)return;
-  if(!canMove(p,t)){setStatus("Cannot move");return}
-  const old=players[p][t],rolled=dice;
-  players[p][t]=old===-1?0:old+rolled;
-  let captured=0;
-  if(players[p][t]>=0&&players[p][t]<52){
-    const global=(players[p][t]+starts[p])%52;
-    if(!safe.has(global)){
-      for(let op=0;op<4;op++){
-        if(op===p)continue;
-        for(let ot=0;ot<4;ot++){
-          const opos=players[op][ot];
-          if(opos>=0&&opos<52&&((opos+starts[op])%52)===global){
-            players[op][ot]=-1;captured++
-          }
-        }
-      }
-    }
-  }
-  if(captured>0)playSound('capture');else playSound('move');
-  dice=0;rolledPending=false;
-  if(players[p].every(x=>x===57)){
-    gameOver=true;drawBoard();setStatus("🏆 "+names[p]+" wins!");stopTimer();playSound('win');return
-  }
-  let extraTurn=false;
-  if(captured>0)extraTurn=true;
-  if(rolled===6)extraTurn=true;
-  if(!extraTurn){turn=(turn+1)%4;resetTimerForNewTurn();playSound('turn');}
-  else{resetTimerOnSix();setStatus(captured>0?`💥 ${names[p]} ne goti maari! Extra`:`${names[p]} rolled 6! Extra`)}
-  drawBoard();highlightActiveDice();
-}
-const lanes=[[[7,1],[7,2],[7,3],[7,4],[7,5],[7,6]],[[1,7],[2,7],[3,7],[4,7],[5,7],[6,7]],[[7,13],[7,12],[7,11],[7,10],[7,9],[7,8]],[[13,7],[12,7],[11,7],[10,7],[9,7],[8,7]]];
+function updateTimerUI(){for(let i=0;i<4;i++){const c=document.getElementById("timerCircle"+i),box=document.getElementById("diceBox"+i);if(!c||!box)continue;const circumference=2*Math.PI*36;box.classList.toggle("active",i===turn&&!gameOver);c.style.strokeDashoffset=i===turn?circumference*(1-timerRemaining/20):circumference;c.style.opacity=i===turn?"1":".12";c.style.stroke=timerRemaining<=5?"#ef4444":timerRemaining<=10?"#facc15":"#4ade80"}}
+function startTimer(){stopTimer();timerRemaining=20;updateTimerUI();timerInterval=setInterval(()=>{if(gameOver){stopTimer();return}timerRemaining--;updateTimerUI();if(timerRemaining<=0){stopTimer();if(rolledPending){dice=0;rolledPending=false}turn=(turn+1)%4;drawBoard();setStatus("⏰ Time up! "+names[turn]+"'s turn.");startTimer()}},1000)}
+function nextTurnTimer(){startTimer()}
+function rollForPlayer(p){if(p!==turn){setStatus("It is "+names[turn]+"'s turn.");return}roll()}
+function resetGame(){stopTimer();turn=0;dice=0;gameOver=false;rolledPending=false;players=names.map(()=>[-1,-1,-1,-1]);drawBoard();renderDie(1);setStatus("Red player's turn. Roll the dice.");startTimer()}
+function setStatus(s){document.getElementById("status").textContent=s}
+function renderDie(n){const patterns={1:[4],2:[0,8],3:[0,4,8],4:[0,2,6,8],5:[0,2,4,6,8],6:[0,2,3,5,6,8]};for(let player=0;player<4;player++){const face=document.getElementById("pipface"+player);if(!face)continue;face.innerHTML="";for(let i=0;i<9;i++){const pip=document.createElement("span");pip.className="pip"+(patterns[n].includes(i)?" on":"");face.appendChild(pip)}const die=document.getElementById("die"+player);die.setAttribute("aria-label",names[player]+" dice showing "+n)}updateTimerUI()}
+const lanes=[[[7,1],[7,2],[7,3],[7,4],[7,5]],[[1,7],[2,7],[3,7],[4,7],[5,7]],[[7,13],[7,12],[7,11],[7,10],[7,9]],[[13,7],[12,7],[11,7],[10,7],[9,7]]];
 const homeSpots=[[[1,1],[1,4],[4,1],[4,4]],[[1,10],[1,13],[4,10],[4,13]],[[10,10],[10,13],[13,10],[13,13]],[[10,1],[10,4],[13,1],[13,4]]];
-function drawBoard(){const board=document.getElementById("board");if(!board)return;board.innerHTML="";for(let r=0;r<15;r++)for(let c=0;c<15;c++){const cell=document.createElement("div");cell.className="cell";const p=path.findIndex(x=>x[0]===r&&x[1]===c);if(p>=0){cell.classList.add("track");if(safe.has(p))cell.classList.add("safe")}else if(r===7&&c===7){cell.classList.add("center");cell.textContent="♛"}else{let h=(r<6&&c<6)?0:(r<6&&c>8)?1:(r>8&&c>8)?2:(r>8&&c<6)?3:-1;if(h>=0){cell.classList.add("base",colors[h]);if((r===1||r===4)&&(c===1||c===4)){const inner=document.createElement("div");inner.className="homeinner";cell.appendChild(inner)}}else if((r===6&&c>=1&&c<=5)||(r===8&&c>=1&&c<=5))cell.classList.add("red");else if((c===6&&r>=1&&r<=5)||(c===8&&r>=1&&r<=5))cell.classList.add("green");else if((r===6&&c>=9&&c<=13)||(r===8&&c>=9&&c<=13))cell.classList.add("yellow");else if((c===6&&r>=9&&r<=13)||(c===8&&r>=9&&r<=13))cell.classList.add("blue")}board.appendChild(cell)}lanes.forEach((lane,p)=>lane.forEach(([r,c])=>board.children[r*15+c].classList.add(colors[p])));players.forEach((arr,p)=>arr.forEach((pos,t)=>{let r,c;if(pos===-1)[r,c]=homeSpots[p][t];else if(pos<52){const idx=(pos+starts[p])%52;[r,c]=path[idx]}else if(pos>=52&&pos<=56){const step=pos-52;[r,c]=lanes[p][Math.min(step,lanes[p].length-1)]||[7,7]}else{[r,c]=[7,7]}const cell=board.children[r*15+c];if(!cell)return;const pawn=document.createElement("button");pawn.className="pawn "+colors[p]+(rolledPending&&p===turn&&canMove(p,t)?" selectable":"");if(pos===57){pawn.style.opacity="0.7";pawn.style.transform="scale(.85)"}pawn.onclick=()=>selectToken(p,t);cell.appendChild(pawn)}))}
-function adminLogin(){if(document.getElementById("adminPass").value!=="DEMO-ADMIN-CHANGE-ME"){alert("Incorrect");return}document.getElementById("adminArea").hidden=false;renderOrders()}
-function renderOrders(){const list=document.getElementById("adminOrders");if(!list)return;if(!orders.length){list.innerHTML="No orders";return}list.innerHTML=orders.map(o=>`<div class="panel" style="text-align:left"><b>${o.type}</b> ${o.status} · User: ${o.userId} · ${fmt(o.coins)} coins · PKR ${fmt(o.amount)}<br><small>${o.date}</small><br>${o.status!=="CONFIRMED"?`<button onclick="confirmBuy('${o.id}')" style="margin-top:6px;background:linear-gradient(#a7f3d0,#4ade80)">✅ CONFIRM - Unlock if 5000+</button>`:`<span style="color:#4ade80">✅ CONFIRMED</span>`}</div>`).join("");const unlockInfo=document.getElementById("adminUnlockInfo");const unlocks=JSON.parse(localStorage.getItem("ludoSultanSellUnlockedUsers")||"{}");const totals=JSON.parse(localStorage.getItem("ludoSultanUserTotals")||"{}");unlockInfo.innerHTML=Object.keys(totals).length?Object.entries(totals).map(([uid,total])=>`<div>User ${uid}: ${fmt(total)} coins - Sell ${unlocks[uid]?'🔓 UNLOCKED':'🔒 LOCKED'}</div>`).join(""):"No confirmed buys yet";}
-makeLobby();for(let i=0;i<4;i++)renderDieFor(i,1);showCoins();updateBonus();
+function drawBoard(){const board=document.getElementById("board");board.innerHTML="";for(let r=0;r<15;r++)for(let c=0;c<15;c++){const cell=document.createElement("div");cell.className="cell";const p=path.findIndex(x=>x[0]===r&&x[1]===c);if(p>=0){cell.classList.add("track");if(safe.has(p))cell.classList.add("safe")}else if(r===7&&c===7){cell.classList.add("center");cell.textContent="♛"}else{let h=(r<6&&c<6)?0:(r<6&&c>8)?1:(r>8&&c>8)?2:(r>8&&c<6)?3:-1;if(h>=0){cell.classList.add("base",colors[h]);if((r===1||r===4)&&(c===1||c===4)){const inner=document.createElement("div");inner.className="homeinner";cell.appendChild(inner)}}else if((r===6&&c>=1&&c<=5)||(r===8&&c>=1&&c<=5))cell.classList.add("red");else if((c===6&&r>=1&&r<=5)||(c===8&&r>=1&&r<=5))cell.classList.add("green");else if((r===6&&c>=9&&c<=13)||(r===8&&c>=9&&c<=13))cell.classList.add("yellow");else if((c===6&&r>=9&&r<=13)||(c===8&&r>=9&&r<=13))cell.classList.add("blue")}
+cell.dataset.r=r;cell.dataset.c=c;board.appendChild(cell)}
+lanes.forEach((lane,p)=>lane.forEach(([r,c])=>board.children[r*15+c].classList.add(colors[p])));
+players.forEach((arr,p)=>arr.forEach((pos,t)=>{let r,c;if(pos===-1)[r,c]=homeSpots[p][t];else if(pos<52){const idx=(pos+starts[p])%52;[r,c]=path[idx]}else{const step=Math.min(4,pos-52);[r,c]=lanes[p][step]||[7,7]}const cell=board.children[r*15+c];const pawn=document.createElement("button");pawn.className="pawn "+colors[p]+(rolledPending&&p===turn&&canMove(p,t)?" selectable":"");pawn.title=names[p]+" token "+(t+1);pawn.setAttribute("aria-label",pawn.title);pawn.onclick=()=>selectToken(p,t);cell.appendChild(pawn)}))}
+function canMove(p,t){const pos=players[p][t];return pos===-1?dice===6:pos+dice<=57}
+function legalMoves(){return players[turn].map((_,i)=>i).filter(i=>canMove(turn,i))}
+function roll(){if(gameOver)return;if(rolledPending){setStatus("Select a highlighted token for "+names[turn]+".");return}const die=document.getElementById("die"+turn);die.classList.remove("rolling");void die.offsetWidth;die.classList.add("rolling");setStatus(names[turn]+" is rolling...");setTimeout(()=>{if(gameOver)return;dice=1+Math.floor(Math.random()*6);renderDie(dice);die.classList.remove("rolling");const moves=legalMoves();if(!moves.length){const who=names[turn],v=dice;dice=0;if(v!==6)turn=(turn+1)%4;drawBoard();setStatus(who+" rolled "+v+". No legal move. "+names[turn]+"'s turn.");nextTurnTimer();return}rolledPending=true;drawBoard();setStatus(names[turn]+" rolled "+dice+". Tap one of the highlighted tokens.");},800)}
+function selectToken(p,t){if(gameOver||!rolledPending||p!==turn)return;if(!canMove(p,t)){setStatus("That token cannot move with this roll.");return}const old=players[p][t],rolled=dice;players[p][t]=old===-1?0:old+rolled;let captured=0;
+if(players[p][t]>=0&&players[p][t]<52){const global=(players[p][t]+starts[p])%52;if(!safe.has(global)){for(let op=0;op<4;op++){if(op===p)continue;for(let ot=0;ot<4;ot++){const opos=players[op][ot];if(opos>=0&&opos<52&&((opos+starts[op])%52)===global){players[op][ot]=-1;captured++}}}}}
+dice=0;rolledPending=false;if(players[p].every(x=>x===57)){gameOver=true;stopTimer();drawBoard();updateTimerUI();setStatus(names[p]+" wins! (Local demo only.)");return}if(rolled!==6)turn=(turn+1)%4;drawBoard();setStatus(names[p]+" moved token "+(t+1)+(captured?"; captured "+captured+" token(s), sent back to base. ":"; ")+names[turn]+"'s turn.");if(gameOver)stopTimer();else nextTurnTimer()}
+function adminLogin(){if(document.getElementById("adminPass").value!=="DEMO-ADMIN-CHANGE-ME"){alert("Incorrect demo password. This is not secure authentication.");return}document.getElementById("adminArea").hidden=false;renderOrders()}
+function saveAdminSettings(){const s={epNumber:document.getElementById("epNumber").value,epName:document.getElementById("epName").value,jcNumber:document.getElementById("jcNumber").value,jcName:document.getElementById("jcName").value};localStorage.setItem("ludoSultanDemoPaymentSettings",JSON.stringify(s));document.getElementById("adminMessage").textContent="Demo settings saved in this browser only. They are not private or secure."}
+function renderOrders(){document.getElementById("adminOrders").innerHTML=orders.length?orders.map(o=>`<div class="panel"><b>${o.type}</b> · ${fmt(o.coins)} coins · PKR ${fmt(o.amount)}<p>${o.method||""} · ${o.date}</p><p class="small">Demo record only; no real payment status.</p></div>`).join(""):"No local demo requests yet."}
+function openAdminRoute(){showScreen("admin")}
+makeLobby();renderDie(1);showCoins();updateBonus();
+if(location.hash==="#admin")openAdminRoute();
 </script></body></html>
-
 
 
 
