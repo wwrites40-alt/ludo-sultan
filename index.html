@@ -3,10 +3,9 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Ludo Sultan - Fancy Arenas</title>
+  <title>Ludo Sultan - Arena Selection</title>
   <link rel="stylesheet" href="themes.css">
   <style>
-    /* اسکرینز کو چھپانے اور دکھانے کے لیے ضروری اسٹائل */
     .screen {
       display: none !important;
     }
@@ -133,24 +132,17 @@
       </div>
     </section>
 
-    <!-- گیم روم / ارینا بورڈ اسکرین -->
+    <!-- خالی گیم روم اسکرین -->
     <section id="arena" class="screen">
-      <div class="room-topbar" style="display: flex; justify-content: space-between; padding: 10px;">
+      <div class="room-topbar" style="padding: 10px;">
         <button onclick="leaveRoom()" style="background: #333; color: #fff; border: none; padding: 6px 12px; border-radius: 4px; cursor: pointer;">Exit to Lobby</button>
       </div>
-
-      <div id="status" style="text-align: center; margin: 10px 0; font-weight: bold;">Waiting for player turn...</div>
-
-      <!-- لڈو بورڈ روٹ -->
-      <div class="board-wrapper" style="display: flex; justify-content: center; margin: 20px 0;">
-        <div id="board" class="theme-forest-arena" style="width: 300px; height: 300px; position: relative; border-radius: 8px; display: grid; place-items: center;">
-          <div class="cell center" style="background: rgba(0,0,0,0.5); padding: 10px; border-radius: 6px;">HOME</div>
-        </div>
+      <div id="status" style="text-align: center; margin-top: 100px; color: #888; font-size: 16px;">
+        Empty Room Screen
       </div>
     </section>
   </main>
 
-  <!-- ضروری اسکرپٹس -->
   <script src="svg-icons.js"></script>
   <script>
     function showScreen(screenId) {
@@ -160,17 +152,12 @@
 
     function enterArena(arenaName, entryFee) {
       showScreen('arena');
-      const board = document.getElementById('board');
-      board.className = '';
-      board.classList.add(`theme-${arenaName}`);
-      document.getElementById('status').innerText = `Entered ${arenaName.replace(/-/g, ' ').toUpperCase()}! Good Luck.`;
     }
 
     function leaveRoom() {
       showScreen('arenaSelection');
     }
 
-    // تمام کارٖڈز میں ان کے اپنے SVG آئیکنز خود بخود فٹ کرنا
     window.addEventListener('DOMContentLoaded', () => {
       if (typeof ArenaSvgIcons !== 'undefined') {
         for (const key in ArenaSvgIcons) {
