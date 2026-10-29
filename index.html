@@ -3,122 +3,163 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Ludo Sultan - Fancy Arenas & Board</title>
-  <!-- آپ کی اپنی تھیم فائل -->
+  <title>Ludo Sultan</title>
+  
   <link rel="stylesheet" href="themes.css">
+  
   <style>
-    .screen { display: none !important; }
-    .screen.active { display: block !important; }
-    body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      background: #090d16;
-      color: #fff;
-    }
-    main { padding: 10px; }
+    :root{--gold:#f4d17b;--line:#bd9548}
+    *{box-sizing:border-box}
+    body{margin:0;background:radial-gradient(circle at top,#163b29,#06120c 70%);color:#fff;font-family:Arial,sans-serif;min-height:100vh}
+    header{text-align:center;padding:14px;background:linear-gradient(120deg,#173d2a,#06120c);border-bottom:2px solid #d7ae53}
+    h1{margin:0;color:var(--gold);letter-spacing:2px;font-size:clamp(24px,6vw,36px)}
+    .sub{font-size:10px;letter-spacing:2px;margin-top:4px;color:#d9c18a}
+    .balance{text-align:center;padding:10px;color:#ffe3a0}.balance strong{display:block;font-size:22px}
+    main{max-width:900px;margin:auto;padding:10px}h2{color:var(--gold);font-size:16px}
+    .screen{display:none}.screen.active{display:block}
+    
+    .auth-box{max-width:380px;margin:40px auto;background:linear-gradient(145deg,#204a32,#10291d);border:1px solid var(--line);border-radius:16px;padding:25px;box-shadow:0 10px 30px #000a}
+    .auth-field{margin-bottom:15px;text-align:left}
+    .auth-field label{display:block;font-size:12px;color:#ffe5a1;margin-bottom:5px}
+    .auth-field input{width:100%;padding:10px;border:1px solid var(--line);border-radius:8px;background:#071810;color:#fff;font-size:14px}
+    .auth-btn{width:100%;padding:12px;margin-top:10px;border-radius:8px;font-weight:bold;cursor:pointer;background:linear-gradient(#ffe7a1,#c99535);color:#201606;border:0}
+    .auth-alt-btn{width:100%;padding:10px;margin-top:8px;background:transparent;border:1px solid var(--line);color:#ffe5a1;border-radius:8px;cursor:pointer}
+    .auth-msg{padding:10px;border-radius:8px;font-size:12px;margin-bottom:15px;text-align:center}
+
+    .boards-single{display:flex;flex-direction:column;align-items:center;gap:10px}
+    .board-view{width:100%;max-width:340px;margin:auto}
+    .card{border-radius:14px;text-align:center;padding:18px 10px;background:linear-gradient(145deg,#204a32,#10291d);border:1px solid var(--line)}
+    .card .icon{width:64px;height:64px;margin:0 auto 10px auto}.card h3{font-size:15px;color:#ffe5a1;margin:8px 0 3px}.card p{font-size:11px;color:#d2e0d5;margin:3px 0}
+    .card button{width:94%;font-size:12px;margin-top:8px;padding:11px}
+    button{border:0;border-radius:8px;background:linear-gradient(#ffe7a1,#c99535);color:#201606;font-weight:bold;padding:9px;cursor:pointer}
+    
+    .board-wrapper{position:relative;width:min(94vw,440px);margin:0 auto}
+    #board{width:100%;aspect-ratio:1;display:grid;grid-template-columns:repeat(15,1fr);grid-template-rows:repeat(15,1fr);background:#f6f0d9;border:4px solid #e4bc5e;box-shadow:0 0 22px #d4a83c55}
+    .cell{border:1px solid #c8c1a9;display:flex;align-items:center;justify-content:center;position:relative;font-size:clamp(6px,2vw,12px);overflow:hidden}
+    
+    .dice-below{display:flex;flex-direction:column;align-items:center;gap:10px;margin-top:15px}
+    .die{width:70px;height:70px;display:grid;place-items:center;border-radius:14px;border:3px solid #f4d17b;box-shadow:0 6px 0 #0008,0 0 12px #f4d17b;font-size:32px;cursor:pointer;background:linear-gradient(145deg,#fff,#f3e5b5 30%,#d7c9a2 70%,#a89060)}
+    
+    .room-topbar{position:relative;height:40px;display:flex;justify-content:space-between;align-items:center;margin-bottom:6px}
+    .room-menu-btn{width:38px;height:38px;border-radius:50%;background:#ffffff14;border:1px solid #f4d17b;display:grid;place-items:center;font-size:22px;color:#f4d17b;cursor:pointer}
+    .room-menu-dropdown{position:absolute;top:42px;right:0;background:linear-gradient(145deg,#204a32,#10291d);border:1px solid #f4d17b;border-radius:12px;padding:6px;min-width:190px;z-index:100;display:none;box-shadow:0 10px 30px #000a}
+    .room-menu-dropdown.show{display:block}
+    .room-menu-dropdown button{width:100%;text-align:left;padding:11px;background:transparent;border:0;border-bottom:1px solid #ffffff11;color:#ffe5a1;font-size:13px}
+    #turn{text-align:center;min-height:30px;color:#ffe4a0;margin:6px 0;font-size:14px;font-weight:bold}
+    
+    #accountBar { display: flex; justify-content: space-between; align-items: center; background: #10291d; border-bottom: 1px solid var(--line); padding: 6px 15px; font-size: 12px; }
   </style>
+  
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
 </head>
 <body>
 
-  <!-- ہیڈر سیکشن -->
-  <header style="text-align: center; padding: 10px;">
+  <div id="accountBar" hidden>
+    <span>Signed in as: <strong id="accountEmail"></strong></span>
+    <button onclick="logoutUser()" style="padding: 4px 10px; font-size: 11px;">Logout</button>
+  </div>
+
+  <header>
     <h1>LUDO SULTAN</h1>
-    <div class="sub" style="font-size: 12px; color: #aaa;">SULTAN OF THE BOARD</div>
+    <div class="sub">SULTAN OF THE BOARD</div>
   </header>
 
-  <!-- بیلنس بار -->
-  <div class="balance" style="text-align: center; margin-bottom: 15px;">
-    Coins: <strong id="userCoins">50,000</strong>
-    <span id="sellUnlockBadge" style="background: gold; color: #000; padding: 2px 6px; border-radius: 4px; font-size: 10px; margin-left: 5px;">VIP UNLOCKED</span>
+  <div class="balance">
+    Coins: <strong id="coins">50,000</strong>
+    <span id="sellUnlockBadge">VIP UNLOCKED</span>
   </div>
 
   <main>
-    <!-- 1. ارینا سلیکشن اسکرین (سوائپ سسٹم کے ساتھ) -->
-    <section id="arenaSelection" class="screen active">
-      <h2 style="text-align: center; font-size: 18px;">SELECT ARENA</h2>
+    <!-- لاگ ان اسکرین -->
+    <section id="authScreen" class="screen">
+      <div class="auth-box">
+        <h2 id="authTitle" style="text-align: center; margin-top: 0;">👑 LUDO SULTAN LOGIN</h2>
+        <div id="authMessage" class="auth-msg" hidden></div>
+        
+        <div class="auth-field">
+          <label>Email Address</label>
+          <input type="email" id="authEmail" placeholder="Enter your email" />
+        </div>
+        
+        <div class="auth-field">
+          <label>Password</label>
+          <input type="password" id="authPassword" placeholder="Enter password (min 6 chars)" />
+        </div>
+
+        <div class="auth-field" id="authConfirmWrap" hidden>
+          <label>Confirm Password</label>
+          <input type="password" id="authConfirm" placeholder="Re-enter password" />
+        </div>
+
+        <button class="auth-btn" id="authSubmit" onclick="submitAuth()">LOGIN</button>
+        <button class="auth-alt-btn" id="authModeButton" onclick="toggleAuthMode()">CREATE NEW ACCOUNT</button>
+        <button class="auth-alt-btn" onclick="resetPassword()" style="border: none; font-size: 11px; margin-top: 12px; color: #d9c18a;">Forgot Password?</button>
+      </div>
+    </section>
+
+    <!-- ارینا سلیکشن / ہوم -->
+    <section id="home" class="screen">
+      <h2 style="text-align: center;">SELECT ARENA</h2>
       
       <div class="boards-single">
         <div class="board-view">
           <div id="arenaSwipeContainer" style="display: flex; overflow-x: auto; scroll-snap-type: x mandatory; gap: 15px; scrollbar-width: none; padding: 10px 0;">
             
-            <!-- 1. Forest Arena -->
-            <div class="card style-0" style="min-width: 260px; flex: 0 0 auto; scroll-snap-align: center; padding: 20px; border-radius: 12px; text-align: center;">
-              <div class="icon" id="icon-forest-arena" style="width: 64px; height: 64px; margin: 0 auto 10px auto;"></div>
+            <div class="card" style="min-width: 260px; scroll-snap-align: center;">
+              <div class="icon" id="icon-forest-arena"></div>
               <h3>Forest Arena</h3>
-              <p>Entry: 50 Coins</p>
-              <button onclick="enterArena('forest-arena', 50)" style="padding: 8px 16px; background: #2e7d32; color: #fff; border: none; border-radius: 6px; cursor: pointer;">Play Forest</button>
+              <p>Entry: 10 Coins</p>
+              <button onclick="selectAndEnterBoard('forest-arena')">Play Forest</button>
             </div>
 
-            <!-- 2. Royal Palace -->
-            <div class="card style-1" style="min-width: 260px; flex: 0 0 auto; scroll-snap-align: center; padding: 20px; border-radius: 12px; text-align: center;">
-              <div class="icon" id="icon-royal-palace" style="width: 64px; height: 64px; margin: 0 auto 10px auto;"></div>
+            <div class="card" style="min-width: 260px; scroll-snap-align: center;">
+              <div class="icon" id="icon-royal-palace"></div>
               <h3>Royal Palace</h3>
-              <p>Entry: 100 Coins</p>
-              <button onclick="enterArena('royal-palace', 100)" style="padding: 8px 16px; background: #6b43a8; color: #fff; border: none; border-radius: 6px; cursor: pointer;">Play Royal</button>
+              <p>Entry: 30 Coins</p>
+              <button onclick="selectAndEnterBoard('royal-palace')">Play Royal</button>
             </div>
 
-            <!-- 3. Desert Dangers -->
-            <div class="card style-2" style="min-width: 260px; flex: 0 0 auto; scroll-snap-align: center; padding: 20px; border-radius: 12px; text-align: center;">
-              <div class="icon" id="icon-desert-dangers" style="width: 64px; height: 64px; margin: 0 auto 10px auto;"></div>
-              <h3>Desert Dangers</h3>
-              <p>Entry: 200 Coins</p>
-              <button onclick="enterArena('desert-dangers', 200)" style="padding: 8px 16px; background: #d98a3a; color: #fff; border: none; border-radius: 6px; cursor: pointer;">Play Desert</button>
+            <div class="card" style="min-width: 260px; scroll-snap-align: center;">
+              <div class="icon" id="icon-magical-desert"></div>
+              <h3>Magical Desert</h3>
+              <p>Entry: 50 Coins</p>
+              <button onclick="selectAndEnterBoard('magical-desert')">Play Desert</button>
             </div>
 
-            <!-- 4. Diamond Arena -->
-            <div class="card style-3" style="min-width: 260px; flex: 0 0 auto; scroll-snap-align: center; padding: 20px; border-radius: 12px; text-align: center;">
-              <div class="icon" id="icon-diamond-arena" style="width: 64px; height: 64px; margin: 0 auto 10px auto;"></div>
-              <h3>Diamond Arena</h3>
-              <p>Entry: 500 Coins</p>
-              <button onclick="enterArena('diamond-arena', 500)" style="padding: 8px 16px; background: #0891b2; color: #fff; border: none; border-radius: 6px; cursor: pointer;">Play Diamond</button>
-            </div>
-
-            <!-- 5. Ice Kingdom -->
-            <div class="card style-4" style="min-width: 260px; flex: 0 0 auto; scroll-snap-align: center; padding: 20px; border-radius: 12px; text-align: center;">
-              <div class="icon" id="icon-ice-kingdom" style="width: 64px; height: 64px; margin: 0 auto 10px auto;"></div>
+            <div class="card" style="min-width: 260px; scroll-snap-align: center;">
+              <div class="icon" id="icon-ice-kingdom"></div>
               <h3>Ice Kingdom</h3>
-              <p>Entry: 1,000 Coins</p>
-              <button onclick="enterArena('ice-kingdom', 1000)" style="padding: 8px 16px; background: #3b82f6; color: #fff; border: none; border-radius: 6px; cursor: pointer;">Play Ice</button>
+              <p>Entry: 70 Coins</p>
+              <button onclick="selectAndEnterBoard('ice-kingdom')">Play Ice</button>
             </div>
 
-            <!-- 6. Lava Fortress -->
-            <div class="card style-5" style="min-width: 260px; flex: 0 0 auto; scroll-snap-align: center; padding: 20px; border-radius: 12px; text-align: center;">
-              <div class="icon" id="icon-lava-fortress" style="width: 64px; height: 64px; margin: 0 auto 10px auto;"></div>
+            <div class="card" style="min-width: 260px; scroll-snap-align: center;">
+              <div class="icon" id="icon-lava-fortress"></div>
               <h3>Lava Fortress</h3>
-              <p>Entry: 2,500 Coins</p>
-              <button onclick="enterArena('lava-fortress', 2500)" style="padding: 8px 16px; background: #ea580c; color: #fff; border: none; border-radius: 6px; cursor: pointer;">Play Lava</button>
+              <p>Entry: 100 Coins</p>
+              <button onclick="selectAndEnterBoard('lava-fortress')">Play Lava</button>
             </div>
 
-            <!-- 7. Fire Age -->
-            <div class="card style-6" style="min-width: 260px; flex: 0 0 auto; scroll-snap-align: center; padding: 20px; border-radius: 12px; text-align: center;">
-              <div class="icon" id="icon-fire-age" style="width: 64px; height: 64px; margin: 0 auto 10px auto;"></div>
+            <div class="card" style="min-width: 260px; scroll-snap-align: center;">
+              <div class="icon" id="icon-diamond-arena"></div>
+              <h3>Diamond Arena</h3>
+              <p>Entry: 150 Coins</p>
+              <button onclick="selectAndEnterBoard('diamond-arena')">Play Diamond</button>
+            </div>
+
+            <div class="card" style="min-width: 260px; scroll-snap-align: center;">
+              <div class="icon" id="icon-fire-age"></div>
               <h3>Fire Age</h3>
-              <p>Entry: 4,000 Coins</p>
-              <button onclick="enterArena('fire-age', 4000)" style="padding: 8px 16px; background: #dc2626; color: #fff; border: none; border-radius: 6px; cursor: pointer;">Play Fire</button>
+              <p>Entry: 250 Coins</p>
+              <button onclick="selectAndEnterBoard('fire-age')">Play Fire</button>
             </div>
 
-            <!-- 8. Pharaoh's Temple -->
-            <div class="card style-7" style="min-width: 260px; flex: 0 0 auto; scroll-snap-align: center; padding: 20px; border-radius: 12px; text-align: center;">
-              <div class="icon" id="icon-pharaohs-temple" style="width: 64px; height: 64px; margin: 0 auto 10px auto;"></div>
-              <h3>Pharaoh's Temple</h3>
-              <p>Entry: 9,000 Coins</p>
-              <button onclick="enterArena('pharaohs-temple', 9000)" style="padding: 8px 16px; background: #b45309; color: #fff; border: none; border-radius: 6px; cursor: pointer;">Play Pharaoh</button>
-            </div>
-
-            <!-- 9. Sultan Throne -->
-            <div class="card style-8" style="min-width: 260px; flex: 0 0 auto; scroll-snap-align: center; padding: 20px; border-radius: 12px; text-align: center;">
-              <div class="icon" id="icon-sultan-throne" style="width: 64px; height: 64px; margin: 0 auto 10px auto;"></div>
-              <h3>Sultan Throne</h3>
-              <p>Entry: 18,000 Coins</p>
-              <button onclick="enterArena('sultan-throne', 18000)" style="padding: 8px 16px; background: #7e22ce; color: #fff; border: none; border-radius: 6px; cursor: pointer;">Play Throne</button>
-            </div>
-
-            <!-- 10. Sultan Skull -->
-            <div class="card style-9" style="min-width: 260px; flex: 0 0 auto; scroll-snap-align: center; padding: 20px; border-radius: 12px; text-align: center;">
-              <div class="icon" id="icon-sultan-skull" style="width: 64px; height: 64px; margin: 0 auto 10px auto;"></div>
-              <h3>Sultan Skull</h3>
-              <p>Entry: 35,000 Coins</p>
-              <button onclick="enterArena('sultan-skull', 35000)" style="padding: 8px 16px; background: #111827; border: 1px solid #ef4444; color: #fff; border-radius: 6px; cursor: pointer;">Play Skull</button>
+            <div class="card" style="min-width: 260px; scroll-snap-align: center;">
+              <div class="icon" id="icon-sultan-legends"></div>
+              <h3>Sultan Legends</h3>
+              <p>Entry: 500 Coins</p>
+              <button onclick="selectAndEnterBoard('sultan-legends')">Play Legends</button>
             </div>
 
           </div>
@@ -126,55 +167,67 @@
       </div>
     </section>
 
-    <!-- 2. گیم روم اسکرین (لڈو بورڈ، ڈائس اور گوٹیوں کے ساتھ) -->
+    <!-- گیم روم اسکرین -->
     <section id="arena" class="screen">
-      <div class="room-topbar" style="display: flex; justify-content: space-between; padding: 10px;">
-        <button onclick="leaveRoom()" style="background: #333; color: #fff; border: none; padding: 6px 12px; border-radius: 4px; cursor: pointer;">Exit to Lobby</button>
-      </div>
-
-      <div id="status" style="text-align: center; margin: 5px 0; font-weight: bold; font-size: 14px;">Game Started</div>
-
-      <!-- لڈو بورڈ روٹ (themes.css کے ذریعے اس پر تھیم اپلائی ہوگی) -->
-      <div class="board-wrapper" style="display: flex; justify-content: center; margin: 10px 0;">
-        <div id="board" class="theme-forest-arena" style="width: 320px; height: 320px; position: relative; border-radius: 8px; display: grid; grid-template-columns: repeat(15, 1fr); grid-template-rows: repeat(15, 1fr); padding: 5px;">
-          <!-- بیسز اور ٹریکس کے خانے -->
-          <div class="base" style="grid-column: span 6; grid-row: span 6; background: rgba(0,0,0,0.3); border-radius: 4px;"></div>
-          <div class="track" style="grid-column: 7 / span 3; grid-row: 1 / span 6;"></div>
-          <div class="cell center" style="grid-column: 7 / span 3; grid-row: 7 / span 3; background: gold; color: #000; font-size: 10px; display: grid; place-items: center; font-weight: bold;">HOME</div>
+      <div class="room-topbar">
+        <div class="room-menu-btn" onclick="toggleMenu()">☰</div>
+        <div class="room-menu-dropdown" id="roomDropdown">
+          <button onclick="leaveRoom()">Exit to Lobby</button>
+          <button onclick="newGame()">Restart Game</button>
         </div>
       </div>
 
-      <!-- تھری ڈی ڈائس سیکشن -->
-      <div class="dice-below" style="display: flex; justify-content: center; margin-top: 15px;">
-        <div class="die" id="dieElement" style="width: 50px; height: 50px; border-radius: 8px; display: grid; place-items: center; font-weight: bold; font-size: 18px; cursor: pointer;">
-          🎲 6
-        </div>
+      <div id="turn">Turn: Red</div>
+
+      <div class="board-wrapper">
+        <div id="board" class="theme-forest-arena"></div>
+      </div>
+
+      <div class="dice-below">
+        <div class="die" id="die" onclick="rollDice()">⚄</div>
       </div>
     </section>
   </main>
 
-  <!-- آپ کی اپنی SVG آئیکنز فائل -->
+  <!-- تمام فائلیں بالترتیب جڑی ہوئی ہیں -->
+  <script src="firebase-init.js"></script>
   <script src="svg-icons.js"></script>
+  <script src="game.js"></script>
+  <script src="auth.js"></script>
+  <script src="controller.js"></script>
+
   <script>
     function showScreen(screenId) {
       document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
-      document.getElementById(screenId).classList.add('active');
+      const target = document.getElementById(screenId);
+      if (target) target.classList.add('active');
     }
 
-    function enterArena(arenaName, entryFee) {
+    function toggleMenu() {
+      document.getElementById('roomDropdown').classList.toggle('show');
+    }
+
+    function selectAndEnterBoard(boardId) {
+      if (window.LudoSultan) {
+        window.LudoSultan.selectBoard(boardId);
+      }
       showScreen('arena');
       const board = document.getElementById('board');
-      // بورڈ پر منتخب ارینا کی تھیم کلاس سیٹ کرنا تاکہ themes.css کا بیک گراؤنڈ اور ڈیزائن ایکٹیو ہو جائے
       board.className = '';
-      board.classList.add(`theme-${arenaName}`);
-      document.getElementById('status').innerText = `Entered ${arenaName.replace(/-/g, ' ').toUpperCase()}!`;
+      board.classList.add(`theme-${boardId}`);
     }
 
     function leaveRoom() {
-      showScreen('arenaSelection');
+      document.getElementById('roomDropdown').classList.remove('show');
+      showScreen('home');
     }
 
-    // SVG آئیکنز کو کارڈز میں خود بخود لوڈ کرنا
+    window.showCoins = function() {
+      const coinEl = document.getElementById('coins');
+      if (coinEl) coinEl.innerText = "50,000";
+    };
+
+    // SVG آئیکنز کارڈز میں لوڈ کرنا
     window.addEventListener('DOMContentLoaded', () => {
       if (typeof ArenaSvgIcons !== 'undefined') {
         for (const key in ArenaSvgIcons) {
