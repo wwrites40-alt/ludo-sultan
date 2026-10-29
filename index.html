@@ -219,36 +219,7 @@
       board.className = '';
       board.classList.add(`theme-${boardId}`);
       
-      // ارینا کھلتے ہی بورڈ کے خانے جنریٹ کرنے کا فنکشن کال کریں
-      createBoardCells();
-    }
-
-    // 15x15 لڈو بورڈ کے سیلز بنانے کا فنکشن
-    function createBoardCells() {
-      const board = document.getElementById('board');
-      if (!board) return;
-      board.innerHTML = '';
-      
-      for (let i = 0; i < 225; i++) {
-        const cell = document.createElement('div');
-        cell.className = 'cell';
-        
-        const row = Math.floor(i / 15);
-        const col = i % 15;
-        
-        // بیس اور سینٹر کی پوزیشنز سیٹ کرنا
-        if (row < 6 && col < 6) cell.classList.add('base', 'red');
-        else if (row < 6 && col > 8) cell.classList.add('base', 'green');
-        else if (row > 8 && col > 8) cell.classList.add('base', 'yellow');
-        else if (row > 8 && col < 6) cell.classList.add('base', 'blue');
-        else if (row >= 6 && row <= 8 && col >= 6 && col <= 8) {
-          cell.classList.add('center');
-        } else {
-          cell.classList.add('track');
-        }
-        
-        board.appendChild(cell);
-      }
+      // پرانے خانے بنانے والا فنکشن یہاں سے ہٹا دیا گیا ہے تاکہ صرف تصویر نظر آئے
     }
 
     function leaveRoom() {
