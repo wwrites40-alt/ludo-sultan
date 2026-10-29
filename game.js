@@ -7,6 +7,15 @@ const LudoGame = (() => {
   const SAFE = new Set([0, 8, 13, 21, 26, 34, 39, 47]);
   const FINISH = 57;
 
+  // Each color has one square it cannot LAND on.
+  // The other three colors may land on that square.
+  const BLOCKED_FOR_COLOR = {
+    Red: (START[0] + 1) % 52,
+    Green: (START[1] + 1) % 52,
+    Yellow: (START[2] + 1) % 52,
+    Blue: (START[3] + 1) % 52
+  };
+
   let players, turn, dice, over, winner;
 
   function newGame() {
@@ -32,11 +41,35 @@ const LudoGame = (() => {
   function legalMoves() {
     if (!dice || over) return [];
 
-    return players[turn].tokens
+    const player = players[turn];
+    const blockedSquare = BLOCKED_FOR_COLOR[player.color];
+
+    return player.tokens
       .map((position, index) => ({ position, index }))
       .filter(({ position }) => {
-        if (position === -1) return dice === 6;
-        return position + dice <= FINISH;
+        // A token at home can leave only on a six.
+        if (position === -1) {
+          return dice === 6;
+        }
+
+        const nextPosition = position + dice;
+
+        // Do not allow moving beyond the finish.
+        if (nextPosition > FINISH) {
+          return false;
+        }
+
+        // Apply the color-specific blocked square only
+        // when landing on the shared 52-square track.
+        if (nextPosition < 52) {
+          const destination = square(turn, nextPosition);
+
+          if (destination === blockedSquare) {
+            return false;
+          }
+        }
+
+        return true;
       })
       .map(({ index }) => index);
   }
@@ -78,6 +111,7 @@ const LudoGame = (() => {
     if (over) return { error: "Game over." };
     if (!dice) return { error: "Roll the dice first." };
 
+    // Enforce every rule, including color-specific blocked squares.
     if (
       !Number.isInteger(tokenIndex) ||
       !legalMoves().includes(tokenIndex)
@@ -88,8 +122,6 @@ const LudoGame = (() => {
     const playerIndex = turn;
     const player = players[playerIndex];
     const oldPosition = player.tokens[tokenIndex];
-
-    // Save the dice result before resetting it.
     const rolledSix = dice === 6;
 
     const nextPosition =
@@ -121,7 +153,7 @@ const LudoGame = (() => {
           });
         });
 
-        // Capture one opposing token.
+        // Preserve the existing rule: capture only one opponent.
         if (captured.length === 1) {
           const enemy = captured[0];
 
@@ -140,10 +172,9 @@ const LudoGame = (() => {
 
     const reachedFinish = nextPosition === FINISH;
 
-    // Reset dice after the move.
     dice = 0;
 
-    // Extra turn for rolling six or reaching finish.
+    // Preserve the existing extra-turn rule.
     if (!over && !rolledSix && !reachedFinish) {
       turn = (turn + 1) % 4;
     }
