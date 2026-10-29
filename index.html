@@ -4,89 +4,147 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Ludo Sultan - Fancy Arenas</title>
-  <!-- لنک تھیمز سی ایس ایس -->
   <link rel="stylesheet" href="themes.css">
+  <style>
+    /* اسکرینز کو چھپانے اور دکھانے کے لیے ضروری اسٹائل */
+    .screen {
+      display: none !important;
+    }
+    .screen.active {
+      display: block !important;
+    }
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #090d16;
+      color: #fff;
+    }
+    main {
+      padding: 10px;
+    }
+  </style>
 </head>
 <body>
 
   <!-- ہیڈر سیکشن -->
-  <header>
+  <header style="text-align: center; padding: 10px;">
     <h1>LUDO SULTAN</h1>
-    <div class="sub">SULTAN OF THE BOARD</div>
+    <div class="sub" style="font-size: 12px; color: #aaa;">SULTAN OF THE BOARD</div>
   </header>
 
   <!-- بیلنس بار -->
-  <div class="balance">
+  <div class="balance" style="text-align: center; margin-bottom: 15px;">
     Coins: <strong id="userCoins">50,000</strong>
-    <span id="sellUnlockBadge">VIP UNLOCKED</span>
+    <span id="sellUnlockBadge" style="background: gold; color: #000; padding: 2px 6px; border-radius: 4px; font-size: 10px; margin-left: 5px;">VIP UNLOCKED</span>
   </div>
 
   <main>
     <!-- ہوم اسکرین / ارینا سلیکشن اسکرین (سوائپ سسٹم کے ساتھ) -->
     <section id="arenaSelection" class="screen active">
-      <h2>SELECT ARENA</h2>
+      <h2 style="text-align: center; font-size: 18px;">SELECT ARENA</h2>
       
       <!-- سوائپ ایبل بورڈ / ارینا ویو -->
       <div class="boards-single">
         <div class="board-view">
           <div id="arenaSwipeContainer" style="display: flex; overflow-x: auto; scroll-snap-type: x mandatory; gap: 15px; scrollbar-width: none; padding: 10px 0;">
-            <!-- ارینا کارڈز جاوا اسکرپٹ یا ڈائنامک لوڈ ہوں گے، یہاں مثال کے طور پر پہلا کارڈ -->
-            <div class="card style-0" style="min-width: 100%; scroll-snap-align: center;">
-              <div class="icon" id="icon-forest-arena" style="width: 64px; height: 64px; margin: 0 auto;"></div>
+            
+            <!-- 1. Forest Arena -->
+            <div class="card style-0" style="min-width: 260px; flex: 0 0 auto; scroll-snap-align: center; padding: 20px; border-radius: 12px; text-align: center;">
+              <div class="icon" id="icon-forest-arena" style="width: 64px; height: 64px; margin: 0 auto 10px auto;"></div>
               <h3>Forest Arena</h3>
               <p>Entry: 50 Coins</p>
-              <button onclick="enterArena('forest-arena', 50, 0)">Play Forest</button>
+              <button onclick="enterArena('forest-arena', 50)" style="padding: 8px 16px; background: #2e7d32; color: #fff; border: none; border-radius: 6px; cursor: pointer;">Play Forest</button>
             </div>
-          </div>
-        </div>
 
-        <!-- پیج / سلائیڈ انڈیکیٹرز -->
-        <div class="board-nav" id="arenaDots">
-          <!-- یہاں ڈاٹس آئیں گے -->
+            <!-- 2. Royal Palace -->
+            <div class="card style-1" style="min-width: 260px; flex: 0 0 auto; scroll-snap-align: center; padding: 20px; border-radius: 12px; text-align: center;">
+              <div class="icon" id="icon-royal-palace" style="width: 64px; height: 64px; margin: 0 auto 10px auto;"></div>
+              <h3>Royal Palace</h3>
+              <p>Entry: 100 Coins</p>
+              <button onclick="enterArena('royal-palace', 100)" style="padding: 8px 16px; background: #6b43a8; color: #fff; border: none; border-radius: 6px; cursor: pointer;">Play Royal</button>
+            </div>
+
+            <!-- 3. Desert Dangers -->
+            <div class="card style-2" style="min-width: 260px; flex: 0 0 auto; scroll-snap-align: center; padding: 20px; border-radius: 12px; text-align: center;">
+              <div class="icon" id="icon-desert-dangers" style="width: 64px; height: 64px; margin: 0 auto 10px auto;"></div>
+              <h3>Desert Dangers</h3>
+              <p>Entry: 200 Coins</p>
+              <button onclick="enterArena('desert-dangers', 200)" style="padding: 8px 16px; background: #d98a3a; color: #fff; border: none; border-radius: 6px; cursor: pointer;">Play Desert</button>
+            </div>
+
+            <!-- 4. Diamond Arena -->
+            <div class="card style-3" style="min-width: 260px; flex: 0 0 auto; scroll-snap-align: center; padding: 20px; border-radius: 12px; text-align: center;">
+              <div class="icon" id="icon-diamond-arena" style="width: 64px; height: 64px; margin: 0 auto 10px auto;"></div>
+              <h3>Diamond Arena</h3>
+              <p>Entry: 500 Coins</p>
+              <button onclick="enterArena('diamond-arena', 500)" style="padding: 8px 16px; background: #0891b2; color: #fff; border: none; border-radius: 6px; cursor: pointer;">Play Diamond</button>
+            </div>
+
+            <!-- 5. Ice Kingdom -->
+            <div class="card style-4" style="min-width: 260px; flex: 0 0 auto; scroll-snap-align: center; padding: 20px; border-radius: 12px; text-align: center;">
+              <div class="icon" id="icon-ice-kingdom" style="width: 64px; height: 64px; margin: 0 auto 10px auto;"></div>
+              <h3>Ice Kingdom</h3>
+              <p>Entry: 1,000 Coins</p>
+              <button onclick="enterArena('ice-kingdom', 1000)" style="padding: 8px 16px; background: #3b82f6; color: #fff; border: none; border-radius: 6px; cursor: pointer;">Play Ice</button>
+            </div>
+
+            <!-- 6. Lava Fortress -->
+            <div class="card style-5" style="min-width: 260px; flex: 0 0 auto; scroll-snap-align: center; padding: 20px; border-radius: 12px; text-align: center;">
+              <div class="icon" id="icon-lava-fortress" style="width: 64px; height: 64px; margin: 0 auto 10px auto;"></div>
+              <h3>Lava Fortress</h3>
+              <p>Entry: 2,500 Coins</p>
+              <button onclick="enterArena('lava-fortress', 2500)" style="padding: 8px 16px; background: #ea580c; color: #fff; border: none; border-radius: 6px; cursor: pointer;">Play Lava</button>
+            </div>
+
+            <!-- 7. Fire Age -->
+            <div class="card style-6" style="min-width: 260px; flex: 0 0 auto; scroll-snap-align: center; padding: 20px; border-radius: 12px; text-align: center;">
+              <div class="icon" id="icon-fire-age" style="width: 64px; height: 64px; margin: 0 auto 10px auto;"></div>
+              <h3>Fire Age</h3>
+              <p>Entry: 4,000 Coins</p>
+              <button onclick="enterArena('fire-age', 4000)" style="padding: 8px 16px; background: #dc2626; color: #fff; border: none; border-radius: 6px; cursor: pointer;">Play Fire</button>
+            </div>
+
+            <!-- 8. Pharaoh's Temple -->
+            <div class="card style-7" style="min-width: 260px; flex: 0 0 auto; scroll-snap-align: center; padding: 20px; border-radius: 12px; text-align: center;">
+              <div class="icon" id="icon-pharaohs-temple" style="width: 64px; height: 64px; margin: 0 auto 10px auto;"></div>
+              <h3>Pharaoh's Temple</h3>
+              <p>Entry: 9,000 Coins</p>
+              <button onclick="enterArena('pharaohs-temple', 9000)" style="padding: 8px 16px; background: #b45309; color: #fff; border: none; border-radius: 6px; cursor: pointer;">Play Pharaoh</button>
+            </div>
+
+            <!-- 9. Sultan Throne -->
+            <div class="card style-8" style="min-width: 260px; flex: 0 0 auto; scroll-snap-align: center; padding: 20px; border-radius: 12px; text-align: center;">
+              <div class="icon" id="icon-sultan-throne" style="width: 64px; height: 64px; margin: 0 auto 10px auto;"></div>
+              <h3>Sultan Throne</h3>
+              <p>Entry: 18,000 Coins</p>
+              <button onclick="enterArena('sultan-throne', 18000)" style="padding: 8px 16px; background: #7e22ce; color: #fff; border: none; border-radius: 6px; cursor: pointer;">Play Throne</button>
+            </div>
+
+            <!-- 10. Sultan Skull -->
+            <div class="card style-9" style="min-width: 260px; flex: 0 0 auto; scroll-snap-align: center; padding: 20px; border-radius: 12px; text-align: center;">
+              <div class="icon" id="icon-sultan-skull" style="width: 64px; height: 64px; margin: 0 auto 10px auto;"></div>
+              <h3>Sultan Skull</h3>
+              <p>Entry: 35,000 Coins</p>
+              <button onclick="enterArena('sultan-skull', 35000)" style="padding: 8px 16px; background: #111827; border: 1px solid #ef4444; color: #fff; border-radius: 6px; cursor: pointer;">Play Skull</button>
+            </div>
+
+          </div>
         </div>
       </div>
     </section>
 
     <!-- گیم روم / ارینا بورڈ اسکرین -->
     <section id="arena" class="screen">
-      <div class="room-topbar">
-        <div class="room-menu-btn" onclick="toggleRoomMenu()">⋮</div>
-        <div class="room-menu-dropdown" id="roomMenuDropdown">
-          <button onclick="leaveRoom()">Exit to Lobby</button>
-        </div>
+      <div class="room-topbar" style="display: flex; justify-content: space-between; padding: 10px;">
+        <button onclick="leaveRoom()" style="background: #333; color: #fff; border: none; padding: 6px 12px; border-radius: 4px; cursor: pointer;">Exit to Lobby</button>
       </div>
 
-      <div id="status">Waiting for player turn...</div>
+      <div id="status" style="text-align: center; margin: 10px 0; font-weight: bold;">Waiting for player turn...</div>
 
-      <!-- لڈو بورڈ اور فینسی بیک گراؤنڈ روٹ -->
-      <div class="board-wrapper">
-        <div id="board" class="theme-forest-arena">
-          <!-- 15x15 لڈو بورڈ سیلز -->
-          <div class="cell base red"></div>
-          <div class="cell base green"></div>
-          <div class="cell base yellow"></div>
-          <div class="cell base blue"></div>
-          <div class="cell center">HOME</div>
-        </div>
-      </div>
-
-      <!-- تھری ڈی ڈائس اور ٹائمر سیکشن -->
-      <div class="dice-below">
-        <div class="dice-pos red active">
-          <b>RED PLAYER</b>
-          <div class="dice-timer-wrap">
-            <svg>
-              <circle class="timer-circle-bg" cx="39" cy="39" r="36"></circle>
-              <circle class="timer-circle" id="timerCircle" cx="39" cy="39" r="36"></circle>
-            </svg>
-            <div class="die" id="dieElement">
-              <div class="pipface">
-                <div class="pip"></div><div class="pip"></div><div class="pip"></div>
-                <div class="pip"></div><div class="pip on"></div><div class="pip"></div>
-                <div class="pip"></div><div class="pip"></div><div class="pip"></div>
-              </div>
-            </div>
-          </div>
+      <!-- لڈو بورڈ روٹ -->
+      <div class="board-wrapper" style="display: flex; justify-content: center; margin: 20px 0;">
+        <div id="board" class="theme-forest-arena" style="width: 300px; height: 300px; position: relative; border-radius: 8px; display: grid; place-items: center;">
+          <div class="cell center" style="background: rgba(0,0,0,0.5); padding: 10px; border-radius: 6px;">HOME</div>
         </div>
       </div>
     </section>
@@ -95,38 +153,31 @@
   <!-- ضروری اسکرپٹس -->
   <script src="svg-icons.js"></script>
   <script>
-    // اسکرین تبدیل کرنے کا فنکشن
     function showScreen(screenId) {
       document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
       document.getElementById(screenId).classList.add('active');
     }
 
-    // روم میں داخل ہونے اور تھیم سیٹ کرنے کا فنکشن
-    function enterArena(arenaName, entryFee, styleIndex) {
+    function enterArena(arenaName, entryFee) {
       showScreen('arena');
       const board = document.getElementById('board');
-      // بورڈ کی پرانی تھیم کلاس ہٹا کر نئی تھیم لگانا
       board.className = '';
       board.classList.add(`theme-${arenaName}`);
-      document.getElementById('status').innerText = `Entered ${arenaName.replace('-', ' ').toUpperCase()}! Good Luck.`;
+      document.getElementById('status').innerText = `Entered ${arenaName.replace(/-/g, ' ').toUpperCase()}! Good Luck.`;
     }
 
-    // روم سے باہر نکلنے کا فنکشن
     function leaveRoom() {
       showScreen('arenaSelection');
     }
 
-    // روم مینو ڈراپ ڈاؤن ٹوگل
-    function toggleRoomMenu() {
-      document.getElementById('roomMenuDropdown').classList.toggle('show');
-    }
-
-    // صفحہ لوڈ ہوتے ہی SVG آئیکنز کو ان کے متعلقہ کنٹینر میں رینڈر کرنا
+    // تمام کارٖڈز میں ان کے اپنے SVG آئیکنز خود بخود فٹ کرنا
     window.addEventListener('DOMContentLoaded', () => {
       if (typeof ArenaSvgIcons !== 'undefined') {
-        const iconContainer = document.getElementById('icon-forest-arena');
-        if (iconContainer && ArenaSvgIcons['forest-arena']) {
-          iconContainer.innerHTML = ArenaSvgIcons['forest-arena'];
+        for (const key in ArenaSvgIcons) {
+          const container = document.getElementById(`icon-${key}`);
+          if (container) {
+            container.innerHTML = ArenaSvgIcons[key];
+          }
         }
       }
     });
