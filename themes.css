@@ -76,7 +76,7 @@ section#arena:has(#board.theme-royal-palace) {
 section#arena:has(#board.theme-desert-dangers) {
   background: radial-gradient(circle, #381a0b 0%, #170a04 80%);
 }
-#board.theme-desert {
+#board.theme-desert-dangers {
   background-image: url('board-3.png');
   background-size: cover;
   background-position: center;
@@ -105,7 +105,7 @@ section#arena:has(#board.theme-desert-dangers) {
 section#arena:has(#board.theme-diamond-arena) {
   background: radial-gradient(circle, #083344 0%, #02131a 80%);
 }
-#board.theme-desert {
+#board.theme-diamond-arena {
   background-image: url('board-4.png');
   background-size: cover;
   background-position: center;
@@ -134,7 +134,7 @@ section#arena:has(#board.theme-diamond-arena) {
 section#arena:has(#board.theme-ice-kingdom) {
   background: radial-gradient(circle, #0f2357 0%, #050d24 80%);
 }
-#board.theme-ice {
+#board.theme-ice-kingdom {
   background-image: url('board-5.png');
   background-size: cover;
   background-position: center;
@@ -163,7 +163,7 @@ section#arena:has(#board.theme-ice-kingdom) {
 section#arena:has(#board.theme-lava-fortress) {
   background: radial-gradient(circle, #2d0b06 0%, #120302 80%);
 }
-#board.theme-lava {
+#board.theme-lava-fortress {
   background-image: url('board-6.png');
   background-size: cover;
   background-position: center;
@@ -229,7 +229,7 @@ section#arena:has(#board.theme-fire-age) {
 section#arena:has(#board.theme-pharaohs-temple) {
   background: radial-gradient(circle, #2d1e05 0%, #120b02 80%);
 }
-#board.theme-pharaoh {
+#board.theme-pharaoh's-temple {
   background-image: url('board-8.png');
   background-size: cover;
   background-position: center;
@@ -258,7 +258,7 @@ section#arena:has(#board.theme-pharaohs-temple) {
 section#arena:has(#board.theme-sultan-throne) {
   background: radial-gradient(circle, #21043b 0%, #0a0112 80%);
 }
-  #board.theme-sultan {
+  #board.theme-sultan-throne {
   background-image: url('board-9.png');
   background-size: cover;
   background-position: center;
