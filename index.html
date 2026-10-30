@@ -33,63 +33,82 @@
     .card button{width:94%;font-size:12px;margin-top:8px;padding:11px}
     button{border:0;border-radius:8px;background:linear-gradient(#ffe7a1,#c99535);color:#201606;font-weight:bold;padding:9px;cursor:pointer}
     
-    .board-wrapper{position:relative;width:min(94vw,400px);margin:0 auto}
+    /* گیم ارینا اور کونے والی ڈائس کا لے آؤٹ */
+    .game-arena-container {
+      position: relative;
+      width: min(94vw, 420px);
+      margin: 25px auto;
+      padding: 50px;
+    }
     #board{width:100%;aspect-ratio:1;display:grid;grid-template-columns:repeat(15,1fr);grid-template-rows:repeat(15,1fr);background:#f6f0d9;border:4px solid #e4bc5e;box-shadow:0 0 22px #d4a83c55;position:relative}
     .cell{border:1px solid #c8c1a9;display:flex;align-items:center;justify-content:center;position:relative;font-size:clamp(6px,2vw,12px);overflow:hidden}
     .red{background:#e95a58}.green{background:#49b87c}.yellow{background:#f4d14b}.blue{background:#55a4ee}
     .base{border:1px solid #fff}.track{background:#fffdf3}.safe:before{content:"★";color:#a18a53}
     .center{background:conic-gradient(#e95a58 0 25%,#49b87c 0 50%,#f4d14b 0 75%,#55a4ee 0);color:#fff;font-weight:bold}
     
-    /* ٹوکنز (گوٹیاں) */
+    /* حقیقی 3D اسٹائل گوٹیاں (Tokens) */
     .token {
       position: absolute;
-      width: 18px;
-      height: 18px;
+      width: 20px;
+      height: 20px;
       border-radius: 50%;
-      border: 2px solid #fff;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.6);
+      border: 2px solid #ffffff;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.7), inset 0 3px 4px rgba(255,255,255,0.6), inset 0 -3px 4px rgba(0,0,0,0.4);
       z-index: 10;
       cursor: pointer;
       transform: translate(-50%, -50%);
       transition: all 0.3s ease;
     }
-    .token.red { background: #e95a58; }
-    .token.green { background: #49b87c; }
-    .token.yellow { background: #f4d14b; }
-    .token.blue { background: #55a4ee; }
+    .token.red { background: radial-gradient(circle at 35% 35%, #ff8381, #d63031); }
+    .token.green { background: radial-gradient(circle at 35% 35%, #74b9ff, #00b894); }
+    .token.yellow { background: radial-gradient(circle at 35% 35%, #ffeaa7, #fdcb6e); }
+    .token.blue { background: radial-gradient(circle at 35% 35%, #81ecec, #0984e3); }
 
-    /* ہر کھلاڑی کی اپنی 3D ڈائس */
-    .players-dice-bar {
+    /* بورڈ کے چاروں کناروں پر 3D ڈائس اور 20 سیکنڈ سرکلر ٹائمر */
+    .corner-dice-box {
+      position: absolute;
+      width: 55px;
+      height: 55px;
       display: flex;
-      justify-content: space-around;
       align-items: center;
-      width: 100%;
-      max-width: 400px;
-      margin: 10px auto;
-    }
-    .player-dice-box {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      opacity: 0.4;
+      justify-content: center;
+      opacity: 0.35;
       pointer-events: none;
       transition: all 0.3s ease;
+      z-index: 20;
     }
-    .player-dice-box.active-turn {
+    .corner-dice-box.active-turn {
       opacity: 1;
       pointer-events: auto;
-      transform: scale(1.08);
     }
-    .player-dice-box span {
-      font-size: 11px;
-      font-weight: bold;
-      color: #ffe4a0;
-      margin-bottom: 3px;
+    
+    /* پوزیشنز */
+    .dice-red-pos   { top: 2px; left: 2px; }
+    .dice-green-pos { top: 2px; right: 2px; }
+    .dice-yellow-pos{ bottom: 2px; right: 2px; }
+    .dice-blue-pos  { bottom: 2px; left: 2px; }
+
+    /* 20 سیکنڈ سرکلر ٹائمر */
+    .timer-ring {
+      position: absolute;
+      width: 55px;
+      height: 55px;
+      border-radius: 50%;
+      border: 3px solid transparent;
+      pointer-events: none;
+    }
+    .active-turn .timer-ring {
+      border: 3px solid var(--gold);
+      animation: countdown 20s linear infinite;
+    }
+    @keyframes countdown {
+      0% { clip-path: polygon(50% 50%, 50% 0%, 100% 0%, 100% 100%, 0% 100%, 0% 0%, 50% 0%); }
+      100% { clip-path: polygon(50% 50%, 50% 0%, 50% 0%, 50% 0%, 50% 0%, 50% 0%, 50% 0%); }
     }
 
     .dice-scene {
-      width: 45px;
-      height: 45px;
+      width: 40px;
+      height: 40px;
       perspective: 400px;
       cursor: pointer;
     }
@@ -102,24 +121,24 @@
     }
     .face {
       position: absolute;
-      width: 45px;
-      height: 45px;
+      width: 40px;
+      height: 40px;
       background: linear-gradient(145deg, #fff, #e0e0e0);
       border: 1px solid #bd9548;
-      border-radius: 8px;
+      border-radius: 6px;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 18px;
+      font-size: 16px;
       font-weight: bold;
       color: #201606;
     }
-    .front  { transform: translateZ(22.5px); }
-    .back   { transform: rotateY(180deg) translateZ(22.5px); }
-    .right  { transform: rotateY(90deg) translateZ(22.5px); }
-    .left   { transform: rotateY(-90deg) translateZ(22.5px); }
-    .top    { transform: rotateX(90deg) translateZ(22.5px); }
-    .bottom { transform: rotateX(-90deg) translateZ(22.5px); }
+    .front  { transform: translateZ(20px); }
+    .back   { transform: rotateY(180deg) translateZ(20px); }
+    .right  { transform: rotateY(90deg) translateZ(20px); }
+    .left   { transform: rotateY(-90deg) translateZ(20px); }
+    .top    { transform: rotateX(90deg) translateZ(20px); }
+    .bottom { transform: rotateX(-90deg) translateZ(20px); }
     
     .room-topbar{position:relative;height:40px;display:flex;justify-content:space-between;align-items:center;margin-bottom:6px}
     .room-menu-btn{width:38px;height:38px;border-radius:50%;background:#ffffff14;border:1px solid #f4d17b;display:grid;place-items:center;font-size:22px;color:#f4d17b;cursor:pointer}
@@ -128,7 +147,6 @@
     .room-menu-dropdown button{width:100%;text-align:left;padding:11px;background:transparent;border:0;border-bottom:1px solid #ffffff11;color:#ffe5a1;font-size:13px}
     #turn{text-align:center;min-height:30px;color:#ffe4a0;margin:6px 0;font-size:14px;font-weight:bold}
     
-    /* شاپ اور ماڈلز */
     .modal-overlay {
       position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
       background: rgba(0, 0, 0, 0.85);
@@ -147,7 +165,6 @@
       background: #204a32; border: 1px solid var(--line); padding: 10px; border-radius: 8px;
     }
 
-    /* لیڈر بورڈ لسٹ */
     .leaderboard-list {
       max-height: 200px; overflow-y: auto; margin: 10px 0; text-align: left; font-size: 13px;
     }
@@ -155,7 +172,6 @@
       display: flex; justify-content: space-between; padding: 6px 10px; border-bottom: 1px solid #ffffff15;
     }
 
-    /* کوئیک چیٹ / ایموجیز بار */
     .quick-chat-bar {
       display: flex; justify-content: center; gap: 10px; margin-top: 10px;
     }
@@ -237,77 +253,16 @@
 
         <div class="board-view">
           <div id="arenaSwipeContainer" style="display: flex; overflow-x: auto; scroll-snap-type: x mandatory; gap: 15px; scrollbar-width: none; padding: 10px 0;">
-            
-            <div class="card" style="min-width: 260px; scroll-snap-align: center;">
-              <div class="icon" id="icon-forest-arena"></div>
-              <h3>Forest Arena</h3>
-              <p>Entry: 50 Coins</p>
-              <button onclick="selectAndEnterBoard('forest-arena')">Play Forest</button>
-            </div>
-
-            <div class="card" style="min-width: 260px; scroll-snap-align: center;">
-              <div class="icon" id="icon-royal-palace"></div>
-              <h3>Royal Palace</h3>
-              <p>Entry: 100 Coins</p>
-              <button onclick="selectAndEnterBoard('royal-palace')">Play Royal</button>
-            </div>
-
-            <div class="card" style="min-width: 260px; scroll-snap-align: center;">
-              <div class="icon" id="icon-desert-dangers"></div>
-              <h3>Desert Dangers</h3>
-              <p>Entry: 200 Coins</p>
-              <button onclick="selectAndEnterBoard('desert-dangers')">Play Desert</button>
-            </div>
-
-            <div class="card" style="min-width: 260px; scroll-snap-align: center;">
-              <div class="icon" id="icon-diamond-arena"></div>
-              <h3>Diamond Arena</h3>
-              <p>Entry: 500 Coins</p>
-              <button onclick="selectAndEnterBoard('diamond-arena')">Play Diamond</button>
-            </div>
-
-            <div class="card" style="min-width: 260px; scroll-snap-align: center;">
-              <div class="icon" id="icon-ice-kingdom"></div>
-              <h3>Ice Kingdom</h3>
-              <p>Entry: 1,000 Coins</p>
-              <button onclick="selectAndEnterBoard('ice-kingdom')">Play Ice</button>
-            </div>
-
-            <div class="card" style="min-width: 260px; scroll-snap-align: center;">
-              <div class="icon" id="icon-lava-fortress"></div>
-              <h3>Lava Fortress</h3>
-              <p>Entry: 2,500 Coins</p>
-              <button onclick="selectAndEnterBoard('lava-fortress')">Play Lava</button>
-            </div>
-
-            <div class="card" style="min-width: 260px; scroll-snap-align: center;">
-              <div class="icon" id="icon-fire-age"></div>
-              <h3>Fire Age</h3>
-              <p>Entry: 4,000 Coins</p>
-              <button onclick="selectAndEnterBoard('fire-age')">Play Fire</button>
-            </div>
-
-            <div class="card" style="min-width: 260px; scroll-snap-align: center;">
-              <div class="icon" id="icon-pharaohs-temple"></div>
-              <h3>Pharaohs Temple</h3>
-              <p>Entry: 9,000 Coins</p>
-              <button onclick="selectAndEnterBoard('pharaohs-temple')">Play Pharaoh</button>
-            </div>
-
-            <div class="card" style="min-width: 260px; scroll-snap-align: center;">
-              <div class="icon" id="icon-sultan-throne"></div>
-              <h3>Sultan Throne</h3>
-              <p>Entry: 18,000 Coins</p>
-              <button onclick="selectAndEnterBoard('sultan-throne')">Play Throne</button>
-            </div>
-
-            <div class="card" style="min-width: 260px; scroll-snap-align: center;">
-              <div class="icon" id="icon-sultan-skull"></div>
-              <h3>Sultan Skull</h3>
-              <p>Entry: 35,000 Coins</p>
-              <button onclick="selectAndEnterBoard('sultan-skull')">Play Skull</button>
-            </div>
-
+            <div class="card" style="min-width: 260px; scroll-snap-align: center;"><div class="icon" id="icon-forest-arena"></div><h3>Forest Arena</h3><p>Entry: 50 Coins</p><button onclick="selectAndEnterBoard('forest-arena')">Play Forest</button></div>
+            <div class="card" style="min-width: 260px; scroll-snap-align: center;"><div class="icon" id="icon-royal-palace"></div><h3>Royal Palace</h3><p>Entry: 100 Coins</p><button onclick="selectAndEnterBoard('royal-palace')">Play Royal</button></div>
+            <div class="card" style="min-width: 260px; scroll-snap-align: center;"><div class="icon" id="icon-desert-dangers"></div><h3>Desert Dangers</h3><p>Entry: 200 Coins</p><button onclick="selectAndEnterBoard('desert-dangers')">Play Desert</button></div>
+            <div class="card" style="min-width: 260px; scroll-snap-align: center;"><div class="icon" id="icon-diamond-arena"></div><h3>Diamond Arena</h3><p>Entry: 500 Coins</p><button onclick="selectAndEnterBoard('diamond-arena')">Play Diamond</button></div>
+            <div class="card" style="min-width: 260px; scroll-snap-align: center;"><div class="icon" id="icon-ice-kingdom"></div><h3>Ice Kingdom</h3><p>Entry: 1,000 Coins</p><button onclick="selectAndEnterBoard('ice-kingdom')">Play Ice</button></div>
+            <div class="card" style="min-width: 260px; scroll-snap-align: center;"><div class="icon" id="icon-lava-fortress"></div><h3>Lava Fortress</h3><p>Entry: 2,500 Coins</p><button onclick="selectAndEnterBoard('lava-fortress')">Play Lava</button></div>
+            <div class="card" style="min-width: 260px; scroll-snap-align: center;"><div class="icon" id="icon-fire-age"></div><h3>Fire Age</h3><p>Entry: 4,000 Coins</p><button onclick="selectAndEnterBoard('fire-age')">Play Fire</button></div>
+            <div class="card" style="min-width: 260px; scroll-snap-align: center;"><div class="icon" id="icon-pharaohs-temple"></div><h3>Pharaohs Temple</h3><p>Entry: 9,000 Coins</p><button onclick="selectAndEnterBoard('pharaohs-temple')">Play Pharaoh</button></div>
+            <div class="card" style="min-width: 260px; scroll-snap-align: center;"><div class="icon" id="icon-sultan-throne"></div><h3>Sultan Throne</h3><p>Entry: 18,000 Coins</p><button onclick="selectAndEnterBoard('sultan-throne')">Play Throne</button></div>
+            <div class="card" style="min-width: 260px; scroll-snap-align: center;"><div class="icon" id="icon-sultan-skull"></div><h3>Sultan Skull</h3><p>Entry: 35,000 Coins</p><button onclick="selectAndEnterBoard('sultan-skull')">Play Skull</button></div>
           </div>
         </div>
       </div>
@@ -330,10 +285,11 @@
 
       <div id="turn">Turn: Red</div>
 
-      <!-- ہر کھلاڑی کا اپنا 3D ڈائس پینل -->
-      <div class="players-dice-bar">
-        <div class="player-dice-box active-turn" data-player="0" onclick="rollPlayerDice(0)">
-          <span>🔴 P1</span>
+      <!-- بورڈ اور کونوں پر ڈائس لے آؤٹ -->
+      <div class="game-arena-container">
+        <!-- P1 Red Dice (Top-Left) -->
+        <div class="corner-dice-box dice-red-pos active-turn" data-player="0" onclick="rollPlayerDice(0)">
+          <div class="timer-ring"></div>
           <div class="dice-scene">
             <div id="cube-0" class="cube">
               <div class="face front">1</div><div class="face back">6</div>
@@ -343,8 +299,9 @@
           </div>
         </div>
 
-        <div class="player-dice-box" data-player="1" onclick="rollPlayerDice(1)">
-          <span>🟢 P2</span>
+        <!-- P2 Green Dice (Top-Right) -->
+        <div class="corner-dice-box dice-green-pos" data-player="1" onclick="rollPlayerDice(1)">
+          <div class="timer-ring"></div>
           <div class="dice-scene">
             <div id="cube-1" class="cube">
               <div class="face front">1</div><div class="face back">6</div>
@@ -354,8 +311,9 @@
           </div>
         </div>
 
-        <div class="player-dice-box" data-player="2" onclick="rollPlayerDice(2)">
-          <span>🟡 P3</span>
+        <!-- P3 Yellow Dice (Bottom-Right) -->
+        <div class="corner-dice-box dice-yellow-pos" data-player="2" onclick="rollPlayerDice(2)">
+          <div class="timer-ring"></div>
           <div class="dice-scene">
             <div id="cube-2" class="cube">
               <div class="face front">1</div><div class="face back">6</div>
@@ -365,8 +323,9 @@
           </div>
         </div>
 
-        <div class="player-dice-box" data-player="3" onclick="rollPlayerDice(3)">
-          <span>🔵 P4</span>
+        <!-- P4 Blue Dice (Bottom-Left) -->
+        <div class="corner-dice-box dice-blue-pos" data-player="3" onclick="rollPlayerDice(3)">
+          <div class="timer-ring"></div>
           <div class="dice-scene">
             <div id="cube-3" class="cube">
               <div class="face front">1</div><div class="face back">6</div>
@@ -375,34 +334,35 @@
             </div>
           </div>
         </div>
-      </div>
 
-      <div class="board-wrapper">
+        <!-- بورڈ اور اصلی 3D گوٹیاں -->
         <div id="board" class="theme-forest-arena">
-          <!-- گوٹیاں -->
-          <div class="token red" style="top: 15%; left: 15%;"></div>
-          <div class="token red" style="top: 15%; left: 25%;"></div>
-          <div class="token red" style="top: 25%; left: 15%;"></div>
-          <div class="token red" style="top: 25%; left: 25%;"></div>
+          <!-- سرخ گوٹیاں -->
+          <div class="token red" id="red-0" style="top: 15%; left: 15%;"></div>
+          <div class="token red" id="red-1" style="top: 15%; left: 25%;"></div>
+          <div class="token red" id="red-2" style="top: 25%; left: 15%;"></div>
+          <div class="token red" id="red-3" style="top: 25%; left: 25%;"></div>
 
-          <div class="token green" style="top: 15%; right: 15%;"></div>
-          <div class="token green" style="top: 15%; right: 25%;"></div>
-          <div class="token green" style="top: 25%; right: 15%;"></div>
-          <div class="token green" style="top: 25%; right: 25%;"></div>
+          <!-- سبز گوٹیاں -->
+          <div class="token green" id="green-0" style="top: 15%; right: 15%;"></div>
+          <div class="token green" id="green-1" style="top: 15%; right: 25%;"></div>
+          <div class="token green" id="green-2" style="top: 25%; right: 15%;"></div>
+          <div class="token green" id="green-3" style="top: 25%; right: 25%;"></div>
 
-          <div class="token yellow" style="bottom: 15%; right: 15%;"></div>
-          <div class="token yellow" style="bottom: 15%; right: 25%;"></div>
-          <div class="token yellow" style="bottom: 25%; right: 15%;"></div>
-          <div class="token yellow" style="bottom: 25%; right: 25%;"></div>
+          <!-- پیلی گوٹیاں -->
+          <div class="token yellow" id="yellow-0" style="bottom: 15%; right: 15%;"></div>
+          <div class="token yellow" id="yellow-1" style="bottom: 15%; right: 25%;"></div>
+          <div class="token yellow" id="yellow-2" style="bottom: 25%; right: 15%;"></div>
+          <div class="token yellow" id="yellow-3" style="bottom: 25%; right: 25%;"></div>
 
-          <div class="token blue" style="bottom: 15%; left: 15%;"></div>
-          <div class="token blue" style="bottom: 15%; left: 25%;"></div>
-          <div class="token blue" style="bottom: 25%; left: 15%;"></div>
-          <div class="token blue" style="bottom: 25%; left: 25%;"></div>
+          <!-- نیلی گوٹیاں -->
+          <div class="token blue" id="blue-0" style="bottom: 15%; left: 15%;"></div>
+          <div class="token blue" id="blue-1" style="bottom: 15%; left: 25%;"></div>
+          <div class="token blue" id="blue-2" style="bottom: 25%; left: 15%;"></div>
+          <div class="token blue" id="blue-3" style="bottom: 25%; left: 25%;"></div>
         </div>
       </div>
 
-      <!-- ان گیم کوئیک چیٹ اور ایموجیز -->
       <div class="quick-chat-bar">
         <button class="emoji-btn" onclick="sendEmoji('😀')">😀</button>
         <button class="emoji-btn" onclick="sendEmoji('🔥')">🔥</button>
@@ -413,32 +373,19 @@
     </section>
   </main>
 
-  <!-- گیم شاپ ماڈل -->
+  <!-- ماڈلز (شاپ، روم، لیڈر بورڈ، اسپن وہیل) -->
   <div id="game-shop" class="modal-overlay" style="display: none;">
     <div class="modal-box">
       <h2>🛍️ Ludo Luxury Shop</h2>
       <p>Coins: <span id="shop-coins">50,000</span> 🪙</p>
-      
       <div class="shop-items-grid">
-        <div class="shop-card">
-          <div style="font-size: 24px;">💎</div>
-          <h3 style="font-size: 13px; margin: 5px 0;">Diamond Token</h3>
-          <p style="font-size: 11px; color:#ffe3a0;">2,500 Coins</p>
-          <button onclick="buyItem('Diamond Token', 2500)" style="padding: 6px 10px; font-size: 11px; margin-top: 5px;">Buy</button>
-        </div>
-        <div class="shop-card">
-          <div style="font-size: 24px;">🔥🎲</div>
-          <h3 style="font-size: 13px; margin: 5px 0;">Golden Dice</h3>
-          <p style="font-size: 11px; color:#ffe3a0;">4,000 Coins</p>
-          <button onclick="buyItem('Golden Dice', 4000)" style="padding: 6px 10px; font-size: 11px; margin-top: 5px;">Buy</button>
-        </div>
+        <div class="shop-card"><div style="font-size: 24px;">💎</div><h3 style="font-size: 13px; margin: 5px 0;">Diamond Token</h3><p style="font-size: 11px; color:#ffe3a0;">2,500 Coins</p><button onclick="buyItem('Diamond Token', 2500)" style="padding: 6px 10px; font-size: 11px; margin-top: 5px;">Buy</button></div>
+        <div class="shop-card"><div style="font-size: 24px;">🔥🎲</div><h3 style="font-size: 13px; margin: 5px 0;">Golden Dice</h3><p style="font-size: 11px; color:#ffe3a0;">4,000 Coins</p><button onclick="buyItem('Golden Dice', 4000)" style="padding: 6px 10px; font-size: 11px; margin-top: 5px;">Buy</button></div>
       </div>
-      
       <button onclick="toggleShop()" style="background: transparent; border: 1px solid var(--gold); color: var(--gold); padding: 8px 15px; margin-top: 10px;">Close Shop</button>
     </div>
   </div>
 
-  <!-- پرائیویٹ روم ماڈل -->
   <div id="room-modal" class="modal-overlay" style="display: none;">
     <div class="modal-box">
       <h2>🏠 Private Room</h2>
@@ -453,7 +400,6 @@
     </div>
   </div>
 
-  <!-- لیڈر بورڈ ماڈل -->
   <div id="leaderboard-modal" class="modal-overlay" style="display: none;">
     <div class="modal-box">
       <h2>🏆 Top Sultans Leaderboard</h2>
@@ -468,7 +414,6 @@
     </div>
   </div>
 
-  <!-- ڈیلی اسپن وہیل ماڈل -->
   <div id="spin-wheel-modal" class="modal-overlay" style="display: none;">
     <div class="modal-box">
       <h2>🎡 Daily Spin Wheel</h2>
@@ -479,13 +424,7 @@
     </div>
   </div>
 
-  <!-- جاوا اسکریپٹ فائلز -->
-  <script src="firebase.js"></script>
-  <script src="svg-icons.js"></script>
-  <script src="game.js"></script>
-  <script src="auth.js"></script>
-  <script src="controller.js"></script>
-
+  <!-- جاوا اسکریپٹ لاجک -->
   <script>
     function showScreen(screenId) {
       document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
@@ -494,30 +433,35 @@
     }
 
     function toggleMenu() {
-      document.getElementById('roomDropdown').classList.toggle('show');
+      const dropdown = document.getElementById('roomDropdown');
+      if (dropdown) dropdown.classList.toggle('show');
     }
 
     function toggleShop() {
       const shop = document.getElementById('game-shop');
-      shop.style.display = shop.style.display === 'none' ? 'flex' : 'none';
+      if (shop) shop.style.display = shop.style.display === 'none' ? 'flex' : 'none';
     }
 
     function openRoomModal() {
-      document.getElementById('room-modal').style.display = 'flex';
+      const modal = document.getElementById('room-modal');
+      if (modal) modal.style.display = 'flex';
     }
 
     function closeRoomModal() {
-      document.getElementById('room-modal').style.display = 'none';
+      const modal = document.getElementById('room-modal');
+      if (modal) modal.style.display = 'none';
     }
 
     function createPrivateRoom() {
       const code = Math.floor(100000 + Math.random() * 900000);
-      document.getElementById('roomCodeInput').value = code;
+      const input = document.getElementById('roomCodeInput');
+      if (input) input.value = code;
       alert(`روم کامیابی سے بن گیا ہے! آپ کا کوڈ ہے: ${code}`);
     }
 
     function joinPrivateRoom() {
-      const code = document.getElementById('roomCodeInput').value.trim();
+      const input = document.getElementById('roomCodeInput');
+      const code = input ? input.value.trim() : '';
       if (!code) {
         alert("براہ کرم روم کوڈ درج کریں!");
         return;
@@ -527,26 +471,30 @@
     }
 
     function openLeaderboard() {
-      document.getElementById('leaderboard-modal').style.display = 'flex';
+      const modal = document.getElementById('leaderboard-modal');
+      if (modal) modal.style.display = 'flex';
     }
 
     function closeLeaderboard() {
-      document.getElementById('leaderboard-modal').style.display = 'none';
+      const modal = document.getElementById('leaderboard-modal');
+      if (modal) modal.style.display = 'none';
     }
 
     function openSpinWheel() {
-      document.getElementById('spin-wheel-modal').style.display = 'flex';
+      const modal = document.getElementById('spin-wheel-modal');
+      if (modal) modal.style.display = 'flex';
     }
 
     function closeSpinWheel() {
-      document.getElementById('spin-wheel-modal').style.display = 'none';
+      const modal = document.getElementById('spin-wheel-modal');
+      if (modal) modal.style.display = 'none';
     }
 
     let soundEnabled = true;
     function toggleAudio() {
       soundEnabled = !soundEnabled;
       const btn = document.getElementById('audio-btn');
-      btn.innerText = soundEnabled ? "🔊 Sound" : "🔇 Muted";
+      if (btn) btn.innerText = soundEnabled ? "🔊 Sound" : "🔇 Muted";
     }
 
     let currentTurnIndex = 0;
@@ -560,6 +508,7 @@
 
       let rollResult = Math.floor(Math.random() * 6) + 1;
       let cube = document.getElementById(`cube-${playerIndex}`);
+      if (!cube) return;
       
       let rotX = 0, rotY = 0;
       if (rollResult === 1) { rotX = 0; rotY = 0; }
@@ -578,7 +527,7 @@
     }
 
     function updateTurnsUI() {
-      const boxes = document.querySelectorAll('.player-dice-box');
+      const boxes = document.querySelectorAll('.corner-dice-box');
       const turnsText = ["Red", "Green", "Yellow", "Blue"];
       
       boxes.forEach((box, index) => {
@@ -596,8 +545,10 @@
     function buyItem(itemName, price) {
       if (userCoins >= price) {
         userCoins -= price;
-        document.getElementById('coins').innerText = userCoins.toLocaleString();
-        document.getElementById('shop-coins').innerText = userCoins.toLocaleString();
+        const coinsEl = document.getElementById('coins');
+        const shopCoinsEl = document.getElementById('shop-coins');
+        if (coinsEl) coinsEl.innerText = userCoins.toLocaleString();
+        if (shopCoinsEl) shopCoinsEl.innerText = userCoins.toLocaleString();
         alert(`مبارک ہو! آپ نے ${itemName} خرید لیا ہے! 🎉`);
       } else {
         alert("آپ کے پاس اتنے کوائنز نہیں ہیں! 🪙");
@@ -608,8 +559,10 @@
       const rewards = [1000, 2500, 5000, 10000, 500];
       const won = rewards[Math.floor(Math.random() * rewards.length)];
       userCoins += won;
-      document.getElementById('coins').innerText = userCoins.toLocaleString();
-      document.getElementById('spin-result').innerText = `🎉 You Won ${won.toLocaleString()} Coins!`;
+      const coinsEl = document.getElementById('coins');
+      if (coinsEl) coinsEl.innerText = userCoins.toLocaleString();
+      const resEl = document.getElementById('spin-result');
+      if (resEl) resEl.innerText = `🎉 You Won ${won.toLocaleString()} Coins!`;
     }
 
     function sendEmoji(emoji) {
@@ -621,18 +574,23 @@
     }
 
     function selectAndEnterBoard(boardId) {
-      const mode = document.getElementById('gameModeSelect').value;
-      if (window.LudoSultan) {
+      const modeSelect = document.getElementById('gameModeSelect');
+      const mode = modeSelect ? modeSelect.value : 'classic';
+      
+      if (window.LudoSultan && typeof window.LudoSultan.selectBoard === 'function') {
         window.LudoSultan.selectBoard(boardId, mode);
       }
       showScreen('arena');
       const board = document.getElementById('board');
-      board.className = '';
-      board.classList.add(`theme-${boardId}`);
+      if (board) {
+        board.className = '';
+        board.classList.add(`theme-${boardId}`);
+      }
     }
 
     function leaveRoom() {
-      document.getElementById('roomDropdown').classList.remove('show');
+      const dropdown = document.getElementById('roomDropdown');
+      if (dropdown) dropdown.classList.remove('show');
       showScreen('home');
     }
 
