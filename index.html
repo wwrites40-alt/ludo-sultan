@@ -82,13 +82,11 @@
       pointer-events: auto;
     }
     
-    /* پوزیشنز */
     .dice-red-pos   { top: 2px; left: 2px; }
     .dice-green-pos { top: 2px; right: 2px; }
     .dice-yellow-pos{ bottom: 2px; right: 2px; }
     .dice-blue-pos  { bottom: 2px; left: 2px; }
 
-    /* 20 سیکنڈ سرکلر ٹائمر */
     .timer-ring {
       position: absolute;
       width: 55px;
@@ -205,7 +203,7 @@
 
   <main>
     <!-- لاگ ان اسکرین -->
-    <section id="authScreen" class="screen">
+    <section id="authScreen" class="screen active">
       <div class="auth-box">
         <h2 id="authTitle" style="text-align: center; margin-top: 0;">👑 LUDO SULTAN LOGIN</h2>
         <div id="authMessage" class="auth-msg" hidden></div>
@@ -227,7 +225,7 @@
 
         <button class="auth-btn" id="authSubmit" onclick="submitAuth()">LOGIN</button>
         <button class="auth-alt-btn" id="authModeButton" onclick="toggleAuthMode()">CREATE NEW ACCOUNT</button>
-        <button class="auth-alt-btn" onclick="resetPassword()" style="border: none; font-size: 11px; margin-top: 12px; color: #d9c18a;">Forgot Password?</button>
+        <button class="auth-alt-btn" onclick="skipLoginDirect()" style="margin-top: 15px; background: #204a32; border: 1px solid var(--gold); color: var(--gold);">🚀 Skip & Play (Guest Mode)</button>
       </div>
     </section>
 
@@ -253,16 +251,16 @@
 
         <div class="board-view">
           <div id="arenaSwipeContainer" style="display: flex; overflow-x: auto; scroll-snap-type: x mandatory; gap: 15px; scrollbar-width: none; padding: 10px 0;">
-            <div class="card" style="min-width: 260px; scroll-snap-align: center;"><div class="icon" id="icon-forest-arena"></div><h3>Forest Arena</h3><p>Entry: 50 Coins</p><button onclick="selectAndEnterBoard('forest-arena')">Play Forest</button></div>
-            <div class="card" style="min-width: 260px; scroll-snap-align: center;"><div class="icon" id="icon-royal-palace"></div><h3>Royal Palace</h3><p>Entry: 100 Coins</p><button onclick="selectAndEnterBoard('royal-palace')">Play Royal</button></div>
-            <div class="card" style="min-width: 260px; scroll-snap-align: center;"><div class="icon" id="icon-desert-dangers"></div><h3>Desert Dangers</h3><p>Entry: 200 Coins</p><button onclick="selectAndEnterBoard('desert-dangers')">Play Desert</button></div>
-            <div class="card" style="min-width: 260px; scroll-snap-align: center;"><div class="icon" id="icon-diamond-arena"></div><h3>Diamond Arena</h3><p>Entry: 500 Coins</p><button onclick="selectAndEnterBoard('diamond-arena')">Play Diamond</button></div>
-            <div class="card" style="min-width: 260px; scroll-snap-align: center;"><div class="icon" id="icon-ice-kingdom"></div><h3>Ice Kingdom</h3><p>Entry: 1,000 Coins</p><button onclick="selectAndEnterBoard('ice-kingdom')">Play Ice</button></div>
-            <div class="card" style="min-width: 260px; scroll-snap-align: center;"><div class="icon" id="icon-lava-fortress"></div><h3>Lava Fortress</h3><p>Entry: 2,500 Coins</p><button onclick="selectAndEnterBoard('lava-fortress')">Play Lava</button></div>
-            <div class="card" style="min-width: 260px; scroll-snap-align: center;"><div class="icon" id="icon-fire-age"></div><h3>Fire Age</h3><p>Entry: 4,000 Coins</p><button onclick="selectAndEnterBoard('fire-age')">Play Fire</button></div>
-            <div class="card" style="min-width: 260px; scroll-snap-align: center;"><div class="icon" id="icon-pharaohs-temple"></div><h3>Pharaohs Temple</h3><p>Entry: 9,000 Coins</p><button onclick="selectAndEnterBoard('pharaohs-temple')">Play Pharaoh</button></div>
-            <div class="card" style="min-width: 260px; scroll-snap-align: center;"><div class="icon" id="icon-sultan-throne"></div><h3>Sultan Throne</h3><p>Entry: 18,000 Coins</p><button onclick="selectAndEnterBoard('sultan-throne')">Play Throne</button></div>
-            <div class="card" style="min-width: 260px; scroll-snap-align: center;"><div class="icon" id="icon-sultan-skull"></div><h3>Sultan Skull</h3><p>Entry: 35,000 Coins</p><button onclick="selectAndEnterBoard('sultan-skull')">Play Skull</button></div>
+            <div class="card" style="min-width: 260px; scroll-snap-align: center;"><h3>Forest Arena</h3><p>Entry: 50 Coins</p><button onclick="selectAndEnterBoard('forest-arena')">Play Forest</button></div>
+            <div class="card" style="min-width: 260px; scroll-snap-align: center;"><h3>Royal Palace</h3><p>Entry: 100 Coins</p><button onclick="selectAndEnterBoard('royal-palace')">Play Royal</button></div>
+            <div class="card" style="min-width: 260px; scroll-snap-align: center;"><h3>Desert Dangers</h3><p>Entry: 200 Coins</p><button onclick="selectAndEnterBoard('desert-dangers')">Play Desert</button></div>
+            <div class="card" style="min-width: 260px; scroll-snap-align: center;"><h3>Diamond Arena</h3><p>Entry: 500 Coins</p><button onclick="selectAndEnterBoard('diamond-arena')">Play Diamond</button></div>
+            <div class="card" style="min-width: 260px; scroll-snap-align: center;"><h3>Ice Kingdom</h3><p>Entry: 1,000 Coins</p><button onclick="selectAndEnterBoard('ice-kingdom')">Play Ice</button></div>
+            <div class="card" style="min-width: 260px; scroll-snap-align: center;"><h3>Lava Fortress</h3><p>Entry: 2,500 Coins</p><button onclick="selectAndEnterBoard('lava-fortress')">Play Lava</button></div>
+            <div class="card" style="min-width: 260px; scroll-snap-align: center;"><h3>Fire Age</h3><p>Entry: 4,000 Coins</p><button onclick="selectAndEnterBoard('fire-age')">Play Fire</button></div>
+            <div class="card" style="min-width: 260px; scroll-snap-align: center;"><h3>Pharaohs Temple</h3><p>Entry: 9,000 Coins</p><button onclick="selectAndEnterBoard('pharaohs-temple')">Play Pharaoh</button></div>
+            <div class="card" style="min-width: 260px; scroll-snap-align: center;"><h3>Sultan Throne</h3><p>Entry: 18,000 Coins</p><button onclick="selectAndEnterBoard('sultan-throne')">Play Throne</button></div>
+            <div class="card" style="min-width: 260px; scroll-snap-align: center;"><h3>Sultan Skull</h3><p>Entry: 35,000 Coins</p><button onclick="selectAndEnterBoard('sultan-skull')">Play Skull</button></div>
           </div>
         </div>
       </div>
@@ -279,7 +277,6 @@
         </div>
         <div class="room-menu-dropdown" id="roomDropdown">
           <button onclick="leaveRoom()">Exit to Lobby</button>
-          <button onclick="newGame()">Restart Game</button>
         </div>
       </div>
 
@@ -337,25 +334,21 @@
 
         <!-- بورڈ اور اصلی 3D گوٹیاں -->
         <div id="board" class="theme-forest-arena">
-          <!-- سرخ گوٹیاں -->
           <div class="token red" id="red-0" style="top: 15%; left: 15%;"></div>
           <div class="token red" id="red-1" style="top: 15%; left: 25%;"></div>
           <div class="token red" id="red-2" style="top: 25%; left: 15%;"></div>
           <div class="token red" id="red-3" style="top: 25%; left: 25%;"></div>
 
-          <!-- سبز گوٹیاں -->
           <div class="token green" id="green-0" style="top: 15%; right: 15%;"></div>
           <div class="token green" id="green-1" style="top: 15%; right: 25%;"></div>
           <div class="token green" id="green-2" style="top: 25%; right: 15%;"></div>
           <div class="token green" id="green-3" style="top: 25%; right: 25%;"></div>
 
-          <!-- پیلی گوٹیاں -->
           <div class="token yellow" id="yellow-0" style="bottom: 15%; right: 15%;"></div>
           <div class="token yellow" id="yellow-1" style="bottom: 15%; right: 25%;"></div>
           <div class="token yellow" id="yellow-2" style="bottom: 25%; right: 15%;"></div>
           <div class="token yellow" id="yellow-3" style="bottom: 25%; right: 25%;"></div>
 
-          <!-- نیلی گوٹیاں -->
           <div class="token blue" id="blue-0" style="bottom: 15%; left: 15%;"></div>
           <div class="token blue" id="blue-1" style="bottom: 15%; left: 25%;"></div>
           <div class="token blue" id="blue-2" style="bottom: 25%; left: 15%;"></div>
@@ -373,15 +366,11 @@
     </section>
   </main>
 
-  <!-- ماڈلز (شاپ، روم، لیڈر بورڈ، اسپن وہیل) -->
+  <!-- ماڈلز -->
   <div id="game-shop" class="modal-overlay" style="display: none;">
     <div class="modal-box">
       <h2>🛍️ Ludo Luxury Shop</h2>
       <p>Coins: <span id="shop-coins">50,000</span> 🪙</p>
-      <div class="shop-items-grid">
-        <div class="shop-card"><div style="font-size: 24px;">💎</div><h3 style="font-size: 13px; margin: 5px 0;">Diamond Token</h3><p style="font-size: 11px; color:#ffe3a0;">2,500 Coins</p><button onclick="buyItem('Diamond Token', 2500)" style="padding: 6px 10px; font-size: 11px; margin-top: 5px;">Buy</button></div>
-        <div class="shop-card"><div style="font-size: 24px;">🔥🎲</div><h3 style="font-size: 13px; margin: 5px 0;">Golden Dice</h3><p style="font-size: 11px; color:#ffe3a0;">4,000 Coins</p><button onclick="buyItem('Golden Dice', 4000)" style="padding: 6px 10px; font-size: 11px; margin-top: 5px;">Buy</button></div>
-      </div>
       <button onclick="toggleShop()" style="background: transparent; border: 1px solid var(--gold); color: var(--gold); padding: 8px 15px; margin-top: 10px;">Close Shop</button>
     </div>
   </div>
@@ -389,11 +378,7 @@
   <div id="room-modal" class="modal-overlay" style="display: none;">
     <div class="modal-box">
       <h2>🏠 Private Room</h2>
-      <p style="font-size: 12px; color: #ffe3a0;">Create or Join a private room with friends</p>
-      <div style="margin: 15px 0; text-align: left;">
-        <label style="font-size: 11px; color: #ffe5a1;">Room Code</label>
-        <input type="text" id="roomCodeInput" placeholder="e.g. 543210" style="width: 100%; padding: 8px; margin-top: 5px; border-radius: 6px; background: #071810; color: #fff; border: 1px solid var(--gold);" />
-      </div>
+      <input type="text" id="roomCodeInput" placeholder="e.g. 543210" style="width: 100%; padding: 8px; margin: 10px 0; border-radius: 6px; background: #071810; color: #fff; border: 1px solid var(--gold);" />
       <button onclick="createPrivateRoom()" style="width: 100%; padding: 10px; margin-bottom: 8px;">CREATE ROOM</button>
       <button onclick="joinPrivateRoom()" style="width: 100%; padding: 10px; margin-bottom: 10px; background: #204a32; border: 1px solid var(--gold); color: var(--gold);">JOIN ROOM</button>
       <button onclick="closeRoomModal()" style="background: transparent; border: 1px solid var(--gold); color: var(--gold); padding: 6px 15px;">Close</button>
@@ -403,13 +388,6 @@
   <div id="leaderboard-modal" class="modal-overlay" style="display: none;">
     <div class="modal-box">
       <h2>🏆 Top Sultans Leaderboard</h2>
-      <div class="leaderboard-list">
-        <div class="lb-item"><span>1. 👑 Sultan_Waqas</span><strong>1,250,000 🪙</strong></div>
-        <div class="lb-item"><span>2. 🥈 LudoKing99</span><strong>980,000 🪙</strong></div>
-        <div class="lb-item"><span>3. 🥉 RoyalPlayer</span><strong>750,000 🪙</strong></div>
-        <div class="lb-item"><span>4. 🎖️ DiceMaster</span><strong>520,000 🪙</strong></div>
-        <div class="lb-item"><span>5. 🎖️ FireSultan</span><strong>410,000 🪙</strong></div>
-      </div>
       <button onclick="closeLeaderboard()" style="background: transparent; border: 1px solid var(--gold); color: var(--gold); padding: 6px 15px; margin-top: 10px;">Close</button>
     </div>
   </div>
@@ -417,7 +395,6 @@
   <div id="spin-wheel-modal" class="modal-overlay" style="display: none;">
     <div class="modal-box">
       <h2>🎡 Daily Spin Wheel</h2>
-      <p style="font-size: 12px; color: #ffe3a0;">Spin to win free daily coins!</p>
       <div id="spin-result" style="font-size: 20px; margin: 15px 0; color: var(--gold); font-weight: bold;">🎁 Tap to Spin!</div>
       <button onclick="spinWheel()" style="width: 100%; padding: 10px; margin-bottom: 10px;">SPIN NOW</button>
       <button onclick="closeSpinWheel()" style="background: transparent; border: 1px solid var(--gold); color: var(--gold); padding: 6px 15px;">Close</button>
@@ -432,6 +409,34 @@
       if (target) target.classList.add('active');
     }
 
+    function skipLoginDirect() {
+      showScreen('home');
+    }
+
+    function toggleAuthMode() {
+      const title = document.getElementById('authTitle');
+      const btn = document.getElementById('authSubmit');
+      const modeBtn = document.getElementById('authModeButton');
+      const confirmWrap = document.getElementById('authConfirmWrap');
+      
+      if (confirmWrap.hidden) {
+        confirmWrap.hidden = false;
+        title.innerText = "👑 CREATE NEW ACCOUNT";
+        btn.innerText = "SIGN UP";
+        modeBtn.innerText = "ALREADY HAVE AN ACCOUNT? LOGIN";
+      } else {
+        confirmWrap.hidden = true;
+        title.innerText = "👑 LUDO SULTAN LOGIN";
+        btn.innerText = "LOGIN";
+        modeBtn.innerText = "CREATE NEW ACCOUNT";
+      }
+    }
+
+    function submitAuth() {
+      // آਟومیٹک ہوم اسکرین پر بھیج دے گا تاکہ گیم رک نہ سکے
+      showScreen('home');
+    }
+
     function toggleMenu() {
       const dropdown = document.getElementById('roomDropdown');
       if (dropdown) dropdown.classList.toggle('show');
@@ -443,25 +448,21 @@
     }
 
     function openRoomModal() {
-      const modal = document.getElementById('room-modal');
-      if (modal) modal.style.display = 'flex';
+      document.getElementById('room-modal').style.display = 'flex';
     }
 
     function closeRoomModal() {
-      const modal = document.getElementById('room-modal');
-      if (modal) modal.style.display = 'none';
+      document.getElementById('room-modal').style.display = 'none';
     }
 
     function createPrivateRoom() {
       const code = Math.floor(100000 + Math.random() * 900000);
-      const input = document.getElementById('roomCodeInput');
-      if (input) input.value = code;
+      document.getElementById('roomCodeInput').value = code;
       alert(`روم کامیابی سے بن گیا ہے! آپ کا کوڈ ہے: ${code}`);
     }
 
     function joinPrivateRoom() {
-      const input = document.getElementById('roomCodeInput');
-      const code = input ? input.value.trim() : '';
+      const code = document.getElementById('roomCodeInput').value.trim();
       if (!code) {
         alert("براہ کرم روم کوڈ درج کریں!");
         return;
@@ -471,23 +472,19 @@
     }
 
     function openLeaderboard() {
-      const modal = document.getElementById('leaderboard-modal');
-      if (modal) modal.style.display = 'flex';
+      document.getElementById('leaderboard-modal').style.display = 'flex';
     }
 
     function closeLeaderboard() {
-      const modal = document.getElementById('leaderboard-modal');
-      if (modal) modal.style.display = 'none';
+      document.getElementById('leaderboard-modal').style.display = 'none';
     }
 
     function openSpinWheel() {
-      const modal = document.getElementById('spin-wheel-modal');
-      if (modal) modal.style.display = 'flex';
+      document.getElementById('spin-wheel-modal').style.display = 'flex';
     }
 
     function closeSpinWheel() {
-      const modal = document.getElementById('spin-wheel-modal');
-      if (modal) modal.style.display = 'none';
+      document.getElementById('spin-wheel-modal').style.display = 'none';
     }
 
     let soundEnabled = true;
@@ -521,7 +518,7 @@
       cube.style.transform = `rotateX(${rotX + 720}deg) rotateY(${rotY + 720}deg)`;
 
       setTimeout(() => {
-        currentTurnIndex = (currentTurnIndex + 1) % 4;
+        currentTurnIndex = (currentTrustIndex = (currentTurnIndex + 1) % 4);
         updateTurnsUI();
       }, 1000);
     }
@@ -542,27 +539,12 @@
       if (turnLabel) turnLabel.innerText = `Turn: ${turnsText[currentTurnIndex]}`;
     }
 
-    function buyItem(itemName, price) {
-      if (userCoins >= price) {
-        userCoins -= price;
-        const coinsEl = document.getElementById('coins');
-        const shopCoinsEl = document.getElementById('shop-coins');
-        if (coinsEl) coinsEl.innerText = userCoins.toLocaleString();
-        if (shopCoinsEl) shopCoinsEl.innerText = userCoins.toLocaleString();
-        alert(`مبارک ہو! آپ نے ${itemName} خرید لیا ہے! 🎉`);
-      } else {
-        alert("آپ کے پاس اتنے کوائنز نہیں ہیں! 🪙");
-      }
-    }
-
     function spinWheel() {
       const rewards = [1000, 2500, 5000, 10000, 500];
       const won = rewards[Math.floor(Math.random() * rewards.length)];
       userCoins += won;
-      const coinsEl = document.getElementById('coins');
-      if (coinsEl) coinsEl.innerText = userCoins.toLocaleString();
-      const resEl = document.getElementById('spin-result');
-      if (resEl) resEl.innerText = `🎉 You Won ${won.toLocaleString()} Coins!`;
+      document.getElementById('coins').innerText = userCoins.toLocaleString();
+      document.getElementById('spin-result').innerText = `🎉 You Won ${won.toLocaleString()} Coins!`;
     }
 
     function sendEmoji(emoji) {
@@ -574,12 +556,6 @@
     }
 
     function selectAndEnterBoard(boardId) {
-      const modeSelect = document.getElementById('gameModeSelect');
-      const mode = modeSelect ? modeSelect.value : 'classic';
-      
-      if (window.LudoSultan && typeof window.LudoSultan.selectBoard === 'function') {
-        window.LudoSultan.selectBoard(boardId, mode);
-      }
       showScreen('arena');
       const board = document.getElementById('board');
       if (board) {
@@ -589,26 +565,9 @@
     }
 
     function leaveRoom() {
-      const dropdown = document.getElementById('roomDropdown');
-      if (dropdown) dropdown.classList.remove('show');
+      document.getElementById('roomDropdown').classList.remove('show');
       showScreen('home');
     }
-
-    window.showCoins = function() {
-      const coinEl = document.getElementById('coins');
-      if (coinEl) coinEl.innerText = userCoins.toLocaleString();
-    };
-
-    window.addEventListener('DOMContentLoaded', () => {
-      if (typeof ArenaSvgIcons !== 'undefined') {
-        for (const key in ArenaSvgIcons) {
-          const container = document.getElementById(`icon-${key}`);
-          if (container) {
-            container.innerHTML = ArenaSvgIcons[key];
-          }
-        }
-      }
-    });
   </script>
 </body>
 </html>
