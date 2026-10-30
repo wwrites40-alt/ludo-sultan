@@ -112,57 +112,71 @@
             <div class="card" style="min-width: 260px; scroll-snap-align: center;">
               <div class="icon" id="icon-forest-arena"></div>
               <h3>Forest Arena</h3>
-              <p>Entry: 10 Coins</p>
+              <p>Entry: 50 Coins</p>
               <button onclick="selectAndEnterBoard('forest-arena')">Play Forest</button>
             </div>
 
             <div class="card" style="min-width: 260px; scroll-snap-align: center;">
               <div class="icon" id="icon-royal-palace"></div>
               <h3>Royal Palace</h3>
-              <p>Entry: 30 Coins</p>
+              <p>Entry: 100 Coins</p>
               <button onclick="selectAndEnterBoard('royal-palace')">Play Royal</button>
             </div>
 
             <div class="card" style="min-width: 260px; scroll-snap-align: center;">
-              <div class="icon" id="icon-magical-desert"></div>
-              <h3>Magical Desert</h3>
-              <p>Entry: 50 Coins</p>
-              <button onclick="selectAndEnterBoard('magical-desert')">Play Desert</button>
+              <div class="icon" id="icon-desert-dangers"></div>
+              <h3>Desert Dangers</h3>
+              <p>Entry: 200 Coins</p>
+              <button onclick="selectAndEnterBoard('desert-dangers')">Play Desert</button>
+            </div>
+
+            <div class="card" style="min-width: 260px; scroll-snap-align: center;">
+              <div class="icon" id="icon-diamond-arena"></div>
+              <h3>Diamond Arena</h3>
+              <p>Entry: 500 Coins</p>
+              <button onclick="selectAndEnterBoard('diamond-arena')">Play Diamond</button>
             </div>
 
             <div class="card" style="min-width: 260px; scroll-snap-align: center;">
               <div class="icon" id="icon-ice-kingdom"></div>
               <h3>Ice Kingdom</h3>
-              <p>Entry: 70 Coins</p>
+              <p>Entry: 1,000 Coins</p>
               <button onclick="selectAndEnterBoard('ice-kingdom')">Play Ice</button>
             </div>
 
             <div class="card" style="min-width: 260px; scroll-snap-align: center;">
               <div class="icon" id="icon-lava-fortress"></div>
               <h3>Lava Fortress</h3>
-              <p>Entry: 100 Coins</p>
+              <p>Entry: 2,500 Coins</p>
               <button onclick="selectAndEnterBoard('lava-fortress')">Play Lava</button>
-            </div>
-
-            <div class="card" style="min-width: 260px; scroll-snap-align: center;">
-              <div class="icon" id="icon-diamond-arena"></div>
-              <h3>Diamond Arena</h3>
-              <p>Entry: 150 Coins</p>
-              <button onclick="selectAndEnterBoard('diamond-arena')">Play Diamond</button>
             </div>
 
             <div class="card" style="min-width: 260px; scroll-snap-align: center;">
               <div class="icon" id="icon-fire-age"></div>
               <h3>Fire Age</h3>
-              <p>Entry: 250 Coins</p>
+              <p>Entry: 4,000 Coins</p>
               <button onclick="selectAndEnterBoard('fire-age')">Play Fire</button>
             </div>
 
             <div class="card" style="min-width: 260px; scroll-snap-align: center;">
-              <div class="icon" id="icon-sultan-legends"></div>
-              <h3>Sultan Legends</h3>
-              <p>Entry: 500 Coins</p>
-              <button onclick="selectAndEnterBoard('sultan-legends')">Play Legends</button>
+              <div class="icon" id="icon-pharaohs-temple"></div>
+              <h3>Pharaoh's Temple</h3>
+              <p>Entry: 9,000 Coins</p>
+              <button onclick="selectAndEnterBoard('pharaohs-temple')">Play Pharaoh</button>
+            </div>
+
+            <div class="card" style="min-width: 260px; scroll-snap-align: center;">
+              <div class="icon" id="icon-sultan-throne"></div>
+              <h3>Sultan Throne</h3>
+              <p>Entry: 18,000 Coins</p>
+              <button onclick="selectAndEnterBoard('sultan-throne')">Play Throne</button>
+            </div>
+
+            <div class="card" style="min-width: 260px; scroll-snap-align: center;">
+              <div class="icon" id="icon-sultan-skull"></div>
+              <h3>Sultan Skull</h3>
+              <p>Entry: 35,000 Coins</p>
+              <button onclick="selectAndEnterBoard('sultan-skull')">Play Skull</button>
             </div>
 
           </div>
@@ -218,8 +232,6 @@
       const board = document.getElementById('board');
       board.className = '';
       board.classList.add(`theme-${boardId}`);
-      
-      // پرانے خانے بنانے والا فنکشن یہاں سے ہٹا دیا گیا ہے تاکہ صرف تصویر نظر آئے
     }
 
     function leaveRoom() {
