@@ -5,8 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Ludo Sultan 3D</title>
   
-  <link rel="stylesheet" href="themes.css">
-  
   <style>
     :root{--gold:#f4d17b;--line:#bd9548}
     *{box-sizing:border-box}
@@ -24,7 +22,6 @@
     .auth-field input{width:100%;padding:10px;border:1px solid var(--line);border-radius:8px;background:#071810;color:#fff;font-size:14px}
     .auth-btn{width:100%;padding:12px;margin-top:10px;border-radius:8px;font-weight:bold;cursor:pointer;background:linear-gradient(#ffe7a1,#c99535);color:#201606;border:0}
     .auth-alt-btn{width:100%;padding:10px;margin-top:8px;background:transparent;border:1px solid var(--line);color:#ffe5a1;border-radius:8px;cursor:pointer}
-    .auth-msg{padding:10px;border-radius:8px;font-size:12px;margin-bottom:15px;text-align:center}
 
     .boards-single{display:flex;flex-direction:column;align-items:center;gap:10px}
     .board-view{width:100%;max-width:340px;margin:auto}
@@ -32,7 +29,6 @@
     .card button{width:94%;font-size:12px;margin-top:8px;padding:11px}
     button{border:0;border-radius:8px;background:linear-gradient(#ffe7a1,#c99535);color:#201606;font-weight:bold;padding:9px;cursor:pointer}
     
-    /* گیم ارینا اور 3D کونوں والی ڈائس */
     .game-arena-container {
       position: relative;
       width: min(94vw, 420px);
@@ -41,7 +37,6 @@
     }
     #board{width:100%;aspect-ratio:1;display:grid;grid-template-columns:repeat(15,1fr);grid-template-rows:repeat(15,1fr);background:#f6f0d9;border:4px solid #e4bc5e;box-shadow:0 0 22px #d4a83c55;position:relative}
     
-    /* 3D گوٹیاں */
     .token {
       position: absolute;
       width: 20px;
@@ -59,7 +54,6 @@
     .token.yellow { background: radial-gradient(circle at 35% 35%, #ffeaa7, #fdcb6e); }
     .token.blue { background: radial-gradient(circle at 35% 35%, #81ecec, #0984e3); }
 
-    /* چاروں کونوں کی 3D ڈائس */
     .corner-dice-box {
       position: absolute;
       width: 55px;
@@ -82,7 +76,6 @@
     .dice-yellow-pos{ bottom: 2px; right: 2px; }
     .dice-blue-pos  { bottom: 2px; left: 2px; }
 
-    /* 20 سیکنڈ سرکلر ٹائمر */
     .timer-ring {
       position: absolute;
       width: 55px;
@@ -136,22 +129,7 @@
     
     .room-topbar{position:relative;height:40px;display:flex;justify-content:space-between;align-items:center;margin-bottom:6px}
     #turn{text-align:center;min-height:30px;color:#ffe4a0;margin:6px 0;font-size:14px;font-weight:bold}
-    
-    .modal-overlay {
-      position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
-      background: rgba(0, 0, 0, 0.85);
-      display: flex; align-items: center; justify-content: center;
-      z-index: 9999;
-    }
-    .modal-box {
-      background: #10291d; border: 2px solid var(--gold);
-      padding: 20px; border-radius: 14px; width: 90%; max-width: 360px;
-      text-align: center; color: #fff;
-    }
   </style>
-  
-  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
 </head>
 <body>
 
@@ -169,7 +147,6 @@
     <section id="authScreen" class="screen active">
       <div class="auth-box">
         <h2 style="text-align: center; margin-top: 0;">👑 LUDO SULTAN LOGIN</h2>
-        <div id="authMessage" class="auth-msg" style="color: #ff8381;" hidden></div>
         <div class="auth-field">
           <label>Email Address</label>
           <input type="email" id="authEmail" placeholder="Enter your email" />
@@ -178,8 +155,8 @@
           <label>Password</label>
           <input type="password" id="authPassword" placeholder="Enter password" />
         </div>
-        <button class="auth-btn" onclick="handleFirebaseLogin()">LOGIN / SIGNUP</button>
-        <button class="auth-alt-btn" onclick="startGameDirectly()" style="margin-top: 15px; background: #204a32; border: 1px solid var(--gold); color: var(--gold);">🚀 PLAY AS GUEST</button>
+        <button class="auth-btn" onclick="openHome()">LOGIN</button>
+        <button class="auth-alt-btn" onclick="openHome()" style="margin-top: 15px; background: #204a32; border: 1px solid var(--gold); color: var(--gold);">🚀 PLAY AS GUEST</button>
       </div>
     </section>
 
@@ -193,7 +170,7 @@
           <div class="card" style="margin-top:20px;">
             <h3>Royal Forest Arena</h3>
             <p>Classic 4 Player Ludo Match</p>
-            <button onclick="enterGameRoom()">Start Play</button>
+            <button onclick="openArena()">Start Play</button>
           </div>
         </div>
       </div>
@@ -202,15 +179,15 @@
     <!-- گیم روم -->
     <section id="arena" class="screen">
       <div class="room-topbar">
-        <button onclick="exitToHome()">← Exit Lobby</button>
-        <button onclick="newGameReset()" style="background:#2ecc71; color:#fff;">Restart Match</button>
+        <button onclick="openHome()">← Exit Lobby</button>
+        <button onclick="resetGame()" style="background:#2ecc71; color:#fff;">Restart Match</button>
       </div>
 
       <div id="turn">Turn: Red (Roll 6 to open token)</div>
 
       <div class="game-arena-container">
         <!-- Red Dice (Top-Left) -->
-        <div class="corner-dice-box dice-red-pos active-turn" id="dice-box-0" onclick="rollDiceNew(0)">
+        <div class="corner-dice-box dice-red-pos active-turn" id="dice-box-0" onclick="rollDice(0)">
           <div class="timer-ring"></div>
           <div class="dice-scene">
             <div id="cube-0" class="cube">
@@ -222,7 +199,7 @@
         </div>
 
         <!-- Green Dice (Top-Right) -->
-        <div class="corner-dice-box dice-green-pos" id="dice-box-1" onclick="rollDiceNew(1)">
+        <div class="corner-dice-box dice-green-pos" id="dice-box-1" onclick="rollDice(1)">
           <div class="timer-ring"></div>
           <div class="dice-scene">
             <div id="cube-1" class="cube">
@@ -234,7 +211,7 @@
         </div>
 
         <!-- Yellow Dice (Bottom-Right) -->
-        <div class="corner-dice-box dice-yellow-pos" id="dice-box-2" onclick="rollDiceNew(2)">
+        <div class="corner-dice-box dice-yellow-pos" id="dice-box-2" onclick="rollDice(2)">
           <div class="timer-ring"></div>
           <div class="dice-scene">
             <div id="cube-2" class="cube">
@@ -246,7 +223,7 @@
         </div>
 
         <!-- Blue Dice (Bottom-Left) -->
-        <div class="corner-dice-box dice-blue-pos" id="dice-box-3" onclick="rollDiceNew(3)">
+        <div class="corner-dice-box dice-blue-pos" id="dice-box-3" onclick="rollDice(3)">
           <div class="timer-ring"></div>
           <div class="dice-scene">
             <div id="cube-3" class="cube">
@@ -257,27 +234,23 @@
           </div>
         </div>
 
-        <!-- لڈو بورڈ اور گوٹیاں -->
+        <!-- بورڈ اور گوٹیاں -->
         <div id="board" class="theme-forest-arena">
-          <!-- سرخ گوٹیاں -->
           <div class="token red" id="red-0" onclick="clickToken('red', 0)" style="top: 15%; left: 15%;"></div>
           <div class="token red" id="red-1" onclick="clickToken('red', 1)" style="top: 15%; left: 25%;"></div>
           <div class="token red" id="red-2" onclick="clickToken('red', 2)" style="top: 25%; left: 15%;"></div>
           <div class="token red" id="red-3" onclick="clickToken('red', 3)" style="top: 25%; left: 25%;"></div>
 
-          <!-- سبز گوٹیاں -->
           <div class="token green" id="green-0" onclick="clickToken('green', 0)" style="top: 15%; right: 15%;"></div>
           <div class="token green" id="green-1" onclick="clickToken('green', 1)" style="top: 15%; right: 25%;"></div>
           <div class="token green" id="green-2" onclick="clickToken('green', 2)" style="top: 25%; right: 15%;"></div>
           <div class="token green" id="green-3" onclick="clickToken('green', 3)" style="top: 25%; right: 25%;"></div>
 
-          <!-- پیلی گوٹیاں -->
           <div class="token yellow" id="yellow-0" onclick="clickToken('yellow', 0)" style="bottom: 15%; right: 15%;"></div>
           <div class="token yellow" id="yellow-1" onclick="clickToken('yellow', 1)" style="bottom: 15%; right: 25%;"></div>
           <div class="token yellow" id="yellow-2" onclick="clickToken('yellow', 2)" style="bottom: 25%; right: 15%;"></div>
           <div class="token yellow" id="yellow-3" onclick="clickToken('yellow', 3)" style="bottom: 25%; right: 25%;"></div>
 
-          <!-- نیلی گوٹیاں -->
           <div class="token blue" id="blue-0" onclick="clickToken('blue', 0)" style="bottom: 15%; left: 15%;"></div>
           <div class="token blue" id="blue-1" onclick="clickToken('blue', 1)" style="bottom: 15%; left: 25%;"></div>
           <div class="token blue" id="blue-2" onclick="clickToken('blue', 2)" style="bottom: 25%; left: 15%;"></div>
@@ -287,6 +260,70 @@
     </section>
   </main>
 
-  <script src="game.js"></script>
+  <script>
+    let currentTurn = 0;
+    const colors = ["red", "green", "yellow", "blue"];
+
+    function openHome() {
+      document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+      document.getElementById('home').classList.add('active');
+    }
+
+    function openArena() {
+      document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+      document.getElementById('arena').classList.add('active');
+      resetGame();
+    }
+
+    function resetGame() {
+      currentTurn = 0;
+      updateTurnUI();
+    }
+
+    function rollDice(playerIndex) {
+      if (playerIndex !== currentTurn) {
+        alert("یہ آپ کی باری نہیں ہے!");
+        return;
+      }
+
+      let val = Math.floor(Math.random() * 6) + 1;
+      let cube = document.getElementById(`cube-${playerIndex}`);
+      
+      let rx = 0, ry = 0;
+      if (val === 1) { rx = 0; ry = 0; }
+      else if (val === 2) { rx = -90; ry = 0; }
+      else if (val === 3) { rx = 0; ry = -90; }
+      else if (val === 4) { rx = 0; ry = 90; }
+      else if (val === 5) { rx = 90; ry = 0; }
+      else if (val === 6) { rx = 0; ry = 180; }
+
+      cube.style.transform = `rotateX(${rx + 720}deg) rotateY(${ry + 720}deg)`;
+
+      setTimeout(() => {
+        if (val === 6) {
+          alert(`🎉 6 آیا! آپ کو ایک اور باری ملی ہے!`);
+        } else {
+          currentTurn = (currentTurn + 1) % 4;
+        }
+        updateTurnUI();
+      }, 800);
+    }
+
+    function clickToken(color, index) {
+      alert(`${color.toUpperCase()} گوٹی پر کلک ہوا!`);
+    }
+
+    function updateTurnUI() {
+      for (let i = 0; i < 4; i++) {
+        let box = document.getElementById(`dice-box-${i}`);
+        if (box) {
+          if (i === currentTurn) box.classList.add('active-turn');
+          else box.classList.remove('active-turn');
+        }
+      }
+      let lbl = document.getElementById('turn');
+      if (lbl) lbl.innerText = `Turn: ${colors[currentTurn].toUpperCase()}`;
+    }
+  </script>
 </body>
 </html>
