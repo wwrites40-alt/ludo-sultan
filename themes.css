@@ -48,9 +48,14 @@ section#arena:has(#board.theme-royal-palace) {
   background: radial-gradient(circle, #25123d 0%, #0c0517 80%);
 }
 #board.theme-royal-palace {
-  background: radial-gradient(circle, #6b43a8, #2c174c, #120b20);
+  background-image: url('board-2.png');
+  background-size: cover;
+  background-position: center;
   border: 4px solid #e5c76b;
   box-shadow: 0 0 35px rgba(214, 182, 92, 0.6);
+}
+
+  
 }
 #board.theme-royal-palace .track { background: #fff6d9; }
 #board.theme-royal-palace .base { border: 2px solid #e5c76b !important; box-shadow: 0 0 12px #e5c76b; }
