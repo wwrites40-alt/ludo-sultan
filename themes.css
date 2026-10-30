@@ -10,11 +10,9 @@
   border: 2px solid #72d572;
   box-shadow: 0 0 18px rgba(54, 178, 74, 0.4);
 }
-/* Room Background */
 section#arena:has(#board.theme-forest-arena) {
   background: radial-gradient(circle, #0e291a 0%, #05140c 80%);
 }
-/* Board Design */
 #board.theme-forest-arena {
   background-image: url('board-1.png');
   background-size: 100% 100%;
@@ -23,11 +21,6 @@ section#arena:has(#board.theme-forest-arena) {
   border: 4px solid #72d572;
   box-shadow: 0 0 30px rgba(54, 178, 74, 0.5);
 }
-
-}
-#board.theme-forest-arena .track { background: #effbea; }
-#board.theme-forest-arena .base { border: 2px solid #72d572 !important; box-shadow: inset 0 0 8px #1b5e20; }
-/* 3D Dice */
 #board.theme-forest-arena ~ .dice-below .die,
 #board.theme-forest-arena ~ .dice-grid .die {
   background: linear-gradient(145deg, #e8f5e9, #81c784 40%, #2e7d32 80%) !important;
@@ -54,9 +47,6 @@ section#arena:has(#board.theme-royal-palace) {
   border: 4px solid #e5c76b;
   box-shadow: 0 0 35px rgba(214, 182, 92, 0.6);
 }
-#board.theme-royal-palace .track { background: #fff6d9; }
-#board.theme-royal-palace .base { border: 2px solid #e5c76b !important; box-shadow: 0 0 12px #e5c76b; }
-/* 3D Gold Dice */
 #board.theme-royal-palace ~ .dice-below .die,
 #board.theme-royal-palace ~ .dice-grid .die {
   background: linear-gradient(145deg, #fffde7, #ffd54f 40%, #ff8f00 80%) !important;
@@ -83,9 +73,6 @@ section#arena:has(#board.theme-desert-dangers) {
   border: 4px solid #d4a373;
   box-shadow: 0 0 35px rgba(212, 163, 115, 0.6);
 }
-#board.theme-desert-dangers .track { background: #fff0ce; }
-#board.theme-desert-dangers .base { background: linear-gradient(145deg, #e9b56c, #a85b2a) !important; border: 2px solid #ffe0a3 !important; }
-/* 3D Sand Dice */
 #board.theme-desert-dangers ~ .dice-below .die,
 #board.theme-desert-dangers ~ .dice-grid .die {
   background: linear-gradient(145deg, #fff8e1, #ffcc80 40%, #e65100 80%) !important;
@@ -109,12 +96,9 @@ section#arena:has(#board.theme-diamond-arena) {
   background-image: url('board-4.png');
   background-size: cover;
   background-position: center;
-  border: 4px solid #d4a373;
-  box-shadow: 0 0 35px rgba(212, 163, 115, 0.6);
+  border: 4px solid #67e8f9;
+  box-shadow: 0 0 35px rgba(34, 211, 238, 0.6);
 }
-#board.theme-diamond-arena .track { background: #f0fdff; border-color: #a5f3fc; }
-#board.theme-diamond-arena .base { background: linear-gradient(145deg, #a5f3fc, #0891b2) !important; box-shadow: 0 0 14px #67e8f9; }
-/* 3D Crystal Cyan Dice */
 #board.theme-diamond-arena ~ .dice-below .die,
 #board.theme-diamond-arena ~ .dice-grid .die {
   background: linear-gradient(145deg, #ffffff, #80deea 40%, #00838f 80%) !important;
@@ -141,9 +125,6 @@ section#arena:has(#board.theme-ice-kingdom) {
   border: 4px solid #7bc8e5;
   box-shadow: 0 0 35px rgba(123, 200, 229, 0.6);
 }
-#board.theme-ice-kingdom .track { background: #f8fdff; box-shadow: inset 0 0 12px rgba(147, 197, 253, 0.4); }
-#board.theme-ice-kingdom .base { background: linear-gradient(145deg, #effaff, #93c5fd) !important; border: 2px solid #dbeafe !important; }
-/* 3D Ice Frost Dice */
 #board.theme-ice-kingdom ~ .dice-below .die,
 #board.theme-ice-kingdom ~ .dice-grid .die {
   background: linear-gradient(145deg, #ffffff, #90caf9 40%, #1565c0 80%) !important;
@@ -170,13 +151,6 @@ section#arena:has(#board.theme-lava-fortress) {
   border: 4px solid #e56b43;
   box-shadow: 0 0 35px rgba(229, 107, 67, 0.6);
 }
-@keyframes lavaGlow {
-  from { box-shadow: 0 0 16px #f97316; }
-  to { box-shadow: 0 0 40px #ef4444, 0 0 60px rgba(249, 115, 22, 0.4); }
-}
-#board.theme-lava-fortress .track { background: #35100b; color: #ffe0c2; border-color: #c2410c; }
-#board.theme-lava-fortress .base { background: linear-gradient(145deg, #f97316, #7f1d1d) !important; box-shadow: 0 0 14px #fb6b28; }
-/* 3D Magma Dice */
 #board.theme-lava-fortress ~ .dice-below .die,
 #board.theme-lava-fortress ~ .dice-grid .die {
   background: linear-gradient(145deg, #ffccbc, #ff5722 40%, #bf360c 80%) !important;
@@ -203,13 +177,6 @@ section#arena:has(#board.theme-fire-age) {
   border: 4px solid #ff7733;
   box-shadow: 0 0 35px rgba(255, 119, 51, 0.7);
 }
-@keyframes fireAgeGlow {
-  from { box-shadow: 0 0 20px #ff4500; }
-  to { box-shadow: 0 0 45px #ffb000, 0 0 75px rgba(255, 69, 0, 0.5); }
-}
-#board.theme-fire-age .track { background: #fff0d4; }
-#board.theme-fire-age .base { background: linear-gradient(145deg, #ffb000, #c2410c) !important; border: 2px solid #ffd166 !important; }
-/* 3D Flame Dice */
 #board.theme-fire-age ~ .dice-below .die,
 #board.theme-fire-age ~ .dice-grid .die {
   background: linear-gradient(145deg, #ffe082, #ff9800 40%, #d84315 80%) !important;
@@ -229,16 +196,13 @@ section#arena:has(#board.theme-fire-age) {
 section#arena:has(#board.theme-pharaohs-temple) {
   background: radial-gradient(circle, #2d1e05 0%, #120b02 80%);
 }
-#board.theme-pharaoh's-temple {
+#board.theme-pharaohs-temple {
   background-image: url('board-8.png');
   background-size: cover;
   background-position: center;
   border: 4px solid #f2c94c;
   box-shadow: 0 0 35px rgba(242, 201, 76, 0.7);
 }
-#board.theme-pharaohs-temple .track { background: #fff8df; }
-#board.theme-pharaohs-temple .base { background: linear-gradient(145deg, #f6d878, #9a6a19) !important; border: 2px solid #fff0ad !important; box-shadow: 0 0 14px #e9c46a; }
-/* 3D Pharaoh Gold Dice */
 #board.theme-pharaohs-temple ~ .dice-below .die,
 #board.theme-pharaohs-temple ~ .dice-grid .die {
   background: linear-gradient(145deg, #fff8e1, #ffd54f 40%, #b78103 80%) !important;
@@ -258,16 +222,13 @@ section#arena:has(#board.theme-pharaohs-temple) {
 section#arena:has(#board.theme-sultan-throne) {
   background: radial-gradient(circle, #21043b 0%, #0a0112 80%);
 }
-  #board.theme-sultan-throne {
+#board.theme-sultan-throne {
   background-image: url('board-9.png');
   background-size: cover;
   background-position: center;
   border: 4px solid #ffd700;
   box-shadow: 0 0 35px rgba(255, 215, 0, 0.7);
 }
-#board.theme-sultan-throne .track { background: #fff8d9; box-shadow: inset 0 0 15px rgba(250, 204, 21, 0.4); }
-#board.theme-sultan-throne .base { border: 3px solid #facc15 !important; box-shadow: 0 0 18px #facc15; }
-/* 3D Royal Imperial Purple Dice */
 #board.theme-sultan-throne ~ .dice-below .die,
 #board.theme-sultan-throne ~ .dice-grid .die {
   background: linear-gradient(145deg, #f3e5f5, #ab47bc 40%, #4a148c 80%) !important;
@@ -294,9 +255,6 @@ section#arena:has(#board.theme-sultan-skull) {
   border: 4px solid #d4af37;
   box-shadow: 0 0 35px rgba(212, 175, 55, 0.7);
 }
-#board.theme-sultan-skull .track { background: #e5e7eb; box-shadow: inset 0 0 12px rgba(239, 68, 68, 0.4); }
-#board.theme-sultan-skull .base { background: linear-gradient(145deg, #4b5563, #111827) !important; border: 3px solid #ef4444 !important; box-shadow: 0 0 16px #ef4444; }
-/* 3D Dark Crimson Skull Dice */
 #board.theme-sultan-skull ~ .dice-below .die,
 #board.theme-sultan-skull ~ .dice-grid .die {
   background: linear-gradient(145deg, #e0e0e0, #424242 40%, #111827 80%) !important;
@@ -305,7 +263,16 @@ section#arena:has(#board.theme-sultan-skull) {
   box-shadow: 0 6px 0 #000000, 0 0 28px rgba(239, 68, 68, 0.8) !important;
 }
 
-#board .cell, #board .cell.red, #board .cell.green, #board .cell.yellow, #board .cell.blue, #board .cell.track, #board .cell.center {
+/* --------------------------------------------------------------------------
+   Universal Overrides for Transparent Tracks/Cells
+   -------------------------------------------------------------------------- */
+#board .cell, 
+#board .cell.red, 
+#board .cell.green, 
+#board .cell.yellow, 
+#board .cell.blue, 
+#board .cell.track, 
+#board .cell.center {
   background: transparent !important;
   background-color: transparent !important;
   border: none !important;
