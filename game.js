@@ -1,368 +1,165 @@
-"use strict";
+// Ludo Sultan - Brand New Logic
 
-const LudoGame = (() => {
-  const COLORS = ["Red", "Green", "Yellow", "Blue"];
-  const START = [0, 13, 26, 39];
-  const SAFE = new Set([0, 8, 13, 21, 26, 34, 39, 47]);
-  const FINISH = 57;
+let currentTurn = 0; // 0: Red, 1: Green, 2: Yellow, 3: Blue
+const playerColors = ["red", "green", "yellow", "blue"];
+let currentDiceValue = 0;
 
-  const BLOCKED_FOR_COLOR = {
-    Red: (START[0] + 1) % 52,
-    Green: (START[1] + 1) % 52,
-    Yellow: (START[2] + 1) % 52,
-    Blue: (START[3] + 1) % 52
-  };
+// گوٹیوں کا اسٹیٹ: -1 = گھر کے اندر، 0+ = بورڈ پر
+const gameState = {
+  red: [-1, -1, -1, -1],
+  green: [-1, -1, -1, -1],
+  yellow: [-1, -1, -1, -1],
+  blue: [-1, -1, -1, -1]
+};
 
-  let players, turn, dice, over, winner;
+// ہوم پوزیشنز
+const homeCoords = {
+  red: [{t:'15%',l:'15%'}, {t:'15%',l:'25%'}, {t:'25%',l:'15%'}, {t:'25%',l:'25%'}],
+  green: [{t:'15%',r:'15%'}, {t:'15%',r:'25%'}, {t:'25%',r:'15%'}, {t:'25%',r:'25%'}],
+  yellow: [{b:'15%',r:'15%'}, {b:'15%',r:'25%'}, {b:'25%',r:'15%'}, {b:'25%',r:'25%'}],
+  blue: [{b:'15%',l:'15%'}, {b:'15%',l:'25%'}, {b:'25%',l:'15%'}, {b:'25%',l:'25%'}]
+};
 
-  function newGame() {
-    players = COLORS.map((color, i) => ({
-      color,
-      start: START[i],
-      tokens: [-1, -1, -1, -1]
-    }));
+// سٹارٹنگ ہوم خانے
+const startCoords = {
+  red: { top: '38%', left: '22%' },
+  green: { top: '22%', right: '38%' },
+  yellow: { bottom: '38%', right: '22%' },
+  blue: { bottom: '22%', left: '38%' }
+};
 
-    turn = 0;
-    dice = 0;
-    over = false;
-    winner = null;
-
-    return getState();
-  }
-
-  function square(playerIndex, progress) {
-    if (progress < 0 || progress >= 52) return null;
-    return (START[playerIndex] + progress) % 52;
-  }
-
-  function legalMoves() {
-    if (!dice || over) return [];
-
-    const player = players[turn];
-    const blockedSquare = BLOCKED_FOR_COLOR[player.color];
-
-    return player.tokens
-      .map((position, index) => ({ position, index }))
-      .filter(({ position }) => {
-        if (position === -1) {
-          return dice === 6;
-        }
-
-        const nextPosition = position + dice;
-        if (nextPosition > FINISH) return false;
-
-        if (nextPosition < 52) {
-          const destination = square(turn, nextPosition);
-          if (destination === blockedSquare) return false;
-        }
-
-        return true;
-      })
-      .map(({ index }) => index);
-  }
-
-  function rollDice() {
-    if (over) return { error: "Game over. Start a new game." };
-    if (dice !== 0) return { error: "Complete the current move first." };
-
-    dice = Math.floor(Math.random() * 6) + 1;
-    const moves = legalMoves();
-
-    return {
-      player: COLORS[turn],
-      dice,
-      legalMoves: moves,
-      mustPass: moves.length === 0
-    };
-  }
-
-  function passTurn() {
-    if (!dice || legalMoves().length > 0) {
-      return { error: "A legal move is available, or dice was not rolled." };
-    }
-
-    dice = 0;
-    turn = (turn + 1) % 4;
-    return getState();
-  }
-
-  function moveToken(tokenIndex) {
-    if (over) return { error: "Game over." };
-    if (!dice) return { error: "Roll the dice first." };
-
-    if (!Number.isInteger(tokenIndex) || !legalMoves().includes(tokenIndex)) {
-      return { error: "Invalid token move." };
-    }
-
-    const playerIndex = turn;
-    const player = players[playerIndex];
-    const oldPosition = player.tokens[tokenIndex];
-    const rolledSix = dice === 6;
-
-    const nextPosition = oldPosition === -1 ? 0 : oldPosition + dice;
-    player.tokens[tokenIndex] = nextPosition;
-
-    const captured = [];
-    if (nextPosition < 52) {
-      const landed = square(playerIndex, nextPosition);
-
-      if (!SAFE.has(landed)) {
-        players.forEach((other, otherIndex) => {
-          if (otherIndex === playerIndex) return;
-
-          other.tokens.forEach((position, token) => {
-            if (position >= 0 && position < 52 && square(otherIndex, position) === landed) {
-              captured.push({ player: other.color, token });
-            }
-          });
-        });
-
-        if (captured.length === 1) {
-          const enemy = captured[0];
-          players[COLORS.indexOf(enemy.player)].tokens[enemy.token] = -1;
-        } else {
-          captured.length = 0;
-        }
-      }
-    }
-
-    if (player.tokens.every(position => position === FINISH)) {
-      over = true;
-      winner = player.color;
-    }
-
-    const reachedFinish = nextPosition === FINISH;
-    dice = 0;
-
-    if (!over && !rolledSix && !reachedFinish) {
-      turn = (turn + 1) % 4;
-    }
-
-    return {
-      player: player.color,
-      token: tokenIndex,
-      position: nextPosition,
-      captured,
-      reachedFinish,
-      gameOver: over,
-      winner,
-      nextPlayer: COLORS[turn],
-      state: getState()
-    };
-  }
-
-  function getState() {
-    return {
-      currentPlayer: COLORS[turn],
-      diceValue: dice,
-      gameOver: over,
-      winner,
-      players: JSON.parse(JSON.stringify(players)),
-      legalMoves: legalMoves()
-    };
-  }
-
-  newGame();
-
-  return { newGame, rollDice, moveToken, passTurn, getState, legalMoves };
-})();
-
-// UI Controller & Bridge
-function showScreen(screenId) {
+function showScreen(id) {
   document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
-  const target = document.getElementById(screenId);
-  if (target) target.classList.add('active');
+  document.getElementById(id).classList.add('active');
 }
 
-function skipLoginDirect() {
+function startGameDirectly() {
   showScreen('home');
 }
 
-function submitAuth() {
-  showScreen('home');
-}
-
-function toggleMenu() {
-  const dropdown = document.getElementById('roomDropdown');
-  if (dropdown) dropdown.classList.toggle('show');
-}
-
-function toggleShop() {
-  const shop = document.getElementById('game-shop');
-  if (shop) shop.style.display = shop.style.display === 'none' ? 'flex' : 'none';
-}
-
-function openRoomModal() {
-  document.getElementById('room-modal').style.display = 'flex';
-}
-
-function closeRoomModal() {
-  document.getElementById('room-modal').style.display = 'none';
-}
-
-function createPrivateRoom() {
-  const code = Math.floor(100000 + Math.random() * 900000);
-  document.getElementById('roomCodeInput').value = code;
-  alert(`روم کامیابی سے بن گیا ہے! آپ کا کوڈ ہے: ${code}`);
-}
-
-function joinPrivateRoom() {
-  const code = document.getElementById('roomCodeInput').value.trim();
-  if (!code) {
-    alert("براہ کرم روم کوڈ درج کریں!");
-    return;
-  }
-  closeRoomModal();
-  selectAndEnterBoard('forest-arena');
-}
-
-function openLeaderboard() {
-  document.getElementById('leaderboard-modal').style.display = 'flex';
-}
-
-function closeLeaderboard() {
-  document.getElementById('leaderboard-modal').style.display = 'none';
-}
-
-function openSpinWheel() {
-  document.getElementById('spin-wheel-modal').style.display = 'flex';
-}
-
-function closeSpinWheel() {
-  document.getElementById('spin-wheel-modal').style.display = 'none';
-}
-
-let soundEnabled = true;
-function toggleAudio() {
-  soundEnabled = !soundEnabled;
-  const btn = document.getElementById('audio-btn');
-  if (btn) btn.innerText = soundEnabled ? "🔊 Sound" : "🔇 Muted";
-}
-
-function selectAndEnterBoard(boardId) {
-  LudoGame.newGame();
+function enterGameRoom() {
+  newGameReset();
   showScreen('arena');
-  const board = document.getElementById('board');
-  if (board) {
-    board.className = '';
-    board.classList.add(`theme-${boardId}`);
-  }
-  updateUIFromEngine();
 }
 
-function handleDiceClick(playerIndex) {
-  const state = LudoGame.getState();
-  const playerColors = ["Red", "Green", "Yellow", "Blue"];
+function exitToHome() {
+  showScreen('home');
+}
 
-  if (state.currentPlayer !== playerColors[playerIndex]) {
+function newGameReset() {
+  currentTurn = 0;
+  currentDiceValue = 0;
+  
+  playerColors.forEach(color => {
+    gameState[color] = [-1, -1, -1, -1];
+    for (let i = 0; i < 4; i++) {
+      resetTokenToHome(color, i);
+    }
+  });
+
+  updateTurnsUI();
+}
+
+function rollDiceNew(playerIndex) {
+  if (playerIndex !== currentTurn) {
     alert("یہ آپ کی باری نہیں ہے!");
     return;
   }
 
-  const res = LudoGame.rollDice();
-  if (res.error) {
-    alert(res.error);
-    return;
-  }
+  currentDiceValue = Math.floor(Math.random() * 6) + 1;
+  const cube = document.getElementById(`cube-${playerIndex}`);
+  
+  let rotX = 0, rotY = 0;
+  if (currentDiceValue === 1) { rotX = 0; rotY = 0; }
+  else if (currentDiceValue === 2) { rotX = -90; rotY = 0; }
+  else if (currentDiceValue === 3) { rotX = 0; rotY = -90; }
+  else if (currentDiceValue === 4) { rotX = 0; rotY = 90; }
+  else if (currentDiceValue === 5) { rotX = 90; rotY = 0; }
+  else if (currentDiceValue === 6) { rotX = 0; rotY = 180; }
 
-  let rollResult = res.dice;
-  let cube = document.getElementById(`cube-${playerIndex}`);
-  if (cube) {
-    let rotX = 0, rotY = 0;
-    if (rollResult === 1) { rotX = 0; rotY = 0; }
-    else if (rollResult === 2) { rotX = -90; rotY = 0; }
-    else if (rollResult === 3) { rotX = 0; rotY = -90; }
-    else if (rollResult === 4) { rotX = 0; rotY = 90; }
-    else if (rollResult === 5) { rotX = 90; rotY = 0; }
-    else if (rollResult === 6) { rotX = 0; rotY = 180; }
-    cube.style.transform = `rotateX(${rotX + 720}deg) rotateY(${rotY + 720}deg)`;
-  }
+  cube.style.transform = `rotateX(${rotX + 720}deg) rotateY(${rotY + 720}deg)`;
 
   setTimeout(() => {
-    if (res.mustPass) {
-      alert(`🎲 ${res.player} رولڈ ${rollResult}: کوئی قانونی چال ممکن نہیں، باری پاس ہو رہی ہے!`);
-      LudoGame.passTurn();
+    const currentColor = playerColors[playerIndex];
+
+    if (currentDiceValue === 6) {
+      // 6 آنے پر آٹومیٹک گوٹی باہر نکالنا
+      const closedTokenIndex = gameState[currentColor].findIndex(p => p === -1);
+      if (closedTokenIndex !== -1) {
+        gameState[currentColor][closedTokenIndex] = 0; // باہر آ گئی
+        moveTokenToStartCell(currentColor, closedTokenIndex);
+        alert(`🎉 ${currentColor.toUpperCase()} کو 6 ملا! گوٹی باہر آ گئی اور آپ کو ایک اور باری ملی ہے!`);
+      } else {
+        alert(`🎲 6 آیا! آگے چلنے کے لیے اپنی کسی گوٹی پر کلک کریں (آپ کو دوسری باری بھی ملے گی)۔`);
+      }
+      // 6 آنے پر باری تبدیل نہیں ہوگی (دوسری باری ملے گی)
     } else {
-      alert(`🎲 ${res.player} رولڈ ${rollResult}! چلنے کے لیے اپنی کوئی روشن گوٹی منتخب کریں۔`);
+      alert(`🎲 ${currentColor.toUpperCase()} نے ${currentDiceValue} پھینکا!`);
+      // اگلا کھلاڑی
+      currentTurn = (currentTurn + 1) % 4;
     }
-    updateUIFromEngine();
+    
+    updateTurnsUI();
   }, 800);
 }
 
-function handleTokenClick(colorName, tokenIndex) {
-  const state = LudoGame.getState();
-  if (state.currentPlayer !== colorName) {
-    alert("یہ آپ کی باری یا گوٹی نہیں ہے!");
+function clickToken(color, index) {
+  if (playerColors[currentTurn] !== color) {
+    alert("یہ آپ کی باری نہیں ہے!");
     return;
   }
 
-  const res = LudoGame.moveToken(tokenIndex);
-  if (res.error) {
-    alert(res.error);
+  const currentPos = gameState[color][index];
+  if (currentPos === -1) {
+    alert("یہ گوٹی اندر ہے، باہر نکالنے کے لیے ڈائس پر 6 لائیں!");
     return;
   }
 
-  updateUIFromEngine();
-  if (res.gameOver) {
-    alert(`👑 CONGRATULATIONS! ${res.winner} WON THE MATCH! 🎉`);
-  }
+  // گوٹی کو آگے بڑھائیں
+  gameState[color][index] += currentDiceValue;
+  const tokenEl = document.getElementById(`${color}-${index}`);
+  
+  // بورڈ پر موومنٹ فیڈ بیک
+  tokenEl.style.transform = "translate(-50%, -50%) scale(1.3)";
+  setTimeout(() => {
+    tokenEl.style.transform = "translate(-50%, -50%) scale(1)";
+  }, 300);
 }
 
-function updateUIFromEngine() {
-  const state = LudoGame.getState();
-  const playerColors = ["Red", "Green", "Yellow", "Blue"];
+function moveTokenToStartCell(color, tokenIndex) {
+  const tokenEl = document.getElementById(`${color}-${tokenIndex}`);
+  if (!tokenEl) return;
 
-  // ٹرن اور ڈائس باکس ہائی لائٹ
-  const boxes = document.querySelectorAll('.corner-dice-box');
-  boxes.forEach((box, index) => {
-    if (playerColors[index] === state.currentPlayer) {
+  const pos = startCoords[color];
+  tokenEl.style.top = pos.top || 'auto';
+  tokenEl.style.left = pos.left || 'auto';
+  tokenEl.style.bottom = pos.bottom || 'auto';
+  tokenEl.style.right = pos.right || 'auto';
+}
+
+function resetTokenToHome(color, tokenIndex) {
+  const tokenEl = document.getElementById(`${color}-${tokenIndex}`);
+  if (!tokenEl) return;
+
+  const pos = homeCoords[color][tokenIndex];
+  tokenEl.style.top = pos.t || 'auto';
+  tokenEl.style.left = pos.l || 'auto';
+  tokenEl.style.bottom = pos.b || 'auto';
+  tokenEl.style.right = pos.r || 'auto';
+}
+
+function updateTurnsUI() {
+  for (let i = 0; i < 4; i++) {
+    const box = document.getElementById(`dice-box-${i}`);
+    if (i === currentTurn) {
       box.classList.add('active-turn');
     } else {
       box.classList.remove('active-turn');
     }
-  });
-
-  const turnLabel = document.getElementById('turn');
-  if (turnLabel) {
-    turnLabel.innerText = `Turn: ${state.currentPlayer} ${state.diceValue ? '(Dice: ' + state.diceValue + ')' : '(Roll Dice)'}`;
   }
 
-  // گوٹیوں کی پوزیشنز اپڈیٹ کرنا
-  state.players.forEach(p => {
-    p.tokens.forEach((pos, idx) => {
-      const el = document.getElementById(`${p.color.toLowerCase()}-${idx}`);
-      if (!el) return;
-
-      if (pos === -1) {
-        // گھر کے اندر بیسی پوزیشن
-        el.style.top = ''; el.style.left = ''; el.style.bottom = ''; el.style.right = '';
-        // ابتدائی کوآرڈینیٹس واپس سیٹ کریں
-      } else {
-        // بورڈ پر پوزیشن (آسان نمائندگی)
-        el.style.top = `${20 + (pos % 10) * 5}%`;
-        el.style.left = `${20 + (idx * 6)}%`;
-      }
-    });
-  });
-}
-
-let userCoins = 50000;
-function spinWheel() {
-  const rewards = [1000, 2500, 5000, 10000, 500];
-  const won = rewards[Math.floor(Math.random() * rewards.length)];
-  userCoins += won;
-  document.getElementById('coins').innerText = userCoins.toLocaleString();
-  document.getElementById('spin-result').innerText = `🎉 You Won ${won.toLocaleString()} Coins!`;
-}
-
-function sendEmoji(emoji) {
-  alert(`Emoji Sent: ${emoji}`);
-}
-
-function triggerWinEffect() {
-  alert("👑 CONGRATULATIONS! YOU WON THE MATCH! 🎉");
-}
-
-function leaveRoom() {
-  showScreen('home');
+  const label = document.getElementById('turn');
+  if (label) {
+    label.innerText = `Turn: ${playerColors[currentTurn].toUpperCase()} (Roll 6 to open token)`;
+  }
 }
