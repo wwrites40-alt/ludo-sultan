@@ -33,7 +33,6 @@
     .card button{width:94%;font-size:12px;margin-top:8px;padding:11px}
     button{border:0;border-radius:8px;background:linear-gradient(#ffe7a1,#c99535);color:#201606;font-weight:bold;padding:9px;cursor:pointer}
     
-    /* گیم ارینا اور کونے والی ڈائس کا لے آؤٹ */
     .game-arena-container {
       position: relative;
       width: min(94vw, 420px);
@@ -46,7 +45,6 @@
     .base{border:1px solid #fff}.track{background:#fffdf3}.safe:before{content:"★";color:#a18a53}
     .center{background:conic-gradient(#e95a58 0 25%,#49b87c 0 50%,#f4d14b 0 75%,#55a4ee 0);color:#fff;font-weight:bold}
     
-    /* حقیقی 3D اسٹائل گوٹیاں (Tokens) */
     .token {
       position: absolute;
       width: 20px;
@@ -57,14 +55,13 @@
       z-index: 10;
       cursor: pointer;
       transform: translate(-50%, -50%);
-      transition: all 0.3s ease;
+      transition: all 0.4s ease;
     }
     .token.red { background: radial-gradient(circle at 35% 35%, #ff8381, #d63031); }
     .token.green { background: radial-gradient(circle at 35% 35%, #74b9ff, #00b894); }
     .token.yellow { background: radial-gradient(circle at 35% 35%, #ffeaa7, #fdcb6e); }
     .token.blue { background: radial-gradient(circle at 35% 35%, #81ecec, #0984e3); }
 
-    /* بورڈ کے چاروں کناروں پر 3D ڈائس اور 20 سیکنڈ سرکلر ٹائمر */
     .corner-dice-box {
       position: absolute;
       width: 55px;
@@ -218,13 +215,7 @@
           <input type="password" id="authPassword" placeholder="Enter password (min 6 chars)" />
         </div>
 
-        <div class="auth-field" id="authConfirmWrap" hidden>
-          <label>Confirm Password</label>
-          <input type="password" id="authConfirm" placeholder="Re-enter password" />
-        </div>
-
         <button class="auth-btn" id="authSubmit" onclick="submitAuth()">LOGIN</button>
-        <button class="auth-alt-btn" id="authModeButton" onclick="toggleAuthMode()">CREATE NEW ACCOUNT</button>
         <button class="auth-alt-btn" onclick="skipLoginDirect()" style="margin-top: 15px; background: #204a32; border: 1px solid var(--gold); color: var(--gold);">🚀 Skip & Play (Guest Mode)</button>
       </div>
     </section>
@@ -282,10 +273,9 @@
 
       <div id="turn">Turn: Red</div>
 
-      <!-- بورڈ اور کونوں پر ڈائس لے آؤٹ -->
       <div class="game-arena-container">
         <!-- P1 Red Dice (Top-Left) -->
-        <div class="corner-dice-box dice-red-pos active-turn" data-player="0" onclick="rollPlayerDice(0)">
+        <div class="corner-dice-box dice-red-pos active-turn" data-player="0" onclick="handleDiceClick(0)">
           <div class="timer-ring"></div>
           <div class="dice-scene">
             <div id="cube-0" class="cube">
@@ -297,7 +287,7 @@
         </div>
 
         <!-- P2 Green Dice (Top-Right) -->
-        <div class="corner-dice-box dice-green-pos" data-player="1" onclick="rollPlayerDice(1)">
+        <div class="corner-dice-box dice-green-pos" data-player="1" onclick="handleDiceClick(1)">
           <div class="timer-ring"></div>
           <div class="dice-scene">
             <div id="cube-1" class="cube">
@@ -309,7 +299,7 @@
         </div>
 
         <!-- P3 Yellow Dice (Bottom-Right) -->
-        <div class="corner-dice-box dice-yellow-pos" data-player="2" onclick="rollPlayerDice(2)">
+        <div class="corner-dice-box dice-yellow-pos" data-player="2" onclick="handleDiceClick(2)">
           <div class="timer-ring"></div>
           <div class="dice-scene">
             <div id="cube-2" class="cube">
@@ -321,7 +311,7 @@
         </div>
 
         <!-- P4 Blue Dice (Bottom-Left) -->
-        <div class="corner-dice-box dice-blue-pos" data-player="3" onclick="rollPlayerDice(3)">
+        <div class="corner-dice-box dice-blue-pos" data-player="3" onclick="handleDiceClick(3)">
           <div class="timer-ring"></div>
           <div class="dice-scene">
             <div id="cube-3" class="cube">
@@ -334,25 +324,25 @@
 
         <!-- بورڈ اور اصلی 3D گوٹیاں -->
         <div id="board" class="theme-forest-arena">
-          <div class="token red" id="red-0" style="top: 15%; left: 15%;"></div>
-          <div class="token red" id="red-1" style="top: 15%; left: 25%;"></div>
-          <div class="token red" id="red-2" style="top: 25%; left: 15%;"></div>
-          <div class="token red" id="red-3" style="top: 25%; left: 25%;"></div>
+          <div class="token red" id="red-0" onclick="handleTokenClick('Red', 0)" style="top: 15%; left: 15%;"></div>
+          <div class="token red" id="red-1" onclick="handleTokenClick('Red', 1)" style="top: 15%; left: 25%;"></div>
+          <div class="token red" id="red-2" onclick="handleTokenClick('Red', 2)" style="top: 25%; left: 15%;"></div>
+          <div class="token red" id="red-3" onclick="handleTokenClick('Red', 3)" style="top: 25%; left: 25%;"></div>
 
-          <div class="token green" id="green-0" style="top: 15%; right: 15%;"></div>
-          <div class="token green" id="green-1" style="top: 15%; right: 25%;"></div>
-          <div class="token green" id="green-2" style="top: 25%; right: 15%;"></div>
-          <div class="token green" id="green-3" style="top: 25%; right: 25%;"></div>
+          <div class="token green" id="green-0" onclick="handleTokenClick('Green', 0)" style="top: 15%; right: 15%;"></div>
+          <div class="token green" id="green-1" onclick="handleTokenClick('Green', 1)" style="top: 15%; right: 25%;"></div>
+          <div class="token green" id="green-2" onclick="handleTokenClick('Green', 2)" style="top: 25%; right: 15%;"></div>
+          <div class="token green" id="green-3" onclick="handleTokenClick('Green', 3)" style="top: 25%; right: 25%;"></div>
 
-          <div class="token yellow" id="yellow-0" style="bottom: 15%; right: 15%;"></div>
-          <div class="token yellow" id="yellow-1" style="bottom: 15%; right: 25%;"></div>
-          <div class="token yellow" id="yellow-2" style="bottom: 25%; right: 15%;"></div>
-          <div class="token yellow" id="yellow-3" style="bottom: 25%; right: 25%;"></div>
+          <div class="token yellow" id="yellow-0" onclick="handleTokenClick('Yellow', 0)" style="bottom: 15%; right: 15%;"></div>
+          <div class="token yellow" id="yellow-1" onclick="handleTokenClick('Yellow', 1)" style="bottom: 15%; right: 25%;"></div>
+          <div class="token yellow" id="yellow-2" onclick="handleTokenClick('Yellow', 2)" style="bottom: 25%; right: 15%;"></div>
+          <div class="token yellow" id="yellow-3" onclick="handleTokenClick('Yellow', 3)" style="bottom: 25%; right: 25%;"></div>
 
-          <div class="token blue" id="blue-0" style="bottom: 15%; left: 15%;"></div>
-          <div class="token blue" id="blue-1" style="bottom: 15%; left: 25%;"></div>
-          <div class="token blue" id="blue-2" style="bottom: 25%; left: 15%;"></div>
-          <div class="token blue" id="blue-3" style="bottom: 25%; left: 25%;"></div>
+          <div class="token blue" id="blue-0" onclick="handleTokenClick('Blue', 0)" style="bottom: 15%; left: 15%;"></div>
+          <div class="token blue" id="blue-1" onclick="handleTokenClick('Blue', 1)" style="bottom: 15%; left: 25%;"></div>
+          <div class="token blue" id="blue-2" onclick="handleTokenClick('Blue', 2)" style="bottom: 25%; left: 15%;"></div>
+          <div class="token blue" id="blue-3" onclick="handleTokenClick('Blue', 3)" style="bottom: 25%; left: 25%;"></div>
         </div>
       </div>
 
@@ -401,173 +391,6 @@
     </div>
   </div>
 
-  <!-- جاوا اسکریپٹ لاجک -->
-  <script>
-    function showScreen(screenId) {
-      document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
-      const target = document.getElementById(screenId);
-      if (target) target.classList.add('active');
-    }
-
-    function skipLoginDirect() {
-      showScreen('home');
-    }
-
-    function toggleAuthMode() {
-      const title = document.getElementById('authTitle');
-      const btn = document.getElementById('authSubmit');
-      const modeBtn = document.getElementById('authModeButton');
-      const confirmWrap = document.getElementById('authConfirmWrap');
-      
-      if (confirmWrap.hidden) {
-        confirmWrap.hidden = false;
-        title.innerText = "👑 CREATE NEW ACCOUNT";
-        btn.innerText = "SIGN UP";
-        modeBtn.innerText = "ALREADY HAVE AN ACCOUNT? LOGIN";
-      } else {
-        confirmWrap.hidden = true;
-        title.innerText = "👑 LUDO SULTAN LOGIN";
-        btn.innerText = "LOGIN";
-        modeBtn.innerText = "CREATE NEW ACCOUNT";
-      }
-    }
-
-    function submitAuth() {
-      // آਟومیٹک ہوم اسکرین پر بھیج دے گا تاکہ گیم رک نہ سکے
-      showScreen('home');
-    }
-
-    function toggleMenu() {
-      const dropdown = document.getElementById('roomDropdown');
-      if (dropdown) dropdown.classList.toggle('show');
-    }
-
-    function toggleShop() {
-      const shop = document.getElementById('game-shop');
-      if (shop) shop.style.display = shop.style.display === 'none' ? 'flex' : 'none';
-    }
-
-    function openRoomModal() {
-      document.getElementById('room-modal').style.display = 'flex';
-    }
-
-    function closeRoomModal() {
-      document.getElementById('room-modal').style.display = 'none';
-    }
-
-    function createPrivateRoom() {
-      const code = Math.floor(100000 + Math.random() * 900000);
-      document.getElementById('roomCodeInput').value = code;
-      alert(`روم کامیابی سے بن گیا ہے! آپ کا کوڈ ہے: ${code}`);
-    }
-
-    function joinPrivateRoom() {
-      const code = document.getElementById('roomCodeInput').value.trim();
-      if (!code) {
-        alert("براہ کرم روم کوڈ درج کریں!");
-        return;
-      }
-      closeRoomModal();
-      selectAndEnterBoard('forest-arena');
-    }
-
-    function openLeaderboard() {
-      document.getElementById('leaderboard-modal').style.display = 'flex';
-    }
-
-    function closeLeaderboard() {
-      document.getElementById('leaderboard-modal').style.display = 'none';
-    }
-
-    function openSpinWheel() {
-      document.getElementById('spin-wheel-modal').style.display = 'flex';
-    }
-
-    function closeSpinWheel() {
-      document.getElementById('spin-wheel-modal').style.display = 'none';
-    }
-
-    let soundEnabled = true;
-    function toggleAudio() {
-      soundEnabled = !soundEnabled;
-      const btn = document.getElementById('audio-btn');
-      if (btn) btn.innerText = soundEnabled ? "🔊 Sound" : "🔇 Muted";
-    }
-
-    let currentTurnIndex = 0;
-    let userCoins = 50000;
-
-    function rollPlayerDice(playerIndex) {
-      if (playerIndex !== currentTurnIndex) {
-        alert("یہ آپ کی باری نہیں ہے!");
-        return;
-      }
-
-      let rollResult = Math.floor(Math.random() * 6) + 1;
-      let cube = document.getElementById(`cube-${playerIndex}`);
-      if (!cube) return;
-      
-      let rotX = 0, rotY = 0;
-      if (rollResult === 1) { rotX = 0; rotY = 0; }
-      else if (rollResult === 2) { rotX = -90; rotY = 0; }
-      else if (rollResult === 3) { rotX = 0; rotY = -90; }
-      else if (rollResult === 4) { rotX = 0; rotY = 90; }
-      else if (rollResult === 5) { rotX = 90; rotY = 0; }
-      else if (rollResult === 6) { rotX = 0; rotY = 180; }
-
-      cube.style.transform = `rotateX(${rotX + 720}deg) rotateY(${rotY + 720}deg)`;
-
-      setTimeout(() => {
-        currentTurnIndex = (currentTrustIndex = (currentTurnIndex + 1) % 4);
-        updateTurnsUI();
-      }, 1000);
-    }
-
-    function updateTurnsUI() {
-      const boxes = document.querySelectorAll('.corner-dice-box');
-      const turnsText = ["Red", "Green", "Yellow", "Blue"];
-      
-      boxes.forEach((box, index) => {
-        if (index === currentTurnIndex) {
-          box.classList.add('active-turn');
-        } else {
-          box.classList.remove('active-turn');
-        }
-      });
-
-      const turnLabel = document.getElementById('turn');
-      if (turnLabel) turnLabel.innerText = `Turn: ${turnsText[currentTurnIndex]}`;
-    }
-
-    function spinWheel() {
-      const rewards = [1000, 2500, 5000, 10000, 500];
-      const won = rewards[Math.floor(Math.random() * rewards.length)];
-      userCoins += won;
-      document.getElementById('coins').innerText = userCoins.toLocaleString();
-      document.getElementById('spin-result').innerText = `🎉 You Won ${won.toLocaleString()} Coins!`;
-    }
-
-    function sendEmoji(emoji) {
-      alert(`Emoji Sent: ${emoji}`);
-    }
-
-    function triggerWinEffect() {
-      alert("👑 CONGRATULATIONS! YOU WON THE MATCH! 🎉");
-    }
-
-    function selectAndEnterBoard(boardId) {
-      showScreen('arena');
-      const board = document.getElementById('board');
-      if (board) {
-        board.className = '';
-        board.classList.add(`theme-${boardId}`);
-      }
-    }
-
-    function leaveRoom() {
-      document.getElementById('roomDropdown').classList.remove('show');
-      showScreen('home');
-    }
-  </script>
+  <script src="game.js"></script>
 </body>
 </html>
