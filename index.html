@@ -24,6 +24,7 @@
     .auth-field input{width:100%;padding:10px;border:1px solid var(--line);border-radius:8px;background:#071810;color:#fff;font-size:14px}
     .auth-btn{width:100%;padding:12px;margin-top:10px;border-radius:8px;font-weight:bold;cursor:pointer;background:linear-gradient(#ffe7a1,#c99535);color:#201606;border:0}
     .auth-alt-btn{width:100%;padding:10px;margin-top:8px;background:transparent;border:1px solid var(--line);color:#ffe5a1;border-radius:8px;cursor:pointer}
+    .auth-msg{padding:10px;border-radius:8px;font-size:12px;margin-bottom:15px;text-align:center}
 
     .boards-single{display:flex;flex-direction:column;align-items:center;gap:10px}
     .board-view{width:100%;max-width:340px;margin:auto}
@@ -156,7 +157,7 @@
 
   <header>
     <h1>LUDO SULTAN</h1>
-    <div class="sub">NEW FRESH EDITION</div>
+    <div class="sub">SULTAN OF THE BOARD</div>
   </header>
 
   <div class="balance">
@@ -168,6 +169,7 @@
     <section id="authScreen" class="screen active">
       <div class="auth-box">
         <h2 style="text-align: center; margin-top: 0;">👑 LUDO SULTAN LOGIN</h2>
+        <div id="authMessage" class="auth-msg" style="color: #ff8381;" hidden></div>
         <div class="auth-field">
           <label>Email Address</label>
           <input type="email" id="authEmail" placeholder="Enter your email" />
@@ -176,8 +178,8 @@
           <label>Password</label>
           <input type="password" id="authPassword" placeholder="Enter password" />
         </div>
-        <button class="auth-btn" onclick="startGameDirectly()">LOGIN</button>
-        <button class="auth-alt-btn" onclick="startGameDirectly()" style="margin-top: 15px; background: #204a32; border: 1px solid var(--gold); color: var(--gold);">🚀 PLAY NOW (GUEST)</button>
+        <button class="auth-btn" onclick="handleFirebaseLogin()">LOGIN / SIGNUP</button>
+        <button class="auth-alt-btn" onclick="startGameDirectly()" style="margin-top: 15px; background: #204a32; border: 1px solid var(--gold); color: var(--gold);">🚀 PLAY AS GUEST</button>
       </div>
     </section>
 
